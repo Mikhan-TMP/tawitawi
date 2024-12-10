@@ -24,7 +24,7 @@
 
     <!-- right -->
     <div class="col-sm-10 col-md-6 offset-sm-1">
-      <h1 class="h3 text-white p-1 rounded mt-1 mb-5" style="background: linear-gradient(180deg, #BE110E, #630908);">Data</h1>
+      <h1 class="h3 text-white p-1 rounded mt-1 mb-5" style="background: linear-gradient(180deg, #031084, #000748); ">Data</h1>
       <table class="table">
         <tbody>
           <tr>

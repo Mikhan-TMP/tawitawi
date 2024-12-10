@@ -19,7 +19,7 @@
               <?= form_open_multipart('master/add_faculty'); ?>
               <div class="card" style="border-radius:15px;">
                 <h3 class="mb-0 text-left text-light" 
-                    style="background: linear-gradient(180deg, #BE110E, #630908);
+                    style="background: linear-gradient(180deg, #031084, #000748); 
                     border-top-left-radius:15px;
                     border-top-right-radius:15px;
                     padding: 1.5rem;
@@ -122,7 +122,7 @@
                     <!-- fifth row -->
                     <div class="row">
                       <div class="w-100">
-                        <button type="submit"style="background: linear-gradient(180deg, #BE110E, #630908); border:none; padding: 5px; border-radius: 15px;" class="btn btn-success btn-icon-split mt-4 float-right w-100">
+                        <button type="submit"style="background: linear-gradient(180deg, #031084, #000748);  border:none; padding: 5px; border-radius: 15px;" class="btn btn-success btn-icon-split mt-4 float-right w-100">
                           <!-- <span class="icon text-white">
                               <i class="fas fa-plus-circle"></i>
                             </span> -->

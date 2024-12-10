@@ -14,7 +14,7 @@
           <form action="" method="POST" class="col-lg-5  p-0 m-auto">
             <div class="card" style="border-radius:15px;">
               <h3 class="mb-0 text-left text-light" 
-                    style="background: linear-gradient(180deg, #BE110E, #630908);
+                    style="background: linear-gradient(180deg, #031084, #000748); 
                     border-top-left-radius:15px;
                     border-top-right-radius:15px;
                     padding: 1.5rem;
@@ -84,7 +84,7 @@
                     style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Maximum Reservation Hour">
                     <?= form_error('max_slot', '<small class="text-danger">', '</small><br>') ?>
                   </div>
-                  <button type="submit" style="background: linear-gradient(180deg, #BE110E, #630908); border:none; padding: 5px; border-radius: 15px;" 
+                  <button type="submit" style="background: linear-gradient(180deg, #031084, #000748);  border:none; padding: 5px; border-radius: 15px;" 
                   class="btn btn-success btn-icon-split mt-4 w-100">
                     <span class="text">ADD AREA</span>
                   </button>

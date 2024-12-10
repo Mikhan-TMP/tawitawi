@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="sweetalert2.min.css">
   <style>
     .nav-item.active {
-        background: linear-gradient(180deg, #BE110E, #630908); /* Light gray background */
+        background: linear-gradient(180deg, #031084, #000748);  /* Light gray background */
         border-radius: 10px; /* Rounded corners */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Optional shadow */
     }

@@ -6,7 +6,7 @@
           <div class="">
                   <a href="<?= base_url('master/a_area'); ?>"
                     class="btn btn-icon-split mb-4 shadow-sm text-light" 
-                    style="background: linear-gradient(180deg, #BE110E, #630908); ">
+                    style="background: linear-gradient(180deg, #031084, #000748);  ">
                     <span class="icon text-white-600">
                       <i class="fas fa-plus-circle"></i>
                     </span>
@@ -20,7 +20,7 @@
                   style="justify-content: space-between;
                         border-top-left-radius: 15px;
                         border-top-right-radius: 15px;
-                        background: linear-gradient(180deg, #BE110E, #630908);
+                        background: linear-gradient(180deg, #031084, #000748); 
                         align-item:center;
                 ">
               <h6 class="mb-0 text-light" 

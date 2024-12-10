@@ -54,19 +54,19 @@
             <!-- <h5 class="mt-1 ml-2">Area:</h5> -->
             <div class="buttons d-flex" style="align-items: center; flex-wrap: wrap; gap: 10px" >
               <div class="">
-                <button type="submit" name="submit" value="Show"  class="btn btn-success btn-fill btn-block text-white" style="background: linear-gradient(180deg, #BE110E, #630908); padding: 10px; width: 100px;  border:none; border-radius: 15px">
+                <button type="submit" name="submit" value="Show"  class="btn btn-success btn-fill btn-block text-white" style="background: linear-gradient(180deg, #031084, #000748);  padding: 10px; width: 100px;  border:none; border-radius: 15px">
                 <i class="fa fa-search"></i>
                 Show</button>            
               </div>
               <div class="">
                   <button type="submit" name="submit" value="Print"  class="btn btn-success btn-fill btn-block text-white"
-                  style="background: linear-gradient(180deg, #BE110E, #630908); padding: 10px; width: 100px; border:none; border-radius: 15px">
+                  style="background: linear-gradient(180deg, #031084, #000748);  padding: 10px; width: 100px; border:none; border-radius: 15px">
                   <i class="fa fa-print"></i>
                   Print</button>
               </div>
               <div class="">
                 <button  id="exportCsv" onclick="event.preventDefault();" class="text-white"
-                style="background: linear-gradient(180deg, #BE110E, #630908); border:none; padding: 10px; width: 100px; border-radius: 15px">
+                style="background: linear-gradient(180deg, #031084, #000748);  border:none; padding: 10px; width: 100px; border-radius: 15px">
                 <i class="fa fa-file-excel"></i>
                 Export</button>
               </div>
@@ -90,7 +90,7 @@
                     style="justify-content: space-between;
                           border-top-left-radius: 15px;
                           border-top-right-radius: 15px;
-                          background: linear-gradient(180deg, #BE110E, #630908);
+                          background: linear-gradient(180deg, #031084, #000748); 
               ">
             <!-- <h6 class="m-0 text-light" 
                     style="font-size:1.5rem;

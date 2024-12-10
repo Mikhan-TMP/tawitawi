@@ -16,7 +16,7 @@
                   <div class="card-body mb-0 ml-0 p-0">
                   <a href="<?= base_url('master/a_faculty'); ?>"
                     class="btn btn-icon-split mb-4 shadow-sm text-light" 
-                    style="background: linear-gradient(180deg, #BE110E, #630908);">
+                    style="background: linear-gradient(180deg, #031084, #000748); ">
                     <span class="icon text-white-600">
                       <i class="fas fa-plus-circle"></i>
                     </span>
@@ -43,7 +43,7 @@
                   <div class="modal-content" style="border-radius: 8px;">
                     
                     <!-- Modal Header -->
-                    <div class="modal-header" style="background: linear-gradient(180deg, #BE110E, #630908); color: white;">
+                    <div class="modal-header" style="background: linear-gradient(180deg, #031084, #000748);  color: white;">
                       <h4 class="modal-title">Import New Faculty with Excel</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -110,7 +110,7 @@
                           
                           <!-- Submit Button -->
                           <div class="form-group">
-                            <input type="submit" name="submit" value="Upload" class="btn btn-info btn-block" style="background: linear-gradient(180deg, #BE110E, #630908); font-size: 16px; padding: 10px;">
+                            <input type="submit" name="submit" value="Upload" class="btn btn-info btn-block" style="background: linear-gradient(180deg, #031084, #000748);  font-size: 16px; padding: 10px;">
                           </div>
                         </form>
                       </div>
@@ -133,7 +133,7 @@
 
           <!-- Data Table Faculty-->
           <div class="card shadow mb-4 m-auto" style="border-radius: 15px;">
-            <div class="card-header py-3 d-flex" style="justify-content: space-between; border-top-left-radius: 15px; border-top-right-radius: 15px; background: linear-gradient(180deg, #BE110E, #630908);">  
+            <div class="card-header py-3 d-flex" style="justify-content: space-between; border-top-left-radius: 15px; border-top-right-radius: 15px; background: linear-gradient(180deg, #031084, #000748); ">  
               <h6 class="m-0 text-light" style="font-size:1.5rem; font-family: 'Inter', sans-serif;">DataTables Faculty</h6>
             </div>
             <div class="card-body">

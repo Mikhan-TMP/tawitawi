@@ -17,7 +17,7 @@
               <div class="col-lg-6 m-auto">
                 <div class="card" style="border-radius:15px;">
                   <h3 class="mb-0 text-left text-light" 
-                    style="background: linear-gradient(180deg, #BE110E, #630908);
+                    style="background: linear-gradient(180deg, #031084, #000748); 
                     border-top-left-radius:15px;
                     border-top-right-radius:15px;
                     padding: 1.5rem;
@@ -179,7 +179,7 @@
                     </div>
 
                     <div class="row">
-                    <button style="background: linear-gradient(180deg, #BE110E, #630908); border:none; padding: 5px; border-radius: 15px;" 
+                    <button style="background: linear-gradient(180deg, #031084, #000748);  border:none; padding: 5px; border-radius: 15px;" 
                     type="submit" class="btn btn-success btn-icon-split mt-4 w-100">
                         <!-- <span class="icon text-white">
                           <i class="fas fa-check"></i>

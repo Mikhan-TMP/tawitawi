@@ -11,7 +11,7 @@
                 <div class="col-xl-12 col-lg-7">
                     <div class="card shadow mb-4" style="min-height: 543px; border-radius:15px;">
                         <form action="" method="POST">
-                            <div class="card-header py-3 d-flex justify-content-between" style="border-radius:15px 15px 0 0; background: linear-gradient(180deg, #BE110E, #630908);">
+                            <div class="card-header py-3 d-flex justify-content-between" style="border-radius:15px 15px 0 0; background: linear-gradient(180deg, #031084, #000748); ">
                                 <h6 class="m-0 text-light" style="font-size:1.5rem; font-family: 'Inter', sans-serif;">Attendance Sheet</h6>
                                 <div class="div">
                                     <button type="button" id="exportCsv" class="btn btn-md btn-fill" style="background: #FFFFFF; color: #BE110E !important; font-size: 12px !important; font-weight: 500 !important;">
@@ -167,8 +167,8 @@ document.getElementById('exportCsv').addEventListener('click', function () {
                 </div>
                 <div class="mb-3 d-flex" style="justify-content: right;">
                     <div class="btn-group" style=" gap: 10px;">
-                        <button type="button" class="p-2" style=" border: none; font-weight: 500; font-size: small; border-radius: 5px; background: linear-gradient(180deg, #BE110E, #630908); color: white; min-width: 100px" id="todayButton">Today</button>
-                        <button type="button" class="p-2" id="yesterdayButton" style="border: none; font-weight: 500; font-size: small; border-radius: 5px; background: linear-gradient(180deg, #BE110E, #630908); color: white; min-width: 100px">Yesterday</button>
+                        <button type="button" class="p-2" style=" border: none; font-weight: 500; font-size: small; border-radius: 5px; background: linear-gradient(180deg, #031084, #000748);  color: white; min-width: 100px" id="todayButton">Today</button>
+                        <button type="button" class="p-2" id="yesterdayButton" style="border: none; font-weight: 500; font-size: small; border-radius: 5px; background: linear-gradient(180deg, #031084, #000748);  color: white; min-width: 100px">Yesterday</button>
                         <select class="form-select" id="range" name="range" style="border: none; font-weight: 500; font-size: small; border-radius: 5px; background: linear-gradient(180deg, #FFD602, #FAB703, #D6890E); color: black;">
                             <option value="">Select Range</option>
                             <option value="7">Last 1 week</option>

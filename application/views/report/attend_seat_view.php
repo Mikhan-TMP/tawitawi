@@ -41,7 +41,7 @@
             <div class="d-flex" style="align-items: center; flex-wrap: wrap; gap: 10px">
               <label class="text-dark" style="font-weight: bold;">Area:</label>
                 <div class="">
-                <select class="form-control" name="roomName" style="color: white; background: linear-gradient(180deg, #BE110E, #630908);">              
+                <select class="form-control" name="roomName" style="color: white; background: linear-gradient(180deg, #031084, #000748); ">              
                   <option style="color: black" value="">All</option>
                   <?php foreach ($roomlist as $d) : ?>
                     <option style="color: black" value="<?= $d['room']; ?>"><?= $d['floor']." : ".$d['room']; ?></option>
@@ -56,25 +56,25 @@
               <div class="">
                 <button type="submit" name="submit" value="Show"  
                 class="btn btn-success btn-fill btn-block" 
-                style="background: linear-gradient(180deg, #BE110E, #630908);  color: white; padding: 7px; width: 100px;  border:none; border-radius: 15px">
+                style="background: linear-gradient(180deg, #031084, #000748);   color: white; padding: 7px; width: 100px;  border:none; border-radius: 15px">
                 <i class="fa fa-search"></i>
                 Show</button>            
               </div>
               <div class="">
                   <button type="submit" name="submit" value="Print"  class="btn btn-success btn-fill btn-block"
-                  style="background: linear-gradient(180deg, #BE110E, #630908); color: white; padding: 7px; width: 100px; border:none; border-radius: 15px">
+                  style="background: linear-gradient(180deg, #031084, #000748);  color: white; padding: 7px; width: 100px; border:none; border-radius: 15px">
                   <i class="fa fa-print"></i>
                   Print</button>
               </div>
               <div class="">
                 <button type="submit" id="exportCsv" class="btn btn-success btn-fill btn-block"
-                style="background: linear-gradient(180deg, #BE110E, #630908); color: white; border:none; padding: 7px; width: 100px; border-radius: 15px">
+                style="background: linear-gradient(180deg, #031084, #000748);  color: white; border:none; padding: 7px; width: 100px; border-radius: 15px">
                 <i class="fa fa-file-excel"></i>
                 Export</button>
               </div>
               <div class="">
                 <button type="button" class="btn btn-success btn-fill btn-block" data-toggle="modal" data-target="#cancelAllModal"
-                  style="background: linear-gradient(180deg, #BE110E, #630908); border:none; color: white; padding: 7px; width: 125px; border-radius: 15px">
+                  style="background: linear-gradient(180deg, #031084, #000748);  border:none; color: white; padding: 7px; width: 125px; border-radius: 15px">
                   <i class="fa fa-ban"></i>
                   Cancel All</button>
 
@@ -148,7 +148,7 @@
                   style="justify-content: space-between;
                         border-top-left-radius: 15px;
                         border-top-right-radius: 15px;
-                        background: linear-gradient(180deg, #BE110E, #630908);
+                        background: linear-gradient(180deg, #031084, #000748); 
             ">
           <!-- <h6 class="m-0 text-light" 
                   style="font-size:1.5rem;
@@ -259,7 +259,7 @@
                             echo "..."; 
                             // echo "
                             // <a href='#' class='btn confirm-end-booking' data-url='".base_url('master/cancelBooking?book_id='.$atd['id']. '&start='.$start_time_format. '&end='.$end_time_format). "'
-                            // style='background: linear-gradient(180deg, #BE110E, #630908); font-size: 12px; color: white; border: none; !important'>Cancel</a> 
+                            // style='background: linear-gradient(180deg, #031084, #000748);  font-size: 12px; color: white; border: none; !important'>Cancel</a> 
                             // ";
                           }
                             else 
@@ -269,7 +269,7 @@
                                 echo "...";
                                 // echo "
                                 // <a href='#' class='btn confirm-timeout-booking' data-url='".base_url('master/timeoutForce?book_id='.$atd['id'].'&end='.$end_time_format)."'
-                                // style='background: linear-gradient(180deg, #BE110E, #630908); font-size: 12px; color: white; border: none; !important'>Timeout</a> 
+                                // style='background: linear-gradient(180deg, #031084, #000748);  font-size: 12px; color: white; border: none; !important'>Timeout</a> 
                                 // ";
                               }
                             else 
@@ -298,19 +298,19 @@
                         <a href="#" 
                         class="btn confirm-end-booking w-100" 
                         data-url="<?= base_url('master/cancelBooking?book_id=' . $atd['id'] . '&start=' . $start_time_format . '&end=' . $end_time_format); ?>"
-                        style="background: linear-gradient(180deg, #BE110E, #630908); font-size: 12px; color: white; border: none !important;">
+                        style="background: linear-gradient(180deg, #031084, #000748);  font-size: 12px; color: white; border: none !important;">
                         Cancel</a>
                       <?php }else if ($atd['out_time']==NULL){
                         ?>
                         <a href="#" 
                         class="btn confirm-timeout-booking w-100" 
                         data-url="<?= base_url('master/timeoutForce?book_id=' . $atd['id'] . '&end=' . $end_time_format); ?>"
-                        style="background: linear-gradient(180deg, #BE110E, #630908); font-size: 12px; color: white; border: none !important;">
+                        style="background: linear-gradient(180deg, #031084, #000748);  font-size: 12px; color: white; border: none !important;">
                           Timeout</a>
                         <?php }else{ ?>
                           <button 
                           class="btn w-100" 
-                          style="background: linear-gradient(180deg, #BE110E, #630908); font-size: 12px; color: white; border: none; opacity: 0.6; cursor: not-allowed;" 
+                          style="background: linear-gradient(180deg, #031084, #000748);  font-size: 12px; color: white; border: none; opacity: 0.6; cursor: not-allowed;" 
                           disabled>
                           <?php 
                             if($atd['in_status'] == "occupied" && $atd['out_status'] == "exit"){

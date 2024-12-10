@@ -17,7 +17,7 @@
               <div class="card-body mb-0 p-0">
                 <a href="<?= base_url('master/a_student'); ?>"
                     class="btn btn-icon-split mb-4 shadow-sm text-light" 
-                    style="background: linear-gradient(180deg, #BE110E, #630908);">
+                    style="background: linear-gradient(180deg, #031084, #000748); ">
                     <span class="icon text-white-600">
                       <i class="fas fa-plus-circle"></i>
                     </span>
@@ -56,7 +56,7 @@
                   <div class="modal-content" style="border-radius: 8px;">
                     
                     <!-- Modal Header -->
-                    <div class="modal-header" style="background: linear-gradient(180deg, #BE110E, #630908); color: white;">
+                    <div class="modal-header" style="background: linear-gradient(180deg, #031084, #000748);  color: white;">
                       <h4 class="modal-title">Import New Student with Excel</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span class="text-white" aria-hidden="true">&times;</span>
@@ -127,7 +127,7 @@
                           
                           <!-- Submit Button -->
                           <div class="form-group">
-                            <input type="submit" name="submit" value="Upload" class="btn btn-info btn-block" style="background: linear-gradient(180deg, #BE110E, #630908); font-size: 16px; padding: 10px;">
+                            <input type="submit" name="submit" value="Upload" class="btn btn-info btn-block" style="background: linear-gradient(180deg, #031084, #000748);  font-size: 16px; padding: 10px;">
                           </div>
                         </form>
                       </div>
@@ -148,7 +148,7 @@
               <div class="modal-content" style="border-radius: 8px;">
                 
                 <!-- Modal Header -->
-                <div class="modal-header" style="background: linear-gradient(180deg, #BE110E, #630908); color: white;">
+                <div class="modal-header" style="background: linear-gradient(180deg, #031084, #000748);  color: white;">
                   <h4 class="modal-title">Export Students to Excel</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span class="text-white" aria-hidden="true">&times;</span>
@@ -181,7 +181,7 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <input type="submit" value="Export to Excel" class="btn btn-info btn-block" style="background: linear-gradient(180deg, #BE110E, #630908); font-size: 16px; padding: 10px;">
+                      <input type="submit" value="Export to Excel" class="btn btn-info btn-block" style="background: linear-gradient(180deg, #031084, #000748);  font-size: 16px; padding: 10px;">
                     </div>
                   </form>
                 </div>
@@ -228,7 +228,7 @@
                   style="justify-content: space-between;
                         border-top-left-radius: 15px;
                         border-top-right-radius: 15px;
-                        background: linear-gradient(180deg, #BE110E, #630908);
+                        background: linear-gradient(180deg, #031084, #000748); 
             ">
           <h6 class="m-0 text-light" 
                   style="font-size:1.5rem;
