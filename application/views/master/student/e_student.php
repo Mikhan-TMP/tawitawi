@@ -100,23 +100,23 @@
                     </div>
                     <!-- </div> -->
                     <div class="row">
-                      <div class="col-lg-6">
+                      <!-- <div class="col-lg-6">
                         <div class="form-group">
-                          <!-- rfid -->
+                          rfid
                           <label for="rfid" class="text-dark" style="font-weight: bold;">RFID</label>
                           <input type="text" minlength="2" maxlength="30" class="form-control" name="rfid" id="rfid" value="<?= $student['rfid']; ?>"
                           style="border-radius:15px; font-size: 1rem; padding: 25px;">
                           <?= form_error('rfid', '<small class="text-danger">', '</small>') ?>
                         </div>
-                      </div>
-                      <div class="col-lg-6">
+                      </div> -->
+                      <!-- <div class="col-lg-6">
                         <div class="form-group">
                           <label for="qrcode" class="text-dark" style="font-weight: bold;">QR Code</label>
                           <input type="text" minlength="2" maxlength="30" class="form-control" name="qrcode" id="qrcode" value="<?= $student['qrcode']; ?>"
                           style="border-radius:15px; font-size: 1rem; padding: 25px;">
                           <?= form_error('qrcode', '<small class="text-danger">', '</small>') ?>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                     
                     <div class="row">
@@ -130,14 +130,14 @@
                         </div>
                       </div>
 
-                      <!-- <div class="col-lg-6">
+                      <div class="col-lg-6">
                         <div class="form-group">
                           <label for="pin" class="text-dark" style="font-weight: bold;"">PIN</label>
                           <input type="number" class="form-control col-lg" name="pin" id="pin" value="<?= $student['pin']; ?>"
                           style="border-radius:15px; font-size: 1rem; padding: 25px;">
-                          <?= form_error('e_pin', '<small class="text-danger">', '</small>') ?>
+                          <?= form_error('pin', '<small class="text-danger">', '</small>') ?>
                         </div>
-                      </div> -->
+                      </div>
 
                       <div class="col-lg-6">
                         <div class="form-group">                        
@@ -147,8 +147,6 @@
                           <?= form_error('e_name', '<small class="text-danger">', '</small>') ?>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
                       <div class="col-lg-6">
                         <div class="col-lg-6">
                           <div class="form-group">
@@ -176,6 +174,35 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <div class="row">
+                      <!-- <div class="col-lg-6">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label for="e_gender" class="text-dark" style="font-weight: bold;">Gender</label>
+                            <div class="row col-lg">
+                              <div class="form-check form-check-inline my-0">
+                                <input class="form-check-input" type="radio" name="e_gender" id="m" value="M" <?php if ($student['gender'] == 'M') {
+                                                                                                                echo 'checked';
+                                                                                                              }; ?>>
+                                <label class="form-check-label" for="m">
+                                  Male
+                                </label>
+                                <?= form_error('e_gender', '<small class="text-danger">', '</small>') ?>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="e_gender" id="f" value="F" <?php if ($student['gender'] == 'F') {
+                                                                                                                echo 'checked';
+                                                                                                              }; ?>>
+                                <label class="form-check-label" for="f">
+                                  Female
+                                </label>
+                              </div>
+                            </div>
+                            <?= form_error('e_gender', '<small class="text-danger">', '</small>') ?>
+                          </div>
+                        </div>
+                      </div> -->
                     </div>
 
                     <div class="row">

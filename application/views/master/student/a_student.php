@@ -87,7 +87,7 @@
                     </div>
                   </div>
                   <!-- Pin -->
-                  <!-- <div class="col-lg-6">
+                  <div class="col-lg-6">
                     <div class="form-group mt-4" style="    
                                 display: flex;
                                 flex-direction: column;
@@ -95,12 +95,47 @@
                       <label for="pin"  class="text-dark" style="font-weight: bold;">PIN</label>
                       <input type="text" class="form-control col-lg" name="pin" id="pin" required
                       style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter PIN">
-                      <?= form_error('e_pin', '<small class="text-danger">', '</small>') ?>
+                      <?= form_error('pin', '<small class="text-danger">', '</small>') ?>
                       </div>
-                  </div> -->
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group mt-4" style="    display: flex;flex-direction: column;">
+                      <label for="d-id"  class="text-dark" style="font-weight: bold;">College</label>
+                      <input type="text" minlength="2" maxlength="50" class="form-control col-lg" name="college" id="college" required
+                      style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter College">
+                      <?= form_error('college', '<small class="text-danger">', '</small>') ?>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group mt-4" style="display: flex;flex-direction: column;">
+                      <label for="d_id" class="text-dark" style="font-weight: bold;">Course</label>
+                      <input type="text" minlength="2" maxlength="50" class="form-control col-lg" name="course" id="course" required
+                      style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Course">
+                      <?= form_error('course', '<small class="text-danger">', '</small>') ?>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">           
+                    <div class="form-group mt-4" style="    
+                              display: flex;
+                              flex-direction: column;
+                              /* border-color: blue;">
+                      <label for="e_gender"  class="text-dark" style="font-weight: bold;">Gender</label>
+                      <br>
+                      <div class="form-check form-check-inline my-0" >
+                        <input class="form-check-input" type="radio" name="e_gender" id="m" value="M" checked>
+                        <label class="form-check-label" for="m"> Male   </label>
+                        <?= form_error('e_gender', '<small class="text-danger">', '</small>') ?>                      
+                        &nbsp
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="e_gender" id="f" value="F">
+                          <label class="form-check-label" for="f"> Female </label>
+                        </div>
+                      </div>                  
+                    </div>
+                  </div>
                 </div>
                 
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-lg-6">
                     <div class="form-group mt-4" style="    
                                 display: flex;
@@ -118,29 +153,29 @@
                       <?= form_error('rfid', '<small class="text-danger">', '</small>') ?>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
 
                 <!-- Fourth Row -->
                 <div class="row">
                   <!-- College -->
-                  <div class="col-lg-6">
+                  <!-- <div class="col-lg-6">
                     <div class="form-group mt-4" style="    display: flex;flex-direction: column;">
                       <label for="d-id"  class="text-dark" style="font-weight: bold;">College</label>
                       <input type="text" minlength="2" maxlength="50" class="form-control col-lg" name="college" id="college" required
                       style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter College">
                       <?= form_error('college', '<small class="text-danger">', '</small>') ?>
                     </div>
-                  </div>
+                  </div> -->
                   <!-- Course -->
-                  <div class="col-lg-6">
+                  <!-- <div class="col-lg-6">
                     <div class="form-group mt-4" style="display: flex;flex-direction: column;">
                       <label for="d_id" class="text-dark" style="font-weight: bold;">Course</label>
                       <input type="text" minlength="2" maxlength="50" class="form-control col-lg" name="course" id="course" required
                       style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Course">
                       <?= form_error('course', '<small class="text-danger">', '</small>') ?>
                     </div>
-                  </div>
+                  </div> -->
                 </div>    
 
 
@@ -170,7 +205,7 @@
                 <!-- Fifth Row -->
                 <div class="row">
                   <!-- Gender -->
-                  <div class="col-lg-6">           
+                  <!-- <div class="col-lg-6">           
                     <div class="form-group mt-4" style="    
                               display: flex;
                               flex-direction: column;
@@ -188,7 +223,7 @@
                         </div>
                       </div>                  
                     </div>
-                  </div>
+                  </div> -->
                 </div>    
                 
                <!-- Last Row -->

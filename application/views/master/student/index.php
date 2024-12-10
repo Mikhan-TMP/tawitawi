@@ -84,8 +84,9 @@
                                 <th>Department </th>
                                 <th>Course </th>
                                 <th>Year </th>
-                                <th>QR</th>
-                                <th>RFID</th>
+                                <!-- <th>QR</th> -->
+                                <th>PIN</th>
+                                <!-- <th>RFID</th> -->
 
                               </tr>
                             </thead>
@@ -99,7 +100,7 @@
                                 <td>CCIS</td>
                                 <td>BS Computer Science</td>
                                 <td>4</td>
-                                <td>1234562</td>
+                                <!-- <td>1234562</td> -->
                                 <td>51231</td>
                               </tr>
                               <tr>
@@ -112,7 +113,7 @@
                                 <td>BS Computer Science</td>
                                 <td>4</td>
                                 <td>1234561</td>
-                                <td>42123</td>
+                                <!-- <td>42123</td> -->
                               </tr>
                             </tbody>
                           </table>
@@ -246,9 +247,9 @@
                   <th scope="col">COLLEGE</th>
                   <th scope="col">COURSE</th>
                   <th scope="col">YEAR</th>
-                  <!-- <th scope="col">PIN</th>                       -->
-                  <th scope="col">QRCODE</th>
-                  <th scope="col">RFID</th>
+                  <th scope="col">PIN</th>                      
+                  <!-- <th scope="col">QRCODE</th> -->
+                  <!-- <th scope="col">RFID</th> -->
                   <!-- th>IMAGE</th>
                   <th>BUILDING</th -->              
                   <th scope="col align-middle">Actions</th>
@@ -274,9 +275,9 @@
                     <td class=" align-middle"><?= $emp['college']; ?></td>
                     <td class=" align-middle"><?= $emp['course']; ?></td>
                     <td class=" align-middle"><?= $emp['schoolyear']; ?></td>
-                    <!-- <td class=" align-middle"><?= $emp['pin']; ?></td> -->
-                    <td class=" align-middle"><?= $emp['qrcode']; ?></td>
-                    <td class=" align-middle"><?= $emp['rfid']; ?></td>
+                    <td class=" align-middle"><?= $emp['pin']; ?></td>
+                    <!-- <td class=" align-middle"><?= $emp['qrcode']; ?></td> -->
+                    <!-- <td class=" align-middle"><?= $emp['rfid']; ?></td> -->
                     <!-- td class="text-center"><img src="<?= base_url('images/pp/') . $emp['image']; ?>" style="width: 55px; height:55px" class="img-rounded"></td>
                     <td class=" align-middle"><?= $emp['building']; ?></td -->
                     <td class="text-center align-middle">
@@ -395,7 +396,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Define the custom header labels
         const customHeaders = [
             "First Name", "Middle Name", "Last Name", "ID Number", "College", "Department",
-            "Course", "RFID"
+            "Course", "PIN"
         ];
 
         let csv = [];
@@ -445,7 +446,7 @@ document.addEventListener("DOMContentLoaded", function () {
             rowData.push(`"${row[4]}"`); // College
             rowData.push(`""`);           // Empty Department field
             rowData.push(`"${row[5]}"`); // Program (Course -> Program)
-            rowData.push(`"${row[8]}"`); // RFID
+            rowData.push(`"${row[7]}"`); // PIN
 
             csv.push(rowData.join(","));
         });

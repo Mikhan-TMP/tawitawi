@@ -414,8 +414,9 @@ public function area()
     $this->form_validation->set_rules('srcode', 'Student ID ', 'required|trim|is_unique[student.srcode] ', [
       'is_unique' => 'This Student ID already exists. Please try again.'
     ]);
-    $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
-    $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim');
+    // $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
+    // $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim');
+    $this->form_validation->set_rules('pin', 'PIN', 'required|trim|numeric');
     $this->form_validation->set_rules('year', 'Year', 'required|trim');
     $this->form_validation->set_rules('course', 'course', 'required|trim');
     $this->form_validation->set_rules('college', 'college', 'required|trim');
@@ -435,10 +436,10 @@ public function area()
         'last_name' => $this->input->post('l_name'),
         'srcode' => $this->input->post('srcode'),
         'gender' => $this->input->post('e_gender'),
-        'qrcode' => $this->input->post('qrcode'),
+        // 'qrcode' => $this->input->post('qrcode'),
         'email' => $this->input->post('email'),
-        'rfid' => $this->input->post('rfid'),
-        // 'pin' => $this->input->post('pin'), 
+        // 'rfid' => $this->input->post('rfid'),
+        'pin' => $this->input->post('pin'), 
         'schoolyear' => $this->input->post('year'),
         'course' => $this->input->post('course'),
         'college' => $this->input->post('college')
@@ -466,9 +467,10 @@ public function area()
     $this->form_validation->set_rules('m_name','middle name', 'required|trim|regex_match[/^[a-zA-Z ]+$/]');
     $this->form_validation->set_rules('l_name', 'last name', 'required|trim|regex_match[/^[a-zA-Z ]+$/]');
     $this->form_validation->set_rules('srcode', 'sr code ', 'required|trim');
-    $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim');
+    // $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim');
+    $this->form_validation->set_rules('pin', 'PIN', 'required|trim|numeric');
     // $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
-    $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
+    // $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
     $this->form_validation->set_rules('year', 'Year', 'required|trim');
     $this->form_validation->set_rules('course', 'course', 'required|trim');
     $this->form_validation->set_rules('college', 'college', 'required|trim');
@@ -487,12 +489,12 @@ public function area()
             'last_name' => $this->input->post('l_name'),
             'srcode' => $this->input->post('srcode'),
             'gender' => $this->input->post('e_gender'),
-            'qrcode' => $this->input->post('qrcode'),
+            // 'qrcode' => $this->input->post('qrcode'),
             // email
             'email' => $this->input->post('email'),
             // rfid
-            'rfid' => $this->input->post('rfid'),
-            // 'pin' => $this->input->post('pin'),
+            // 'rfid' => $this->input->post('rfid'),
+            'pin' => $this->input->post('pin'),
             'schoolyear' => $this->input->post('year'),
             'course' => $this->input->post('course'),
             'college' => $this->input->post('college')
@@ -1158,8 +1160,10 @@ public function users()
     $this->form_validation->set_rules('l_name', 'last name', 'required|trim|regex_match[/^[a-zA-Z ]+$/]');
     // Faculty ID not sure yet if this should accept letters and special chars
     $this->form_validation->set_rules('srcode', 'Faculty ID ', 'required|trim|is_unique[faculty.srcode]');
-    $this->form_validation->set_rules('rfid', 'RF id', 'required|trim|numeric');
-    $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim|numeric');
+    $this->form_validation->set_rules('pin', 'PIN', 'required|trim|numeric');
+    // $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim|numeric');
+    // $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim|numeric');
+
     $this->form_validation->set_rules('course', 'course', 'required|trim');
     $this->form_validation->set_rules('e_gender', 'gender', 'required|trim');
 
@@ -1179,9 +1183,9 @@ public function users()
         'last_name' => $this->input->post('l_name'),
         'srcode' => $this->input->post('srcode'),
         'gender' => $this->input->post('e_gender'),
-        'qrcode' => $this->input->post('qrcode'),
-        'rfid' => $this->input->post('rfid'),
-        // 'pin' => $this->input->post('pin'),
+        // 'qrcode' => $this->input->post('qrcode'),
+        // 'rfid' => $this->input->post('rfid'),
+        'pin' => $this->input->post('pin'),
         'course' => $this->input->post('course')
       ];
       
@@ -1218,8 +1222,10 @@ public function users()
     $this->form_validation->set_rules('m_name','middle name', 'required|trim|regex_match[/^[a-zA-Z ]+$/]');
     $this->form_validation->set_rules('l_name', 'last name', 'required|trim|regex_match[/^[a-zA-Z ]+$/]');
     $this->form_validation->set_rules('srcode', 'sr code ', 'required|trim');
-    $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
-    $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim');
+    // $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
+    // $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim');
+    $this->form_validation->set_rules('pin', 'PIN', 'required|trim|numeric');
+    // $this->form_validation->set_rules('course', 'course', 'required|trim');
     $this->form_validation->set_rules('college', 'college', 'required|trim');
     $this->form_validation->set_rules('e_gender', 'gender', 'required|trim');
     
@@ -1242,9 +1248,9 @@ public function users()
         'last_name' => $this->input->post('l_name'),
         'srcode' => $this->input->post('srcode'),
         'gender' => $this->input->post('e_gender'),
-        'qrcode' => $this->input->post('qrcode'),
-        'rfid' => $this->input->post('rfid'),
-        // 'pin' => $this->input->post('pin'),
+        // 'qrcode' => $this->input->post('qrcode'),
+        // 'rfid' => $this->input->post('rfid'),
+        'pin' => $this->input->post('pin'),
         'course' => $this->input->post('college')
       ];
   

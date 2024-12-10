@@ -68,8 +68,8 @@
                                 <th>Middle Name</th>
                                 <th>Faculy ID</th>
                                 <th>Department</th>
-                                <th>RFID</th>
-                                <th>QRCODE</th>
+                                <th>PIN</th>
+                                <!-- <th>QRCODE</th> -->
                                 <th>Gender</th>
 
                               </tr>
@@ -81,7 +81,7 @@
                                 <td>M</td>
                                 <td>001122</td>
                                 <td>BS Computer Science</td>
-                                <td>123456</td>
+                                <!-- <td>123456</td> -->
                                 <td>512311</td>                             
                                 <td>Male</td>
 
@@ -93,7 +93,7 @@
                                 <td>789012</td>
                                 <td>BS Computer Science</td>
                                 <td>654321</td>
-                                <td>123155</td>
+                                <!-- <td>123155</td> -->
                                 <td>Female</td>
                                 
                               </tr>
@@ -146,14 +146,14 @@
                       <th>NAME</th>
                       <th>GENDER</th>
                       <th>DEPARTMENT</th>
-                      <!-- <th>PIN</th> -->
-                      <th>RFID</th>
-                      <th>QRCODE</th>
+                      <th>PIN</th>
+                      <!-- <th>RFID</th> -->
+                      <!-- <th>QRCODE</th> -->
                       
                       
                       <!-- th>IMAGE</th>
                       <th>BUILDING</th -->              
-                      <th>Actions</th>
+                      <th>ACTION</th>
                     </tr>
                   </thead>
                 
@@ -175,11 +175,11 @@
                                                   }; ?></td>
                         <!-- <td class=" align-middle"><?= $emp['college']; ?></td> -->
                         <td class=" align-middle"><?= $emp['course']; ?></td>
-                        <td class=" align-middle"><?= $emp['rfid']; ?></td>
-                        <td class=" align-middle"><?= $emp['qrcode']; ?></td>
+                        <!-- <td class=" align-middle"><?= $emp['rfid']; ?></td> -->
+                        <!-- <td class=" align-middle"><?= $emp['qrcode']; ?></td> -->
                         <!-- td class="text-center"><img src="<?= base_url('images/pp/') . $emp['image']; ?>" style="width: 55px; height:55px" class="img-rounded"></td>
                         <td class=" align-middle"><?= $emp['building']; ?></td -->
-                        <!-- <td class=" align-middle"><?= $emp['pin']; ?></td> -->
+                        <td class=" align-middle"><?= $emp['pin']; ?></td>
                         <td class="text-center align-middle">
                           <a href="<?= base_url('master/e_faculty/') . $emp['id'] ?>" class="">
                           <span class="text-dark" title="Edit">

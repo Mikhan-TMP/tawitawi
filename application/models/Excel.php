@@ -20,7 +20,7 @@ class Excel extends CI_Model
     public function get_filtered_data($startDate, $endDate, $course, $college, $countOnly) {
             // Define the base query
             $this->db->select('
-            a.id, a.qrcode, a.rfid, a.date, a.in_time, a.out_time, a.srcode, a.kiosk,
+            a.id, a.pin, a.date, a.in_time, a.out_time, a.srcode, a.kiosk,
             s.srcode, s.first_name AS student_first_name, 
             s.middle_name AS student_middle_name, s.last_name AS student_last_name, s.course, s.college
         '); // Explicitly select required columns

@@ -71,34 +71,34 @@
                           style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Faculty ID">                        
                         </div>
                       </div>
-                      <!-- <div class="col-lg-6">
+                      <div class="col-lg-6">
                         <div class="form-group">
                             <label for="pin" class="text-dark" style="font-weight: bold;">Pin</label>
                             <input type="number" class="form-control col-lg" name="pin" id="pin" required
                             style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Pin">                        
                         </div>
-                      </div>-->
+                      </div>
                       <div class="col-lg-6">
-                        <div class="form-group">
-                          <!-- rfid -->
+                        <!-- <div class="form-group">
+                          rfid
                           <label for="rfid" class="text-dark" style="font-weight: bold;">RFID</label>
                           <input type="text" minlength="4" maxlength="30" class="form-control col-lg" name="rfid" id="rfid" required
                           style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter RFID">
                           <?= form_error('rfid', '<small class="text-danger">', '</small>') ?>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                     <!-- fourth row -->
                     <div class="row">
-                      <div class="col-lg-6">
+                      <!-- <div class="col-lg-6">
                         <div class="form-group">
-                          <!-- QR -->
+                          QR
                           <label for="qrcode" class="text-dark" style="font-weight: bold;">QR Code</label>
                           <input type="text" maxlength="30" minlength="4" class="form-control col-lg" name="qrcode" id="qrcode" required
                           style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter QR Code">
                           <?= form_error('qrcode', '<small class="text-danger">', '</small>') ?>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="col-lg-6">
                         <div class="form-group ">
                             <label for="e_gender" class="text-dark" style="font-weight: bold;">Gender</label>

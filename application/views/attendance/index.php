@@ -28,7 +28,7 @@
                                         <thead style="color: #272727; font-weight: 500;">
                                             <tr>
                                                 <th>Name</th>
-                                                <th>RFID</th>
+                                                <th>PIN</th>
                                                 <th>Student ID</th>
                                                 <th>College</th>
                                                 <th>Course</th>
@@ -46,7 +46,7 @@
                                                         <?php
                                                         $srcode = $attend['srcode'];
                                                         $student = $this->db->get_where('student', ['srcode' => $srcode])->row_array();
-                                                        echo isset($student['rfid']) ? $student['rfid'] : "-";
+                                                        echo isset($student['pin']) ? $student['pin'] : "-";
                                                         ?>
                                                     </td>
                                                     <td><?= isset($attend['srcode']) ? $attend['srcode'] : "no data"; ?></td>
@@ -589,8 +589,8 @@ if (excelData.count_only) {
     // Proceed with the usual Excel generation logic
     const customHeaders = [
         { key: 'id', displayName: '#' },
-        { key: 'rfid', displayName: 'RFID' },
-        { key: 'qrcode', displayName: 'QR Code' },
+        { key: 'pin', displayName: 'pin' },
+        // { key: 'qrcode', displayName: 'QR Code' },
         { key: 'date', displayName: 'Date' },
         { key: 'srcode', displayName: 'Student ID' },
         { key: 'student_last_name', displayName: 'Last Name' },
@@ -631,7 +631,7 @@ if (excelData.count_only) {
         worksheet.columns = [
             { width: 5 },  // #
             { width: 15 }, // RFID
-            { width: 15 }, // QR Code
+            // { width: 15 }, // QR Code
             { width: 12 }, // Date
             { width: 15 }, // Student ID
             { width: 20 }, // Last Name

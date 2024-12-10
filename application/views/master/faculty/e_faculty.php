@@ -85,18 +85,18 @@
                           </div>
                         </div>
                       </div>
-                      <!-- <div class="col-lg-6">
+                      <div class="col-lg-6">
                         <div class="form-group">
                           <label for="pin" class="text-dark" style="font-weight: bold;">PIN </label>
                           <div class="col-lg p-0">
                             <input type="text" class="form-control" name="pin" id="pin" value="<?= $employee['pin']; ?>"
                             style="border-radius:15px; font-size: 1rem; padding: 25px;">
-                            <?= form_error('', '<small class="text-danger">', '</small>') ?>
+                            <?= form_error('pin', '<small class="text-danger">', '</small>') ?>
                           </div>
                         </div>
-                      </div> -->
+                      </div>
                       <!-- qr -->
-                      <div class="col-lg-6">
+                      <!-- <div class="col-lg-6">
                         <div class="form-group">
                           <label for="qrcode" class="text-dark" style="font-weight: bold;">QR Code</label>
                           <div class="col-lg p-0">
@@ -105,13 +105,13 @@
                             <?= form_error('qrcode', '<small class="text-danger">', '</small>') ?>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                     
                     <div class="row">
-                      <div class="col-lg-6">
+                      <!-- <div class="col-lg-6">
                         <div class="form-group">
-                          <!-- RFID -->
+                          RFID
                           <label for="rfid" class="text-dark" style="font-weight: bold;">RFID</label>
                           <div class="col-lg p-0">
                             <input type="text" minlength="4" maxlength="30" class="form-control" name="rfid" id="rfid" value="<?= $employee['rfid']; ?>"
@@ -119,7 +119,7 @@
                             <?= form_error('rfid', '<small class="text-danger">', '</small>') ?>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="col-lg-4">
                         <div class="form-group">
                           <label for="e_gender" class="text-dark" style="font-weight: bold;">Gender</label>

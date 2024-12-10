@@ -61,7 +61,7 @@ class Import extends CI_Controller {
                       $inserdata[$i]['college'] = $value['F'];
                       $inserdata[$i]['course'] = $value['G'];
                       $inserdata[$i]['schoolyear'] = $value['H'];
-                      // $inserdata[$i]['pin'] = $value['I'];
+                      $inserdata[$i]['pin'] = $value['I'];
                       
                       // $inserdata[$i]['email'] = $value['G'];
                       // $inserdata[$i]['year'] = $value['I'];
@@ -69,8 +69,8 @@ class Import extends CI_Controller {
                       // $inserdata[$i]['photo'] = $value['H'];
                       // $inserdata[$i]['campus'] = $value['I'];
                       // $inserdata[$i]['gender'] = $value['J'];
-                      $inserdata[$i]['qrcode'] = $value['I'];
-                      $inserdata[$i]['rfid'] = $value['J'];
+                      // $inserdata[$i]['qrcode'] = $value['I'];
+                      // $inserdata[$i]['rfid'] = $value['J'];
                       // $inserdata[$i]['gender'] = $value['L'];
                       // $inserdata[$i]['schoolyear'] = $value['M'];
                       $i++;
@@ -137,10 +137,10 @@ class Import extends CI_Controller {
                       $inserdata[$i]['middle_name'] = $value['C'];
                       $inserdata[$i]['srcode'] = $value['D'];
                       $inserdata[$i]['course'] = $value['E'];
-                      // $inserdata[$i]['pin'] = $value['F'];
-                      $inserdata[$i]['rfid'] = $value['F'];
-                      $inserdata[$i]['qrcode'] = $value['G'];
-                      $inserdata[$i]['gender'] = $value['H'];
+                      $inserdata[$i]['pin'] = $value['F'];
+                      // $inserdata[$i]['rfid'] = $value['F'];
+                      // $inserdata[$i]['qrcode'] = $value['G'];
+                      $inserdata[$i]['gender'] = $value['G'];
                       // $inserdata[$i]['college'] = $value['I'];
                       // $inserdata[$i]['campus'] = $value['J'];
                       $i++;

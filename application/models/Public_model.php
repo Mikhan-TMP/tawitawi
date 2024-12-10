@@ -97,6 +97,7 @@ class Public_model extends CI_Model
   {
        
     $query = "SELECT  attend.qrcode, 
+                attend.pin,
                 attend.RFID, 
                 attend.srcode, 
                 attend.building, 
@@ -118,6 +119,7 @@ class Public_model extends CI_Model
        
     $query = "SELECT  attend_faculty.qrcode, 
                 attend_faculty.RFID, 
+                attend_faculty.pin,
                 attend_faculty.srcode, 
                 attend_faculty.building, 
                 attend_faculty.in_time,
@@ -418,6 +420,7 @@ class Public_model extends CI_Model
     
       $query = "SELECT  attend.qrcode, 
                   attend.RFID, 
+                  attend.pin,
                   attend.srcode, 
                   attend.building, 
                   attend.in_time,
@@ -425,7 +428,7 @@ class Public_model extends CI_Model
                   student.last_name AS 'lname'    
       FROM  attend
       INNER JOIN  student
-      ON  attend.srcode = student.rfid
+      ON  attend.srcode = student.srcode OR attend.srcode = student.qrcode OR attend.srcode = student.pin
       WHERE  1 ";
 
     return $this->db->query($query)->result_array();
@@ -500,7 +503,7 @@ class Public_model extends CI_Model
                 booking.out_time
     FROM  booking
     INNER JOIN  student
-    ON  booking.code = student.rfid OR booking.code = student.qrcode
+    ON  booking.code = student.rfid OR booking.code = student.qrcode OR booking.code = student.pin
     WHERE  1 
     ORDER BY booking.date DESC 
     LIMIT  400 ";
@@ -526,7 +529,7 @@ class Public_model extends CI_Model
                 booking.out_time  
       FROM  booking
       INNER JOIN  student
-      ON booking.code = student.rfid OR booking.code = student.qrcode
+    ON  booking.code = student.rfid OR booking.code = student.qrcode OR booking.code = student.pin
       WHERE  (booking.room ='$room')
       ORDER BY  `date` DESC ";
       
@@ -551,7 +554,7 @@ class Public_model extends CI_Model
                 booking.out_time  
       FROM  booking
       INNER JOIN  student
-      ON booking.code = student.rfid OR booking.code = student.qrcode
+    ON  booking.code = student.rfid OR booking.code = student.qrcode OR booking.code = student.pin
       WHERE  (booking.date  BETWEEN '$start' AND '$end')
       ORDER BY  `date` DESC ";
       
@@ -576,7 +579,7 @@ class Public_model extends CI_Model
                 booking.out_time  
       FROM  booking
       INNER JOIN  student
-      ON booking.code = student.rfid OR booking.code = student.qrcode
+    ON  booking.code = student.rfid OR booking.code = student.qrcode OR booking.code = student.pin
       WHERE  (booking.date  BETWEEN '$start' AND '$end') AND (booking.room ='$room')
       ORDER BY  `date` DESC ";      
     return $this->db->query($query)->result_array();

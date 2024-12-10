@@ -476,10 +476,13 @@ class Kiosk extends CI_Controller
     $code_type = $this->input->get("code_type");
     $code = $this->input->get("code");
     
-      if($code_type=='QR'){
+      if($code_type=='QR' || $code_type=='qr') {
           $data  =$this->db->get_where('student', ['qrcode' => $code])->row_array();
-      } else {
+      } 
+      else if ($code_type == "rfid" || $code_type == "RFID") {
           $data  =$this->db->get_where('student', ['rfid' => $code])->row_array();
+      }else{
+          $data  =$this->db->get_where('student', ['pin' => $code])->row_array();
       }
       
       if($data == NULL){
@@ -507,6 +510,7 @@ class Kiosk extends CI_Controller
       //since always pang student 'to. get the student srcode.
       $rfid = $data['rfid'];
       $qr = $data['qrcode'];
+      $pin = $data['pin'];
       // echo '<br>';
       // echo "RFID: " . $rfid . " QR: " . $qr;
 
@@ -516,6 +520,7 @@ class Kiosk extends CI_Controller
       // Fetch booking data
       $this->db->where(['code' => $rfid]);
       $this->db->or_where(['code' => $qr]);
+      $this->db->or_where(['code' => $pin]);
       // $this->db->limit(1);
       $booking_data = $this->db->get('booking')->result_array();
 
@@ -601,10 +606,13 @@ class Kiosk extends CI_Controller
     $code_type = $this->input->get("code_type");
     $code = $this->input->get("code");    
     $kiosk_id = $this->input->get("kiosk_id");        
-    if($code_type=='QR')
+    if($code_type=='QR' || $code_type=='qr')
       $data  =$this->db->get_where('student', ['qrcode' => $code])->row_array();
-    else 
+    else if ($code_type == "rfid" || $code_type == "RFID")
       $data  =$this->db->get_where('student', ['rfid' => $code])->row_array();
+    else
+      $data  =$this->db->get_where('student', ['pin' => $code])->row_array();
+
     if($data == NULL){
       echo "no student record";
       return;
@@ -623,11 +631,23 @@ class Kiosk extends CI_Controller
           'date' => $Sdate
         );
      }
-     else {
+     else if ($code_type == "rfid" || $code_type == "RFID"){
       $data = array(            
         'username' => $username,                     
         'qrcode' =>"",
         'RFID' => $code,     
+        'srcode' => $srcode,   
+        'kiosk' => $kiosk_id,
+        'in_time' => $date,
+        'date' => $Sdate
+      );
+    }
+    else {
+      $data = array(            
+        'username' => $username,                     
+        'qrcode' => "",
+        'RFID' => "", 
+        'pin' => $code,    
         'srcode' => $srcode,   
         'kiosk' => $kiosk_id,
         'in_time' => $date,
@@ -655,10 +675,12 @@ class Kiosk extends CI_Controller
       $kiosk_id = $this->input->get("kiosk_id");  // kiosk id
       
       // Check the code type and adjust the query condition accordingly
-      if ($code_type == 'rfid') {
+      if ($code_type == 'rfid' || $code_type == 'RFID') {
           $data = $this->db->get_where('attend', ['rfid' => $code, 'date' => $Sdate, 'out_time' => NULL])->row_array();
-      } else if ($code_type == 'qr') {
+      } else if ($code_type == 'qr' || $code_type == 'QR') {
           $data = $this->db->get_where('attend', ['qrcode' => $code, 'date' => $Sdate, 'out_time' => NULL])->row_array();
+      } else if ($code_type == 'pin' || $code_type == 'PIN') {
+          $data = $this->db->get_where('attend', ['pin' => $code, 'date' => $Sdate, 'out_time' => NULL])->row_array();
       } else {
           echo "Invalid code type";
           return;
