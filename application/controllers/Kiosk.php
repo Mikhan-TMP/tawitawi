@@ -746,6 +746,7 @@ class Kiosk extends CI_Controller
           // If an incomplete record exists, proceed to "time-out"
           $this->db->where('id', $records['id']);
           $this->db->update('attend', ['out_time' => $date]);
+          
           echo "time out success";
       } else {
           // Create a new "time-in" record

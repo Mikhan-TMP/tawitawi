@@ -1697,12 +1697,15 @@ public function getNotifications() {
   // Fetch all notifications, regardless of status
   $this->db->order_by('created_at', 'DESC');
   $notifications = $this->db->get('notifications')->result_array(); // Fetch as array
+  //put it in session
   echo json_encode($notifications);
   exit;
 }
 public function getUnreadNotifications() {
   $this->db->where('status', 'unread');
   $this->db->order_by('created_at', 'DESC');
+  $this->db->limit(99);
+  
   $notifications = $this->db->get('notifications')->result_array(); // Fetch as array
   echo json_encode($notifications);
   exit;

@@ -45,6 +45,12 @@ body {
                 font-size: 15px;
                 }
             }
+            .nav-item:not(.active) .nav-link:hover {
+                /* background-color: #007bff; Change background color on hover */
+                background: none;
+                /* color: #fff; Change text color on hover */
+                transform: translateY(0px); 
+            }
             </style>
 
         <!-- <p style="font-style: italic;"></p> -->
@@ -89,90 +95,77 @@ body {
 
         </nav>
         <!-- End of Topbar -->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- pusher -->
-  <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+  <!-- <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script> -->
 
 
-<!-- 
+  
+
 <script>
-var baseUrl = "<?= base_url() ?>";
-var notificationInterval; // Declare a variable to store the interval ID
-
-// Start the notification polling
-function startNotificationPolling() {
-    notificationInterval = setInterval(fetchNotifications, 500);
-}
-
-// Stop the notification polling
-function stopNotificationPolling() {
-    clearInterval(notificationInterval);
-}
-
-// Fetch notifications
-function fetchNotifications() {
+function fetchUnreadNotifications() {
     $.ajax({
-        url: "<?= base_url('Master/getNotifications') ?>", // Fetch both read and unread notifications
-        method: "GET",
-        success: function(data) {
-            let notifications = JSON.parse(data);
-            let unreadCount = notifications.filter(notification => notification.status === 'unread').length;
-
-            // Update notification count badge
-            $("#notificationCount").text(unreadCount);
-
-            // Update notification list
-            let listHtml = "";
-            if (notifications.length > 0) {
-                notifications.forEach(notification => {
-                    const notificationClass = notification.status === 'unread' ? 'unread' : 'read'; // Set class based on status
-                    listHtml += `
-                        <li class="dropdown-item ${notificationClass}" data-id="${notification.id}" data-url="<?= base_url() ?>${notification.url}">
-                            ${notification.message}
-                            <small class="text-muted d-block">${notification.created_at}</small>
-                        </li>
-                    `;
-                });
-            } else {
-                listHtml = '<li class="dropdown-item text-muted">No new notifications</li>';
-            }
-
-            $("#notificationList").html(listHtml);
+        url: '<?= base_url("master/getUnreadNotifications") ?>', // Your endpoint
+        method: 'GET',
+        success: function (response) {
+            console.log("Received notifications:", response);
+            const notifications = JSON.parse(response);
+            updateNotificationUI(notifications);
         },
-        error: function() {
-            console.error("Failed to fetch notifications.");
+        error: function (xhr, status, error) {
+            console.error("Error fetching notifications:", error);
         }
     });
 }
 
-// Mark notification as read and change appearance when clicked
-$(document).on("click", ".dropdown-item", function() {
-    var notificationId = $(this).data("id");
-    var notificationUrl = $(this).data("url");
+function updateNotificationUI(notifications) {
+    const notificationList = $("#notificationList");
+    const notificationCount = $("#notificationCount");
 
-    // Mark as read and update appearance
-    markAsRead(notificationId, $(this));
+    // Clear current notifications
+    notificationList.empty();
 
-    // Redirect to the notification URL
-    window.location.href = notificationUrl;
-});
+    if (notifications.length > 0) {
+        notificationCount.text(notifications.length);
 
-// Mark notification as read
-function markAsRead(notificationId, notificationElement) {
+        // Add notifications to the list
+        notifications.forEach(notification => {
+            const item = `<li class="dropdown-item" data-id="${notification.id}" onclick="markNotificationAsRead(this)">${notification.message}</li>`;
+            notificationList.append(item);
+        });
+    } else {
+        notificationCount.text("0");
+        notificationList.append('<li class="dropdown-item text-muted">No new notifications</li>');
+    }
+}
+
+function markNotificationAsRead(element) {
+    const notificationId = $(element).data("id");
+
+    // Mark the notification as read on the server
     $.ajax({
-        url: "<?= base_url('Master/markAsRead') ?>",
-        method: "POST",
-        data: {id: notificationId},
-        success: function(data) {
-            let response = JSON.parse(data);
-            if (response.success) {
-                notificationElement.removeClass("unread").addClass("read");
+        url: '<?= base_url("master/markAsRead") ?>', // Your markAsRead endpoint
+        method: 'POST',
+        data: { id: notificationId },
+        success: function(response) {
+            console.log("Notification marked as read:", response);
+            
+            // Update the notification UI
+            $(element).addClass("text-muted bg-gray-200"); // Optional: Change the appearance of the notification
+            $(element).off('click'); // Disable further clicking on this notification
+
+            // Decrease the unread count
+            let currentCount = parseInt(notificationCount.text());
+            if (currentCount > 0) {
+                notificationCount.text(currentCount - 1);
             }
         },
-        error: function() {
-            console.error("Failed to mark notification as read.");
+        error: function(xhr, status, error) {
+            console.error("Error marking notification as read:", error);
         }
     });
 }
-</script> -->
+// Fetch notifications every 10 seconds
+setInterval(fetchUnreadNotifications, 5000);
+</script>
 

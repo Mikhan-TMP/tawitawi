@@ -89,7 +89,7 @@ class Notif_model extends CI_Model {
             // Update the notification's status to 'read' in the database
             $this->db->where('id', $notificationId);
             $this->db->update('notifications', ['status' => 'read']);
-      
+
             // Optionally, send a success response
             echo json_encode(['status' => 'success']);
         } else {
