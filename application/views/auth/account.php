@@ -2,7 +2,7 @@
 <div class="container d-flex justify-content-center align-items-center mb-4">
 <div class="col-lg-7">
     <div class="text-center">
-        <img class="center img-fluid text-center mb-4" src="<?= base_url('images/LIBRARY.png') ?> " width="130px;">
+        <img class="center img-fluid text-center mb-4" src="<?= base_url('images/LogoMSU.png') ?> " width="130px;">
             <h3 class="text-center text-white color-white" 
             style="
             font-family: 'Inter', sans-serif;
@@ -26,6 +26,11 @@
             border-radius: 10px;
         ">
         <h4 class="text-light text-center mt-4 mb-3">Register</h4>
+        <?php if (validation_errors()) : ?>
+            <div class="alert alert-danger" role="alert">
+                <?php echo validation_errors(); ?>
+            </div>
+        <?php endif; ?>
 
         <!-- Additional password error message -->
         <?php if (isset($password_error) && !empty($password_error)) : ?>
@@ -121,7 +126,7 @@
                         style="background: linear-gradient(180deg, #031084, #000748); border: none;">SUBMIT</button> -->
                     <button 
                         class="btn btn-danger btn-user btn-blockmx-auto w-100 p-3"
-                        style="background: linear-gradient(180deg, #FFD602, #FAB703, #D6890E);
+                        style="background: linear-gradient(180deg, #031084, #000748);
                         border-radius: 10rem;
                         border: none; font-size:12px" 
                         type="submit">SIGN UP</button>
@@ -135,32 +140,6 @@
     </div>
         </div>
 </div>
-
-
-<?php
-
-
-$this->load->helper('toast');
-if ($this->session->flashdata('success')) {
-  echo getAlertMessages('success', $this->session->flashdata('success'));
-}
-if ($this->session->flashdata('error')) {
-  echo getAlertMessages('error', $this->session->flashdata('error'));
-}
-if ($this->session->flashdata('neutral')) {
-  echo getAlertMessages('neutral', $this->session->flashdata('neutral'));
-}
-if ($this->session->flashdata('warning')){
-  echo getAlertMessages('warning', $this->session->flashdata('warning'));
-}
-
-$this->session->unset_userdata('success');
-$this->session->unset_userdata('error');
-$this->session->unset_userdata('neutral');
-$this->session->unset_userdata('warning');
-
-?>
-
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const togglePassword = document.querySelector('.toggle-password');

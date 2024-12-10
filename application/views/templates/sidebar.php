@@ -1,3 +1,52 @@
+
+<style>
+.nav-item {
+    transition: background-color .5s ease, transform .5s ease;
+}
+
+.nav-item .nav-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 10px;
+    color: #333; /* Default text color */
+    transition: color .5s ease;
+}
+
+/* Hover effect */
+.nav-item:not(.active) .nav-link:hover {
+    /* background-color: #007bff; Change background color on hover */
+    background: linear-gradient(180deg, rgba(3,64,132,0.6474964985994398) 0%, rgba(0,7,72,0.7399334733893557) 100%);
+    color: #fff; /* Change text color on hover */
+    transform: translateY(-3px); /* Slight "lift" effect */
+}
+
+/* Styling for active state */
+.nav-item.active .nav-link {
+    background: linear-gradient(180deg, #031084, #000748);
+    color: #fff; /* Active text color */
+    transform: none; /* No lift effect */
+}
+
+.nav-item .nav-link i {
+    transition: background-color .5s ease, color .5s ease;
+}
+
+/* Icon styling on hover */
+.nav-item:not(.active) .nav-link:hover i {
+    /* background: linear-gradient(180deg, #031084, #000748); */
+    color: #fff; /* Change icon color on hover */
+}
+
+/* Icon styling for active state */
+.nav-item.active .nav-link i {
+    /* background-color: #003d7a; Active icon background color */
+    color: #fff; /* Active icon color */
+}
+
+</style>
+<!-- <?= $displayedTitles = [];?> -->
 <!-- Sidebar -->
     <!-- <ul class="navbar-nav sidebar sidebar-dark accordion"  -->
     <ul class="navbar-nav sidebar"id="accordionSidebar" style="background-color: white; box-shadow: -12px 0px 17px 2px #000000;z-index: 1;">
@@ -31,9 +80,10 @@
         $skipTitles = ['Room Reservation','Attend Room','Room Status','Room','Reservation Seat', 'Reservation Room', 'Live Monitoring', 'Seat Reservation'];
         // $skipTitles = [''];
         // Initialize an array to keep track of already displayed submenu titles
-        $displayedTitles = [];
         
+
         foreach ($menu as $menus): ?>
+
             <!-- <div class="ml-2" style="font-weight: bold; color: #2D3748; font-size:10px; text-transform: uppercase;">
                 <?= htmlspecialchars($menus['menu'], ENT_QUOTES, 'UTF-8'); ?>
             </div> -->
@@ -70,7 +120,10 @@
           <?php endforeach; ?>
           
         <?php endforeach; ?>
-    
+        
+        <!-- display the current display titles -->
+
+        
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="ml-2">
           <button class="rounded-circle border-0" id="sidebarToggle"></button>
