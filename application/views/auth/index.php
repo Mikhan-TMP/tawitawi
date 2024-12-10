@@ -6,7 +6,7 @@
 
     <div class="col-xl-6 col-lg-7 col-md-9">
     <div class="text-center">
-    <img class="center img-fluid text-center mt-5 mb-4" src="<?= base_url('images/logoMSU.png') ?> " width="130px;">
+    <img class="center img-fluid text-center mt-5 mb-4" src="<?= base_url('images/LogoMSU.png') ?> " width="130px;">
         <h3 class="text-center text-white color-white" 
         style="
         font-family: 'Inter', sans-serif;

@@ -624,7 +624,8 @@ class Kiosk extends CI_Controller
     } 
     else{
      $srcode = $data['srcode'];
-     $username = ($data['first_name'].' '.$data['last_name']) ;    
+     $username = ($data['first_name'].' '.$data['last_name']) ; 
+        
      if($code_type=='QR' || $code_type=='qr'){
         $data = array(            
           'username' => $username,                     
@@ -704,6 +705,66 @@ class Kiosk extends CI_Controller
           $this->load->model('Notif_model');
           $this->Notif_model->notifications($type, $data);
           echo "time out success";    
+      }
+  }
+
+  public function TimeInOut()
+  {
+      date_default_timezone_set("Asia/Manila");
+      // DATE TODAY
+      $Sdate = date('Y-m-d', time());
+      // DATE AND TIME TODAY
+      $date = date('Y-m-d H:i:s', time());
+  
+      $code_type = $this->input->get("code_type");
+      $code = $this->input->get("code");
+      $kiosk_id = $this->input->get("kiosk_id");
+  
+      if ($code_type == 'qr' || $code_type == 'QR') {
+          $data = $this->db->get_where('student', ['qrcode' => $code])->row_array();
+      } else if ($code_type == 'rfid' || $code_type == 'RFID') {
+          $data = $this->db->get_where('student', ['rfid' => $code])->row_array();
+      } else if ($code_type == 'pin' || $code_type == 'PIN') {
+          $data = $this->db->get_where('student', ['pin' => $code])->row_array();
+      } else {
+          echo "invalid code type";
+          return;
+      }
+  
+      if ($data == NULL) {
+          echo "no student record";
+          return;
+      }
+  
+      // Check for today's attendance record with incomplete "out_time"
+      $records = $this->db->get_where('attend', [
+          'srcode' => $data['srcode'],
+          'date' => $Sdate,
+          'out_time' => NULL // Check if "out_time" is NULL
+      ])->row_array();
+      if ($records) {
+          // If an incomplete record exists, proceed to "time-out"
+          $this->db->where('id', $records['id']);
+          $this->db->update('attend', ['out_time' => $date]);
+          echo "time out success";
+      } else {
+          // Create a new "time-in" record
+          $srcode = $data['srcode'];
+          $username = ($data['first_name'] . ' ' . $data['last_name']);
+  
+          $data = [
+              'username' => $username,
+              'qrcode' => ($code_type == 'qr' ? $code : ""),
+              'RFID' => ($code_type == 'rfid' ? $code : ""),
+              'pin' => ($code_type == 'pin' ? $code : ""),
+              'srcode' => $srcode,
+              'kiosk' => $kiosk_id,
+              'in_time' => $date,
+              'date' => $Sdate
+          ];
+  
+          $this->db->insert('attend', $data);
+          echo "time in success";
       }
   }
   

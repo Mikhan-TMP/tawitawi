@@ -13,21 +13,43 @@ body {
       <!-- Main Content -->
       <div id="content">
 
+        <!-- Sidebar Toggle (Topbar) -->
+
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top"
         style="border-bottom: 1px solid #00000017;">
-        <!-- <h1 class="text-center" >Library Management System</h1> -->
-        <h1 class="text-center h1" style="
-          color: #2D3748; 
-          /* font-size: 2rem; */
-          font-weight: bold;
-          " >TCTO - E-Library Reservation System</h1>
-        <!-- <p style="font-style: italic;"></p> -->
-        
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
+        <!-- <h1 class="text-center" >Library Management System</h1> -->
+        <h1 class="text-center responsive-heading">Library Reservation System</h1>
+
+            <style>
+            .responsive-heading {
+                color: #2D3748;
+                font-size: 2rem; /* Default font size for larger screens */
+                font-weight: bold;
+                text-align: center;
+            }
+
+            @media screen and (max-width: 768px) {
+                /* Styles for tablets and smaller devices */
+                .responsive-heading {
+                font-size: 20px;
+                }
+            }
+
+            @media screen and (max-width: 480px) {
+                /* Styles specifically for phones */
+                .responsive-heading {
+                font-size: 15px;
+                }
+            }
+            </style>
+
+        <!-- <p style="font-style: italic;"></p> -->
+        
+
           
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto align-items-center">

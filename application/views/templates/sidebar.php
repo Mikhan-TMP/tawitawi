@@ -6,7 +6,7 @@
     <div class="sidebar-brand align-items-center mt-1">
       <a class="sidebar-brand d-flex align-items-center justify-content-center" style="flex-direction: column;" href="">
         <img  class="center img-fluid" src="<?= base_url('images/') . 'LogoMSU.png'; ?> " width="48px">
-        <p class="text-center mt-2 mb-2 ml-1" style="font-weight: bold; color: #2D3748;">TCTO - DASHBOARD</p>
+        <p class="text-center mt-2 mb-2 ml-1" style="font-weight: bold; color: #2D3748;">MSU-TCTO</p>
       </a>
     </div>
       <div class="mt-4">
