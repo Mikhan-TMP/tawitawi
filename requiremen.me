@@ -1,0 +1,102 @@
+API  for BULSU  EMLK 
+
+
+Login 
+
+
+VerifyCode  :  for verification RFID card or QR code , need categoy student , faculty, visitor 
+
+
+
+
+GetRoomList  :  request room list based floor information 
+Method : GET
+URl : http://13.209.8.192/DTR/Seat/GetRoomList
+example : http://13.209.8.192/DTR/Seat/GetRoomList?floorname=3F
+
+    return :  room list or fail
+    example : [{"room":"INDIVIDUAL STUDY ROOM"},{"room":"SILENT ROOM"},{"room":"READING AREA \/ LOUNGE AREA"},{"room":"READING AREA 1"},{"room":"READING AREA 2"},{"room":"READING AREA 3"}]
+
+GetSeatList  :  request seat status based room ID 
+Method : GET
+URl : http://13.209.8.192/DTR/Seat/GetSeatList
+example : http://13.209.8.192/DTR/Seat/GetSeatList?floorname=GF&&roomname=READING%20AREA
+
+    return :  seat status list or fail
+    example : [{"id":"63","Floor":"GF","Room":"READING AREA","Slot":"1","status":"[0,0,0,0,0,0,0,0,0,0,0,0,0]","uniqueid":""},{"id":"64","Floor":"GF","Room":"READING AREA","Slot":"2","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"65","Floor":"GF","Room":"READING AREA","Slot":"3","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"66","Floor":"GF","Room":"READING AREA","Slot":"4","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"67","Floor":"GF","Room":"READING AREA","Slot":"5","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"68","Floor":"GF","Room":"READING AREA","Slot":"6","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"69","Floor":"GF","Room":"READING AREA","Slot":"7","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"70","Floor":"GF","Room":"READING AREA","Slot":"8","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"71","Floor":"GF","Room":"READING AREA","Slot":"9","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"72","Floor":"GF","Room":"READING AREA","Slot":"10","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"73","Floor":"GF","Room":"READING AREA","Slot":"11","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"74","Floor":"GF","Room":"READING AREA","Slot":"12","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"75","Floor":"GF","Room":"READING AREA","Slot":"13","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"76","Floor":"GF","Room":"READING AREA","Slot":"14","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"77","Floor":"GF","Room":"READING AREA","Slot":"15","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"78","Floor":"GF","Room":"READING AREA","Slot":"16","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"79","Floor":"GF","Room":"READING AREA","Slot":"17","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"80","Floor":"GF","Room":"READING AREA","Slot":"18","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"81","Floor":"GF","Room":"READING AREA","Slot":"19","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"82","Floor":"GF","Room":"READING AREA","Slot":"20","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"83","Floor":"GF","Room":"READING AREA","Slot":"21","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"84","Floor":"GF","Room":"READING AREA","Slot":"22","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"85","Floor":"GF","Room":"READING AREA","Slot":"23","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"86","Floor":"GF","Room":"READING AREA","Slot":"24","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"87","Floor":"GF","Room":"READING AREA","Slot":"25","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"88","Floor":"GF","Room":"READING AREA","Slot":"26","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"89","Floor":"GF","Room":"READING AREA","Slot":"27","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"90","Floor":"GF","Room":"READING AREA","Slot":"28","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"91","Floor":"GF","Room":"READING AREA","Slot":"29","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"92","Floor":"GF","Room":"READING AREA","Slot":"30","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"93","Floor":"GF","Room":"READING AREA","Slot":"31","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"94","Floor":"GF","Room":"READING AREA","Slot":"32","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"95","Floor":"GF","Room":"READING AREA","Slot":"33","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"96","Floor":"GF","Room":"READING AREA","Slot":"34","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""},{"id":"97","Floor":"GF","Room":"READING AREA","Slot":"35","status":"[0,1,0,1,0,1,0,1,0,1,0,1,0]","uniqueid":""}]
+
+ReqBookSeat    : request resevation seat based room id , seat number , time slot 
+Method : POST
+URl : http://13.209.8.192/DTR/Seat/ReqBookSeat
+parameter :
+        'device' 
+        'userid' 
+        'code_type' 
+        'usercode' 
+        'floor' 
+        'room' 
+        'slot' 
+        'date' formate :  date('Y-m-d', time()),
+        'stime' format (8,18),
+        'etime' format later than stime   
+
+    return :  verification code or fail 
+
+CancelSeatBook :  change seat status based room id , seat number , time slot 
+Method : POST
+URl : http://13.209.8.192/DTR/Seat/CancelSeatBook
+parameter :
+
+    return :  verification code or fail 
+
+GetUserBookSeat :  request user booking seat information based user id and date 
+Method : GET
+URl : http://13.209.8.192/DTR/Seat/GetUserBookSeat
+
+    return :  seat information or fail
+
+
+
+
+GetCheckin :  request checkin based user id , date , time , room id , seat number
+Method : GET
+URl : http://13.209.8.192/DTR/Seat/GetCheckin
+
+    return :  verification code or fail
+
+GetCheckout :  request checkout based user id , date , time , room id , seat number 
+Method : GET
+URl : http://13.209.8.192/DTR/Seat/GetCheckout
+    
+        return :  verification code or fail
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+AM 9:11
+title :  seat booking request. 
+URL : http://13.209.8.192/DTR/Seat/BookSlot
+Method : POST 
+
+Parameter : 
+data = array(
+      'device' => $device,  // kiosk id
+      'userid' => $userid,    // userid
+      'usercode' => $usercode,    // qrcode ,rfid 
+      'floor' => $floor,  
+      'room' => $room,
+      'slot' => $slot,
+      'date' => $date,
+      'start_time' => $start_time,
+      'end_time' => $end_time,
+      'status' => 1
+      );
