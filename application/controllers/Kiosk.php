@@ -603,15 +603,20 @@ class Kiosk extends CI_Controller
     date_default_timezone_set("Asia/Manila");
     $Sdate = date('Y-m-d', time());
     $date = date('Y-m-d H:i:s', time());    
+
     $code_type = $this->input->get("code_type");
     $code = $this->input->get("code");    
-    $kiosk_id = $this->input->get("kiosk_id");        
-    if($code_type=='QR' || $code_type=='qr')
+    $kiosk_id = $this->input->get("kiosk_id");    
+
+    if($code_type=='QR' || $code_type=='qr'){
       $data  =$this->db->get_where('student', ['qrcode' => $code])->row_array();
-    else if ($code_type == "rfid" || $code_type == "RFID")
+    }
+    else if ($code_type == "rfid" || $code_type == "RFID"){
       $data  =$this->db->get_where('student', ['rfid' => $code])->row_array();
-    else
+    }
+    else if ($code_type == "pin" || $code_type == "PIN"){
       $data  =$this->db->get_where('student', ['pin' => $code])->row_array();
+    }
 
     if($data == NULL){
       echo "no student record";
@@ -620,7 +625,7 @@ class Kiosk extends CI_Controller
     else{
      $srcode = $data['srcode'];
      $username = ($data['first_name'].' '.$data['last_name']) ;    
-     if($code_type=='QR'){
+     if($code_type=='QR' || $code_type=='qr'){
         $data = array(            
           'username' => $username,                     
           'qrcode' => $code,
@@ -642,11 +647,9 @@ class Kiosk extends CI_Controller
         'date' => $Sdate
       );
     }
-    else {
+    else if  ($code_type == "pin" || $code_type == "PIN"){
       $data = array(            
         'username' => $username,                     
-        'qrcode' => "",
-        'RFID' => "", 
         'pin' => $code,    
         'srcode' => $srcode,   
         'kiosk' => $kiosk_id,
@@ -670,8 +673,8 @@ class Kiosk extends CI_Controller
       date_default_timezone_set("Asia/Manila");
       $Sdate = date('Y-m-d');    // today     
       $date = date('Y-m-d H:i:s', time());  
-      $code_type = $this->input->get("code_type");  // QR or RFID
-      $code = $this->input->get("code");       // QR or RFID code
+      $code_type = $this->input->get("code_type");  // QR or RFID or PIN
+      $code = $this->input->get("code");       // QR or RFID code or Pin
       $kiosk_id = $this->input->get("kiosk_id");  // kiosk id
       
       // Check the code type and adjust the query condition accordingly
@@ -687,8 +690,8 @@ class Kiosk extends CI_Controller
       }
   
       if ($data == NULL) {
-          echo "Today Date: ".$Sdate. " Code: ".$code. " kiosk: ".$kiosk_id. " code_type: ".$code_type. " Date: ".$date;
-          echo "<br>";
+          // echo "Today Date: ".$Sdate. " Code: ".$code. " kiosk: ".$kiosk_id. " code_type: ".$code_type. " Date: ".$date;
+          // echo "<br>";
           echo "no entry data";
       } else {
           $id = $data['id'];

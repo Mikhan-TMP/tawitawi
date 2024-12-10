@@ -25,7 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 // $config['base_url'] = 'http://13.209.8.192/DTR/';
 // $config['base_url'] = 'http://13.209.12.129/tawitawi/';
-$config['base_url'] = 'http://localhost/tawitawi2.0/';
+$config['base_url'] = 'http://localhost/tawi/';
 /*
 |--------------------------------------------------------------------------
 | Index File
