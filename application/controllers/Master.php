@@ -1726,34 +1726,35 @@ public function markAsRead() {
       echo json_encode(['status' => 'error']);
   }
 }
+public function markAllAsRead() {
+  $data = ['status' => 'read'];
+  $this->db->where('status', 'unread');  // Only mark unread notifications
+  $result = $this->db->update('notifications', $data);
+
+  if ($result) {
+    // Optionally, send a success response
+    echo json_encode(['status' => 'success']);
+  } else {
+    echo json_encode(['status' => 'error']);
+  }
+}
 // public function markAllAsRead() {
+//   // Update notifications where the status is 'unread'
 //   $data = ['status' => 'read'];
-//   $this->db->where('status', 'unread');  // Only mark unread notifications
-//   $result  = $this->db->update('notifications', $data);
+//   $this->db->where('status', 'unread');
+//   $result = $this->db->update('notifications', $data);
+
 //   if ($result) {
-//     // Optionally, send a success response
-//     echo json_encode(['status' => 'success']);
+//       // Fetch updated notifications to return
+//       $this->db->order_by('created_at', 'desc');  // Optionally order them
+//       $notifications = $this->db->get('notifications')->result_array(); // Fetch all notifications
+      
+//       // Return the updated list of notifications as JSON
+//       echo json_encode($notifications);
 //   } else {
 //       echo json_encode(['status' => 'error']);
 //   }
 // }
-public function markAllAsRead() {
-  // Update notifications where the status is 'unread'
-  $data = ['status' => 'read'];
-  $this->db->where('status', 'unread');
-  $result = $this->db->update('notifications', $data);
-
-  if ($result) {
-      // Fetch updated notifications to return
-      $this->db->order_by('created_at', 'desc');  // Optionally order them
-      $notifications = $this->db->get('notifications')->result_array(); // Fetch all notifications
-      
-      // Return the updated list of notifications as JSON
-      echo json_encode($notifications);
-  } else {
-      echo json_encode(['status' => 'error']);
-  }
-}
 
 
     /************************ department   ************************************

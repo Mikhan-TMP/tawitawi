@@ -45,7 +45,7 @@ body {
                 font-size: 15px;
                 }
             }
-            .nav-item:not(.active) .nav-link:hover {
+            #userDropdown:hover {
                 /* background-color: #007bff; Change background color on hover */
                 background: none;
                 /* color: #fff; Change text color on hover */
@@ -74,10 +74,23 @@ body {
                     </span>
                 </a>
               <!-- Notification Dropdown List -->
-                <ul class="dropdown-menu dropdown-menu-right cursor-pointer" style="padding: 10px; cursor: pointer;" aria-labelledby="notificationDropdown" id="notificationList">
-                    <!-- Existing Notifications will be dynamically inserted here -->
-                    <li class="dropdown-item text-muted ">No new notifications</li>
-                </ul>
+            <!-- Notification Dropdown List -->
+            <ul class="dropdown-menu dropdown-menu-right cursor-pointer" style="padding: 10px; cursor: pointer;" aria-labelledby="notificationDropdown" id="notificationList">
+                <!-- "Mark All as Read" button will be dynamically shown or hidden -->
+                <div class="buts" style="display: flex; align-items: center;">
+                    <li class="dropdown-item text-muted text-center" id="markAllReadBtn" style="cursor: pointer; display: none; font-size:10px;">
+                        <i class="fas fa-check-circle"></i> Mark All as Read
+                    </li>
+                    <div id="divider" style="display: none; width: 1px; height: 20px; background-color: #adb5bd; margin: 0px 10px;"></div>
+                    <li class="dropdown-item text-muted text-center" id="goToNotifications" style="cursor: pointer; display: none; font-size:10px;">
+                        <i class="fas fa-bell"></i> Go to Notifications
+                    </li>
+                </div>
+                <!-- Existing Notifications will be dynamically inserted here -->
+                <li class="dropdown-item text-muted" id="noNotificationsMessage">No new notifications</li>
+            </ul>
+
+
             </div>
             <li class="nav-item dropdown no-arrow" id="userDropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -118,26 +131,71 @@ function fetchUnreadNotifications() {
     });
 }
 
+// fetchUnreadNotifications();
+
 function updateNotificationUI(notifications) {
     const notificationList = $("#notificationList");
     const notificationCount = $("#notificationCount");
+    const noNotificationsMessage = $("#noNotificationsMessage");
+    const markAllReadBtn = $("#markAllReadBtn");
+    const goToNotificationsBtn = $("#goToNotifications"); // Reference to "Go to Notifications" button
+    const divider = $("#divider");
 
-    // Clear current notifications
-    notificationList.empty();
+    // Clear existing notifications (but keep the "Mark All as Read" button, "Go to Notifications" button, and the "No new notifications" message)
+    notificationList.find('li:not(#markAllReadBtn, #goToNotifications, #noNotificationsMessage)').remove();
 
     if (notifications.length > 0) {
         notificationCount.text(notifications.length);
+        noNotificationsMessage.hide(); // Hide "No new notifications" message
+        markAllReadBtn.show(); // Show the "Mark All as Read" button
+        goToNotificationsBtn.show(); // Show the "Go to Notifications" button
+        divider.show(); // Ensure the divider is visible when notifications exist
 
         // Add notifications to the list
         notifications.forEach(notification => {
-            const item = `<li class="dropdown-item" data-id="${notification.id}" onclick="markNotificationAsRead(this)">${notification.message}</li>`;
+            const item = `<li class="dropdown-item ${notification.status === 'read' ? 'text-muted bg-gray-200' : ''}" data-id="${notification.id}" onclick="markNotificationAsRead(this)">${notification.message}</li>`;
             notificationList.append(item);
         });
     } else {
         notificationCount.text("0");
-        notificationList.append('<li class="dropdown-item text-muted">No new notifications</li>');
+        noNotificationsMessage.show(); // Show "No new notifications" if there are no unread notifications
+        markAllReadBtn.hide(); // Hide "Mark All as Read" button
+        goToNotificationsBtn.hide(); // Hide "Go to Notifications" button
+        divider.hide(); // Hide the divider if there are no notifications
     }
+
+    // Bind click event for "Mark All as Read" button
+    markAllReadBtn.on("click", function() {
+        markAllAsRead();
+    });
 }
+
+function markAllAsRead() {
+    $.ajax({
+        url: '<?= base_url("master/markAllAsRead") ?>', // Your markAllAsRead endpoint
+        method: 'POST',
+        success: function(response) {
+            console.log("All notifications marked as read:", response);
+
+            // Hide the "Mark All as Read" button
+            $("#markAllReadBtn").hide();
+
+            // Update the UI to mark all notifications as read
+            $(".dropdown-item").each(function() {
+                $(this).addClass("text-muted bg-gray-200");
+                $(this).off('click'); // Disable further clicks
+            });
+
+            // Update the notification count to 0
+            $("#notificationCount").text("0");
+        },
+        error: function(xhr, status, error) {
+            console.error("Error marking all notifications as read:", error);
+        }
+    });
+}
+
+
 
 function markNotificationAsRead(element) {
     const notificationId = $(element).data("id");
@@ -165,7 +223,37 @@ function markNotificationAsRead(element) {
         }
     });
 }
+
+// function markAllAsRead() {
+//     $.ajax({
+//         url: '<?= base_url("master/markAllAsRead") ?>', // Your markAllAsRead endpoint
+//         method: 'POST',
+//         success: function(response) {
+//             console.log("All notifications marked as read:", response);
+
+//             // Hide the "Mark All as Read" button
+//             $("#markAllReadBtn").hide();
+
+//             // Update the UI to mark all notifications as read
+//             $(".dropdown-item").each(function() {
+//                 $(this).addClass("text-muted bg-gray-200");
+//                 $(this).off('click'); // Disable further clicks
+//             });
+
+//             // Update the notification count to 0
+//             $("#notificationCount").text("0");
+//         },
+//         error: function(xhr, status, error) {
+//             console.error("Error marking all notifications as read:", error);
+//         }
+//     });
+// }
 // Fetch notifications every 10 seconds
 setInterval(fetchUnreadNotifications, 5000);
+</script>
+<script>
+    $("#markAllReadBtn").on("click", function() {
+    markAllAsRead();
+});
 </script>
 
