@@ -51,7 +51,7 @@
                   <?= form_error('d_floor', '<small class="text-danger">', '</small>') ?>
                 </div>
                 <div class="form-group">
-                  <label for="d_name" class="text-dark" style="font-weight: bold;">Name</label>
+                  <label for="d_name" class="text-dark" style="font-weight: bold;">Area Name</label>
                   <input type="text" minlength="2" maxlength="30" class="form-control form-control-lg" name="d_name" id="d_name" value="<?= $d_old['room']; ?>"
                   style="border-radius:15px; font-size: 1rem; padding: 25px;">
                   <?= form_error('d_name', '<small class="text-danger">', '</small>') ?>
@@ -69,19 +69,19 @@
                     <?= form_error('open_time', '<small class="text-danger">', '</small>') ?>
                   </div>
                   <div class="form-group">
-                    <label for="close_time" class="text-dark" style="font-weight: bold;">close time</label>
+                    <label for="close_time" class="text-dark" style="font-weight: bold;">Closing Time</label>
                     <input type="time" class="form-control form-control-lg" name="close_time" id="close_time" value="<?= $d_old['closetime']; ?>"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;">
                     <?= form_error('close_time', '<small class="text-danger">', '</small>') ?>
                   </div>
                   <div class="form-group">
-                    <label for="min_slot" class="text-dark" style="font-weight: bold;">Min reservation hour (1hour ~2hour)</label>
+                    <label for="min_slot" class="text-dark" style="font-weight: bold;">Minimum reservation time (1hour ~ 2hours)</label>
                     <input type="number" class="form-control form-control-lg" name="min_slot" id="min_slot" min="1" max="2" value="<?= $d_old['min_slot']; ?>"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;">
                     <?= form_error('min_slot', '<small class="text-danger">', '</small>') ?>
                   </div>
                   <div class="form-group">
-                    <label for="max_slot" class="text-dark" style="font-weight: bold;">Max reservation hour(1hour ~8hour)</label>
+                    <label for="max_slot" class="text-dark" style="font-weight: bold;">Maximum reservation time (1hour ~ 8hours)</label>
                     <input type="number" class="form-control form-control-lg" name="max_slot" id="max_slot"min="1" max="8" value="<?= $d_old['max_slot']; ?>"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;">
                     <?= form_error('max_slot', '<small class="text-danger">', '</small>') ?>

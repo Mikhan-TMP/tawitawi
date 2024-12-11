@@ -27,7 +27,7 @@
                     <div class="col-lg-6" style=" border-right: 1px solid #d1d3e2;">
                       <div class="form-group">
                         <input type="hidden"  class="form-control form-control-lg" name="u_id" value="<?= $users['id']; ?> ">
-                          <label for="u_username"  class="text-dark" style="font-weight: bold;">User Name</label>
+                          <label for="u_username"  class="text-dark" style="font-weight: bold;">Username</label>
                           <input type="text"  class="form-control form-control-lg" name="u_username" value="<?= $users['username']; ?>"
                           style="border-radius:15px; font-size: 1rem; padding: 25px;">
                       </div>

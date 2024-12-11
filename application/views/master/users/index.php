@@ -43,10 +43,10 @@
                   <thead style="color: #272727; font-weight: 500;">
                     <tr>                      
                       <!-- <th>ID</th> -->
-                      <th>Designation</th>                      
+                      <th>Floor Designation</th>                      
                       <th>Username</th>
-                      <th>First Name</th>
                       <th>Last Name</th>
+                      <th>First Name</th>
                       <th>Email</th>
                       <!-- <th>Position</th> -->
                       <th>Actions</th>
@@ -67,7 +67,7 @@
                         <td class=" align-middle"> <?= $dt['u_email']; ?>  </td>
                         <!-- <td class=" align-middle text-center"> Librarian   </td> -->
                         <td class="text-center align-middle">
-                          <a href="<?= base_url('master/e_users/') . $dt['e_id'] ?>" class="">
+                          <a href="<?= base_url('master/e_users/') . $dt['e_id'] ?>" class="" style="text-decoration:none">
                             <span class="text-dark" title="Edit">
                               <i class="fas fa-pen"></i>
                             </span>

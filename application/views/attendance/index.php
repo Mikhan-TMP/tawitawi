@@ -1,7 +1,92 @@
+<style>
+    .faq-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 15%;
+  border: none;
+  /* background-color: #ffe53b; */
+  /* background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.151);
+  position: relative;
+}
+
+.faq-button:hover {
+  animation: jello-vertical 1s both;
+}
+.faq-button svg {
+  height: 1.5em;
+  fill: white;
+}
+
+@keyframes jello-vertical {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  40% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  50% {
+    transform: scale3d(0.85, 1.15, 1);
+  }
+  65% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  75% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.tooltip {
+  position: absolute;
+  top: -20px;
+  opacity: 0;
+  background-color: #ffe53b;
+  background-image: linear-gradient(180deg, #031084, #000748);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: 0.2s;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}
+
+.tooltip::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #ff2525;
+  background-size: 1000%;
+  background-position: center;
+  transform: rotate(45deg);
+  bottom: -15%;
+  transition-duration: 0.3s;
+}
+
+.faq-button:hover .tooltip {
+  top: -40px;
+  opacity: 1;
+  transition-duration: 0.3s;
+}
+
+</style>
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><?= $title; ?></h1>
+        <h1 class="h3 mb-0 text-gray-800">Student Attendance Record</h1>
     </div>
 
     <!-- Content Row -->
@@ -11,15 +96,28 @@
                 <div class="col-xl-12 col-lg-7">
                     <div class="card shadow mb-4" style="min-height: 543px; border-radius:15px;">
                         <form action="" method="POST">
-                            <div class="card-header py-3 d-flex justify-content-between" style="border-radius:15px 15px 0 0; background: linear-gradient(180deg, #031084, #000748); ">
-                                <h6 class="m-0 text-light" style="font-size:1.5rem; font-family: 'Inter', sans-serif;">Attendance Sheet</h6>
-                                <div class="div">
-                                    <button type="button" id="exportCsv" class="btn btn-md btn-fill" style="background: #FFFFFF; color: #BE110E !important; font-size: 12px !important; font-weight: 500 !important;">
+                            <div class="card-header py-3 d-flex justify-content-between"
+                                style="border-radius:15px 15px 0 0; background: linear-gradient(180deg, #031084, #000748); ">
+                                <h6 class="m-0 text-light" style="font-size:1.5rem; font-family: 'Inter', sans-serif;">
+                                    Attendance</h6>
+                                <div class="div" style ="display: flex; flex-wrap: wrap; gap: 10px" >
+                                    <button type="button" class="faq-button" id="exportCsv">
+                                        <i class="fas fa-file-excel text-success"></i>
+                                        <span class="tooltip">Export</span>
+                                    </button>
+                                    <button type="button" class="faq-button" id="filter">
+                                        <i class="fas fa-filter text-dark"></i>
+                                        <span class="tooltip">Filter</span>
+                                    </button>
+
+                                    <!-- <button type="button" id="exportCsv" class="btn btn-md btn-fill"
+                                        style="background: #FFFFFF; color: #BE110E !important; font-size: 12px !important; font-weight: 500 !important;">
                                         <i class="fas fa-file-excel text-success"></i> EXPORT
-                                    </button>
-                                    <button type="button" id="filter" class="btn btn-md btn-fill" style="background: #FFFFFF; color: #BE110E !important; font-size: 12px !important; font-weight: 500 !important;">
+                                    </button> -->
+                                    <!-- <button type="button" id="filter" class="btn btn-md btn-fill"
+                                        style="background: #FFFFFF; color: #BE110E !important; font-size: 12px !important; font-weight: 500 !important;">
                                         <i class="fas fa-filter text-success"></i> FILTER
-                                    </button>
+                                    </button> -->
                                 </div>
                             </div>
                             <div class="card-body">
@@ -40,23 +138,27 @@
                                         </thead>
                                         <tbody style="color: #272727;">
                                             <?php foreach ($attendance as $attend) : ?>
-                                                <tr>
-                                                    <td><?= isset($attend['username']) ? $attend['username'] : "no data"; ?></td>
-                                                    <td>
-                                                        <?php
+                                            <tr>
+                                                <td><?= isset($attend['username']) ? $attend['username'] : "no data"; ?>
+                                                </td>
+                                                <td>
+                                                    <?php
                                                         $srcode = $attend['srcode'];
                                                         $student = $this->db->get_where('student', ['srcode' => $srcode])->row_array();
                                                         echo isset($student['pin']) ? $student['pin'] : "-";
                                                         ?>
-                                                    </td>
-                                                    <td><?= isset($attend['srcode']) ? $attend['srcode'] : "no data"; ?></td>
-                                                    <td><?= isset($attend['college']) ? $attend['college'] : "-"; ?></td>
-                                                    <td><?= isset($attend['course']) ? $attend['course'] : "-"; ?></td>
-                                                    <td><?= isset($attend['kiosk']) ? $attend['kiosk'] : "-"; ?></td>
-                                                    <td><?= isset($attend['in_time']) ? date('F j, Y, g:i A', strtotime($attend['in_time'])) : "-"; ?></td>
-                                                    <td><?= isset($attend['out_time']) ? date('F j, Y, g:i A', strtotime($attend['out_time'])) : "-"; ?></td>
-                                                    <td>
-                                                        <?php
+                                                </td>
+                                                <td><?= isset($attend['srcode']) ? $attend['srcode'] : "no data"; ?>
+                                                </td>
+                                                <td><?= isset($attend['college']) ? $attend['college'] : "-"; ?></td>
+                                                <td><?= isset($attend['course']) ? $attend['course'] : "-"; ?></td>
+                                                <td><?= isset($attend['kiosk']) ? $attend['kiosk'] : "-"; ?></td>
+                                                <td><?= isset($attend['in_time']) ? date('F j, Y, g:i A', strtotime($attend['in_time'])) : "-"; ?>
+                                                </td>
+                                                <td><?= isset($attend['out_time']) ? date('F j, Y, g:i A', strtotime($attend['out_time'])) : "-"; ?>
+                                                </td>
+                                                <td>
+                                                    <?php
                                                         if (isset($attend['in_time']) && isset($attend['out_time'])) {
                                                             $time1 = new DateTime($attend['in_time']);
                                                             $time2 = new DateTime($attend['out_time']);
@@ -66,8 +168,8 @@
                                                             echo "-";
                                                         }
                                                         ?>
-                                                    </td>
-                                                </tr>
+                                                </td>
+                                            </tr>
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
@@ -82,6 +184,8 @@
     </div>
     <!-- /.container-fluid -->
 </div>
+</div>
+
 <!-- End of Main Content -->
 <?php   
         //get the toasterhelper
@@ -100,7 +204,7 @@
           $this->session->unset_userdata('error');
           $this->session->unset_userdata('success');
           $this->session->unset_userdata('warning');
-        ?> 
+        ?>
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -110,49 +214,51 @@
 
 
 <script>
-    $(document).ready(function () {
-            var table = $('#dataTable').DataTable({
-                columnDefs: [{
-                    targets: 6,
-                    type: 'datetime',
-                    render: function (data, type, row) {
-                        if (type === 'sort') return new Date(data).getTime();
-                        return data;
-                    }
-                }],
-                order: [[6, 'desc']],
-            });
-
-            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-                var min = $('#startDateFilter').val();
-                var max = $('#endDateFilter').val();
-                var timeIn = data[6]; // The 'Time In' column (adjust index if necessary)
-
-                if (timeIn) {
-                    // Convert the 'Time In' string to a Date object
-                    var timeInDate = new Date(timeIn);
-
-                    // Create Date objects for the filter range
-                    var minDate = min ? new Date(min) : null;
-                    var maxDate = max ? new Date(max) : null;
-
-                    if (maxDate) maxDate.setHours(23, 59, 59, 999); // Set max date to end of the day
-
-                    // Return true if the row's date is within the filter range
-                    return (!minDate || timeInDate >= minDate) && (!maxDate || timeInDate <= maxDate);
-                }
-                return false;
-            });
-
-            $('#startDateFilter, #endDateFilter').on('change', function () {
-                    table.draw();
-                });
+$(document).ready(function() {
+    var table = $('#dataTable').DataTable({
+        columnDefs: [{
+            targets: 6,
+            type: 'datetime',
+            render: function(data, type, row) {
+                if (type === 'sort') return new Date(data).getTime();
+                return data;
+            }
+        }],
+        order: [
+            [6, 'desc']
+        ],
     });
+
+    $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+        var min = $('#startDateFilter').val();
+        var max = $('#endDateFilter').val();
+        var timeIn = data[6]; // The 'Time In' column (adjust index if necessary)
+
+        if (timeIn) {
+            // Convert the 'Time In' string to a Date object
+            var timeInDate = new Date(timeIn);
+
+            // Create Date objects for the filter range
+            var minDate = min ? new Date(min) : null;
+            var maxDate = max ? new Date(max) : null;
+
+            if (maxDate) maxDate.setHours(23, 59, 59, 999); // Set max date to end of the day
+
+            // Return true if the row's date is within the filter range
+            return (!minDate || timeInDate >= minDate) && (!maxDate || timeInDate <= maxDate);
+        }
+        return false;
+    });
+
+    $('#startDateFilter, #endDateFilter').on('change', function() {
+        table.draw();
+    });
+});
 </script>
 
 <!-- THIS WILL OPEN THE MODAL -->
 <script>
-document.getElementById('exportCsv').addEventListener('click', function () {
+document.getElementById('exportCsv').addEventListener('click', function() {
     Swal.fire({
         title: 'Export Attendance Data',
         html: `
@@ -249,7 +355,12 @@ document.getElementById('exportCsv').addEventListener('click', function () {
                 return false;
             }
 
-            return { startDate, endDate, course, college };
+            return {
+                startDate,
+                endDate,
+                course,
+                college
+            };
         },
         preDeny: () => {
             const startDate = document.getElementById('startDate').value;
@@ -262,16 +373,28 @@ document.getElementById('exportCsv').addEventListener('click', function () {
                 return false;
             }
 
-            return { startDate, endDate, course, college };
+            return {
+                startDate,
+                endDate,
+                course,
+                college
+            };
         }
     }).then((result) => {
-        const { startDate, endDate, course, college } = result.value;
+        const {
+            startDate,
+            endDate,
+            course,
+            college
+        } = result.value;
 
         if (result.isDenied) {
-            const url = `<?= base_url('master/excel_export?startDate=') ?>${startDate}&endDate=${endDate}&course=${course}&college=${college}&countOnly=true`;
+            const url =
+                `<?= base_url('master/excel_export?startDate=') ?>${startDate}&endDate=${endDate}&course=${course}&college=${college}&countOnly=true`;
             window.location.href = url;
         } else if (result.isConfirmed) {
-            const url = `<?= base_url('master/excel_export?startDate=') ?>${startDate}&endDate=${endDate}&course=${course}&college=${college}`;
+            const url =
+                `<?= base_url('master/excel_export?startDate=') ?>${startDate}&endDate=${endDate}&course=${course}&college=${college}`;
             window.location.href = url;
         }
     });
@@ -279,76 +402,74 @@ document.getElementById('exportCsv').addEventListener('click', function () {
 </script>
 <!-- FOR TODAY YESTERDAY  -->
 <script>
-    document.addEventListener('click', function (event) {
-        const today = new Date();
-        // Today Button
-        if (event.target.id === 'todayButton') {
-            document.getElementById('startDate').value = today.toISOString().split('T')[0];
-            document.getElementById('endDate').value = today.toISOString().split('T')[0];
-        }
+document.addEventListener('click', function(event) {
+    const today = new Date();
+    // Today Button
+    if (event.target.id === 'todayButton') {
+        document.getElementById('startDate').value = today.toISOString().split('T')[0];
+        document.getElementById('endDate').value = today.toISOString().split('T')[0];
+    }
 
-        // Yesterday Button
-        if (event.target.id === 'yesterdayButton') {
-            const yesterday = new Date();
-            yesterday.setDate(yesterday.getDate() - 1);
-            document.getElementById('startDate').value = yesterday.toISOString().split('T')[0];
-            document.getElementById('endDate').value = yesterday.toISOString().split('T')[0];
-        }
-    });
+    // Yesterday Button
+    if (event.target.id === 'yesterdayButton') {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        document.getElementById('startDate').value = yesterday.toISOString().split('T')[0];
+        document.getElementById('endDate').value = yesterday.toISOString().split('T')[0];
+    }
+});
 </script>
 
 <!-- FOR RANGE SELECT -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Delegate the change event to the document
-        document.addEventListener('change', function (event) {
-            if (event.target && event.target.id === 'range') {
-                const today = new Date();
-                const rangeValue = event.target.value;
-                let startDate = null;
-                
-                console.log("Selected range:", rangeValue);  // Debugging log
-                
-                if (!rangeValue) {
-                    document.getElementById('startDate').value = '';
-                    document.getElementById('endDate').value = '';
-                    return; 
-                }
+document.addEventListener('DOMContentLoaded', function() {
+    // Delegate the change event to the document
+    document.addEventListener('change', function(event) {
+        if (event.target && event.target.id === 'range') {
+            const today = new Date();
+            const rangeValue = event.target.value;
+            let startDate = null;
 
-                if (rangeValue === 'lastmonth') {
-                    startDate = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-                } else if (rangeValue === 'last2months') {
-                    startDate = new Date(today.getFullYear(), today.getMonth() - 2, today.getDate());
-                } else if (rangeValue === 'last3months') {
-                    startDate = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate());
-                } else if (rangeValue === 'last6months') {
-                    startDate = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
-                } else if (rangeValue === 'lastyear') {
-                    startDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
-                }
-                else {
-                    startDate = new Date();
-                    startDate.setDate(today.getDate() - parseInt(rangeValue, 10)); // Calculate for weeks
-                }
+            console.log("Selected range:", rangeValue); // Debugging log
 
-                console.log("Calculated start date:", startDate);  // Debugging log
-
-                if (startDate) {
-                    document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
-                    document.getElementById('endDate').value = today.toISOString().split('T')[0];
-                }
+            if (!rangeValue) {
+                document.getElementById('startDate').value = '';
+                document.getElementById('endDate').value = '';
+                return;
             }
-        });
-    });
 
+            if (rangeValue === 'lastmonth') {
+                startDate = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+            } else if (rangeValue === 'last2months') {
+                startDate = new Date(today.getFullYear(), today.getMonth() - 2, today.getDate());
+            } else if (rangeValue === 'last3months') {
+                startDate = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate());
+            } else if (rangeValue === 'last6months') {
+                startDate = new Date(today.getFullYear(), today.getMonth() - 6, today.getDate());
+            } else if (rangeValue === 'lastyear') {
+                startDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+            } else {
+                startDate = new Date();
+                startDate.setDate(today.getDate() - parseInt(rangeValue, 10)); // Calculate for weeks
+            }
+
+            console.log("Calculated start date:", startDate); // Debugging log
+
+            if (startDate) {
+                document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
+                document.getElementById('endDate').value = today.toISOString().split('T')[0];
+            }
+        }
+    });
+});
 </script>
 
 <!-- OPEN THE FILTER -->
 <script>
-    document.getElementById('filter').addEventListener('click', function () {
-        Swal.fire({
-            title: 'Filter Attendance Data',
-            html: `
+document.getElementById('filter').addEventListener('click', function() {
+    Swal.fire({
+        title: 'Filter Attendance Data',
+        html: `
                 <form id="filterForm">
                     <div class="mb-3 text-left" style="color: #272727; font-weight: 500; font-size: small;">
                         <label for="startDateFilter" class="form-label">Start Date</label>
@@ -360,39 +481,44 @@ document.getElementById('exportCsv').addEventListener('click', function () {
                     </div>
                 </form>
             `,
-            showCancelButton: true,
-            confirmButtonText: 'Apply Filter',
-            preConfirm: () => {
-                const startDate = document.getElementById('startDateFilter').value;
-                const endDate = document.getElementById('endDateFilter').value;
+        showCancelButton: true,
+        confirmButtonText: 'Apply Filter',
+        preConfirm: () => {
+            const startDate = document.getElementById('startDateFilter').value;
+            const endDate = document.getElementById('endDateFilter').value;
 
-                if (!startDate || !endDate) {
-                    Swal.showValidationMessage('Please select both start and end dates');
-                }
-
-                return { startDate, endDate };
+            if (!startDate || !endDate) {
+                Swal.showValidationMessage('Please select both start and end dates');
             }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const { startDate, endDate } = result.value;
 
-                // Set the date filter inputs (if you are using hidden inputs for table filtering)
-                $('#startDateFilter').val(startDate);
-                $('#endDateFilter').val(endDate);
+            return {
+                startDate,
+                endDate
+            };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const {
+                startDate,
+                endDate
+            } = result.value;
 
-                // Trigger DataTable redraw with the new filters
-                $('#dataTable').DataTable().draw();
+            // Set the date filter inputs (if you are using hidden inputs for table filtering)
+            $('#startDateFilter').val(startDate);
+            $('#endDateFilter').val(endDate);
 
-                Swal.fire('Filter Applied', 'Attendance data has been filtered.', 'success');
-            }
-        });
+            // Trigger DataTable redraw with the new filters
+            $('#dataTable').DataTable().draw();
+
+            Swal.fire('Filter Applied', 'Attendance data has been filtered.', 'success');
+        }
     });
-
+});
 </script>
 
 <script>
-    $.fn.dataTable.ext.search.push(
-    function (settings, data, dataIndex) {
+$.fn.dataTable.ext.search.push(
+    function(settings, data, dataIndex) {
         var min = $('#startDateFilter').val();
         var max = $('#endDateFilter').val();
         var timeIn = data[6]; // Time In column (index 6)
@@ -416,7 +542,7 @@ document.getElementById('exportCsv').addEventListener('click', function () {
         }
         return false; // Hide row
     }
-    );
+);
 </script>
 
 <!-- CONVERT TO EXCEL -->
@@ -531,10 +657,18 @@ if (excelData.count_only) {
 
     const countSummary = Object.values(excelData).filter(item => typeof item === "object");
     console.log("Count Only Data:", excelData);
-    const customHeaders = [
-        { key: 'course', displayName: 'Course' },
-        { key: 'college', displayName: 'College' },
-        { key: 'count', displayName: 'Count' }
+    const customHeaders = [{
+            key: 'course',
+            displayName: 'Course'
+        },
+        {
+            key: 'college',
+            displayName: 'College'
+        },
+        {
+            key: 'count',
+            displayName: 'Count'
+        }
     ];
 
     function downloadCountSummary() {
@@ -543,12 +677,20 @@ if (excelData.count_only) {
 
         worksheet.mergeCells('A1:D1');
         worksheet.getCell('A1').value = 'Attendance Summary Report';
-        worksheet.getCell('A1').font = { bold: true, size: 28 };
-        worksheet.getCell('A1').alignment = { horizontal: 'center', vertical: 'center' };
+        worksheet.getCell('A1').font = {
+            bold: true,
+            size: 28
+        };
+        worksheet.getCell('A1').alignment = {
+            horizontal: 'center',
+            vertical: 'center'
+        };
         worksheet.getCell('A1:D1').fill = {
             type: 'pattern',
             pattern: 'solid',
-            fgColor: { argb: 'FFC08080' }
+            fgColor: {
+                argb: 'FFC08080'
+            }
         };
 
         // Add the header in the second row
@@ -562,15 +704,22 @@ if (excelData.count_only) {
         });
 
         // Adjust column widths
-        worksheet.columns = [
-            { width: 30 }, // Course
-            { width: 25 }, // College
-            { width: 10 }  // Count
+        worksheet.columns = [{
+                width: 30
+            }, // Course
+            {
+                width: 25
+            }, // College
+            {
+                width: 10
+            } // Count
         ];
 
         // Save the file
         workbook.xlsx.writeBuffer().then(buffer => {
-            const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+            const blob = new Blob([buffer], {
+                type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            });
             saveAs(blob, "Attendance_Summary.xlsx");
         });
 
@@ -587,20 +736,55 @@ if (excelData.count_only) {
     downloadCountSummary();
 } else {
     // Proceed with the usual Excel generation logic
-    const customHeaders = [
-        { key: 'id', displayName: '#' },
-        { key: 'pin', displayName: 'pin' },
+    const customHeaders = [{
+            key: 'id',
+            displayName: '#'
+        },
+        {
+            key: 'pin',
+            displayName: 'pin'
+        },
         // { key: 'qrcode', displayName: 'QR Code' },
-        { key: 'date', displayName: 'Date' },
-        { key: 'srcode', displayName: 'Student ID' },
-        { key: 'student_last_name', displayName: 'Last Name' },
-        { key: 'student_first_name', displayName: 'First Name' },
-        { key: 'student_middle_name', displayName: 'Middle Name' },
-        { key: 'in_time', displayName: 'Time In' },
-        { key: 'out_time', displayName: 'Time Out' },
-        { key: 'college', displayName: 'College' },
-        { key: 'course', displayName: 'Course' },
-        { key: 'kiosk', displayName: 'Kiosk' }
+        {
+            key: 'date',
+            displayName: 'Date'
+        },
+        {
+            key: 'srcode',
+            displayName: 'Student ID'
+        },
+        {
+            key: 'student_last_name',
+            displayName: 'Last Name'
+        },
+        {
+            key: 'student_first_name',
+            displayName: 'First Name'
+        },
+        {
+            key: 'student_middle_name',
+            displayName: 'Middle Name'
+        },
+        {
+            key: 'in_time',
+            displayName: 'Time In'
+        },
+        {
+            key: 'out_time',
+            displayName: 'Time Out'
+        },
+        {
+            key: 'college',
+            displayName: 'College'
+        },
+        {
+            key: 'course',
+            displayName: 'Course'
+        },
+        {
+            key: 'kiosk',
+            displayName: 'Kiosk'
+        }
     ];
 
     function downloadExcel() {
@@ -609,12 +793,20 @@ if (excelData.count_only) {
 
         worksheet.mergeCells('A1:M1');
         worksheet.getCell('A1').value = 'Attendance Data Report';
-        worksheet.getCell('A1').font = { bold: true, size: 28 };
-        worksheet.getCell('A1').alignment = { horizontal: 'center', vertical: 'center' };
+        worksheet.getCell('A1').font = {
+            bold: true,
+            size: 28
+        };
+        worksheet.getCell('A1').alignment = {
+            horizontal: 'center',
+            vertical: 'center'
+        };
         worksheet.getCell('A1:M1').fill = {
             type: 'pattern',
             pattern: 'solid',
-            fgColor: { argb: 'FFC08080' }
+            fgColor: {
+                argb: 'FFC08080'
+            }
         };
 
         // Add the header in the third row
@@ -628,25 +820,50 @@ if (excelData.count_only) {
         });
 
         // Adjust column widths
-        worksheet.columns = [
-            { width: 5 },  // #
-            { width: 15 }, // RFID
+        worksheet.columns = [{
+                width: 5
+            }, // #
+            {
+                width: 15
+            }, // RFID
             // { width: 15 }, // QR Code
-            { width: 12 }, // Date
-            { width: 15 }, // Student ID
-            { width: 20 }, // Last Name
-            { width: 20 }, // First Name
-            { width: 20 }, // Middle Name
-            { width: 15 }, // Time In
-            { width: 15 }, // Time Out
-            { width: 25 }, // College
-            { width: 30 }, // Course
-            { width: 20 }  // Kiosk
+            {
+                width: 12
+            }, // Date
+            {
+                width: 15
+            }, // Student ID
+            {
+                width: 20
+            }, // Last Name
+            {
+                width: 20
+            }, // First Name
+            {
+                width: 20
+            }, // Middle Name
+            {
+                width: 15
+            }, // Time In
+            {
+                width: 15
+            }, // Time Out
+            {
+                width: 25
+            }, // College
+            {
+                width: 30
+            }, // Course
+            {
+                width: 20
+            } // Kiosk
         ];
 
         // Save the file
         workbook.xlsx.writeBuffer().then(buffer => {
-            const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+            const blob = new Blob([buffer], {
+                type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            });
             saveAs(blob, "Student_Attendance.xlsx");
         });
 
@@ -662,10 +879,4 @@ if (excelData.count_only) {
 
     downloadExcel();
 }
-
 </script>
-
-
-
-
-

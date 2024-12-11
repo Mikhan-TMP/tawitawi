@@ -10,7 +10,7 @@
   <!-- Page Heading -->
   <div class="row">
     <div class="col-lg">
-      <h1 class="h3 mb-4 text-gray-800">Library Seat Report</h1>
+      <h1 class="h3 mb-4 text-gray-800">Library Seat Reservation Report</h1>
       <!-- <a href="<?= base_url('admin') ?>" class="btn btn-md btn-info mb-2">Back</a>-->
     </div>
   </div>
@@ -143,7 +143,7 @@
 
       <!-- Export exel and PDF -->
 
-      <div class="card shadow mb-4">
+      <div class="card shadow mb-4" style="border-radius: 15px">
         <div class="card-header py-3 d-flex" 
                   style="justify-content: space-between;
                         border-top-left-radius: 15px;
@@ -202,19 +202,19 @@
                   ?>
                   <tr 
                     <?php 
-                    if ($atd['in_status'] == "occupied" && $atd['out_status'] == "exit") {
-                        echo 'style="background-color: #cfffd1;"'; 
-                    } else if ($atd['in_status'] == "occupied" && $atd['out_status'] == "early-exit") {
-                        echo 'style="background-color: #f9ecec;"'; 
-                    } else if ($atd['in_status'] == "occupied" && $atd['out_status'] == "late-exit") {
-                        echo 'style="background-color: #fff4e6;"'; 
-                    } else if ($atd['in_status'] == "late-in" && $atd['out_status'] == "late-exit"){
-                        echo 'style="background-color: #ffcccc;"';
-                    } else if ($atd['in_status'] == "occupied" && $atd['out_status'] == "f-timeout") {
-                        echo 'style="background-color: #f3f3ff;"'; 
-                    } else if ($atd['in_status'] == "cancelled" || $atd['out_status'] == "cancelled") {
-                        echo 'style="background-color: #580202; color: white;"'; 
-                    }
+                    // if ($atd['in_status'] == "occupied" && $atd['out_status'] == "exit") {
+                    //     echo 'style="background-color: #cfffd1;"'; 
+                    // } else if ($atd['in_status'] == "occupied" && $atd['out_status'] == "early-exit") {
+                    //     echo 'style="background-color: #f9ecec;"'; 
+                    // } else if ($atd['in_status'] == "occupied" && $atd['out_status'] == "late-exit") {
+                    //     echo 'style="background-color: #fff4e6;"'; 
+                    // } else if ($atd['in_status'] == "late-in" && $atd['out_status'] == "late-exit"){
+                    //     echo 'style="background-color: #ffcccc;"';
+                    // } else if ($atd['in_status'] == "occupied" && $atd['out_status'] == "f-timeout") {
+                    //     echo 'style="background-color: #f3f3ff;"'; 
+                    // } else if ($atd['in_status'] == "cancelled" || $atd['out_status'] == "cancelled") {
+                    //     echo 'style="background-color: #580202; color: white;"'; 
+                    // }
                     ?>
                     >
                   <td><?= $atd['id']; ?></td>                    

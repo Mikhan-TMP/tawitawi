@@ -85,7 +85,7 @@
       
       <!-- Export exel and PDF -->
 
-      <div class="card shadow mb-4">
+      <div class="card shadow mb-4" style="border-radius: 15px;">
         <div class="card-header py-3 d-flex" 
                     style="justify-content: space-between;
                           border-top-left-radius: 15px;
@@ -117,7 +117,7 @@
                     <th >#</th>
                     <th class="header">Transaction ID</th>
                     <th class="header">Floor</th> 
-                    <th class="header">Room Name</th>                                         
+                    <th class="header">Area Name</th>                                         
                     <th class="header">Reserved Hour</th> 
                     <th class="header">Used Time</th> 
                     <th class="header">Usage(%)</th>

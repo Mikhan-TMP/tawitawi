@@ -143,17 +143,15 @@
                     <tr>
                       <th>#</th>
                       <th>ID Number</th>
-                      <th>NAME</th>
-                      <th>GENDER</th>
-                      <th>DEPARTMENT</th>
-                      <th>PIN</th>
+                      <th>Name <span style="font-weight: normal; font-style: italic;">(LN, FN, MN)<span></th>
+                      <th>Gender</th>
+                      <th>Department</th>
+                      <th>Pin</th>
                       <!-- <th>RFID</th> -->
                       <!-- <th>QRCODE</th> -->
-                      
-                      
                       <!-- th>IMAGE</th>
                       <th>BUILDING</th -->              
-                      <th>ACTION</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                 
@@ -181,7 +179,7 @@
                         <td class=" align-middle"><?= $emp['building']; ?></td -->
                         <td class=" align-middle"><?= $emp['pin']; ?></td>
                         <td class="text-center align-middle">
-                          <a href="<?= base_url('master/e_faculty/') . $emp['id'] ?>" class="">
+                          <a href="<?= base_url('master/e_faculty/') . $emp['id'] ?>" class="" style="text-decoration:none">
                           <span class="text-dark" title="Edit">
                             <i class="fas fa-pen"></i>
                           </span>
