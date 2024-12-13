@@ -1,85 +1,108 @@
 <style>
-    .faq-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 15%;
-  border: none;
-  /* background-color: #ffe53b; */
-  /* background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%); */
+.tooltip-container {
+  position: relative;
+  background-color: #ff3cac;
+  background-image: linear-gradient(
+    225deg,
+    #ff3cac 0%,
+    #784ba0 50%,
+    #2b86c5 100%
+  );
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 17px;
+  /*padding: 0.7em 1.8em;*/
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  fill: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.tooltip-container .borde-back {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(248, 250, 252, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: none;
+}
+
+.tooltip-container .icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background-color: #ff3cac;
+  background-image: linear-gradient(
+    225deg,
+    #ff3cac 0%,
+    #784ba0 50%,
+    #2b86c5 100%
+  );
   cursor: pointer;
-  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.151);
-  position: relative;
-}
-
-.faq-button:hover {
-  animation: jello-vertical 1s both;
-}
-.faq-button svg {
-  height: 1.5em;
-  fill: white;
-}
-
-@keyframes jello-vertical {
-  0% {
-    transform: scale3d(1, 1, 1);
-  }
-  30% {
-    transform: scale3d(0.75, 1.25, 1);
-  }
-  40% {
-    transform: scale3d(1.25, 0.75, 1);
-  }
-  50% {
-    transform: scale3d(0.85, 1.15, 1);
-  }
-  65% {
-    transform: scale3d(1.05, 0.95, 1);
-  }
-  75% {
-    transform: scale3d(0.95, 1.05, 1);
-  }
-  100% {
-    transform: scale3d(1, 1, 1);
-  }
+  transition: 0.4s ease-in-out;
 }
 
 .tooltip {
   position: absolute;
-  top: -20px;
+  top: -2;
+  z-index: -10;
+  transform: scaleX(0);
+  transform-origin: left center;
+  margin-left: 5px;
+  height: 50px;
+  white-space: nowrap;
   opacity: 0;
-  background-color: #ffe53b;
-  background-image: linear-gradient(180deg, #031084, #000748);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
+  pointer-events: none;
+  transition: all 0.6s;
+  border-radius: 0 50px 50px 0;
+  background-color: #ff3cac;
+  background-image: linear-gradient(
+    225deg,
+    #ff3cac 0%,
+    #784ba0 50%,
+    #2b86c5 100%
+  );
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition-duration: 0.2s;
-  pointer-events: none;
-  letter-spacing: 0.5px;
+  justify-content: right;
+  padding-right: 16px;
+  color: #fff;
+  font-size: 18px;
+  font-family: sans-serif;
+  font-weight: 800px;
+  padding-left: 40px;
+  margin-left: -25px;
+  left: 100%;
 }
 
-.tooltip::before {
-  position: absolute;
-  content: "";
-  width: 10px;
-  height: 10px;
-  background-color: #ff2525;
-  background-size: 1000%;
-  background-position: center;
-  transform: rotate(45deg);
-  bottom: -15%;
-  transition-duration: 0.3s;
-}
-
-.faq-button:hover .tooltip {
-  top: -40px;
+.tooltip-container:hover .tooltip {
+  transform: unset;
+  /* Altere para a posição desejada (a direita) */
   opacity: 1;
-  transition-duration: 0.3s;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: -10;
+}
+
+.tooltip-container:hover {
+  transform: translateX(-0px);
+  transition: 0.5s linear;
+}
+
+.tooltip-container:hover .icon {
+  transform: rotate(360deg);
+  transition: 0.5s linear;
 }
 
 </style>
@@ -101,6 +124,7 @@
                                 <h6 class="m-0 text-light" style="font-size:1.5rem; font-family: 'Inter', sans-serif;">
                                     Attendance</h6>
                                 <div class="div" style ="display: flex; flex-wrap: wrap; gap: 10px" >
+
                                     <button type="button" class="faq-button" id="exportCsv">
                                         <i class="fas fa-file-excel text-success"></i>
                                         <span class="tooltip">Export</span>

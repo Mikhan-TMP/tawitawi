@@ -57,12 +57,28 @@ class Kiosk extends CI_Controller
         echo  json_encode($d);  
     else{      
         $slot=0;
+        $open_time = $roominfo->opentime;
+        $close_time = $roominfo->closetime;
+        //get the area information.
+        $start_hour = (int)date('H', strtotime($open_time));
+        $end_hour = (int)date('H', strtotime($close_time));
+          // Generate the hourly ranges and fill the array with zeros
+          for ($i = $start_hour; $i < $end_hour; $i++) {
+            $hour_ranges[] = "$i-" . ($i + 1); // Example: "8-9", "9-10"
+            $hour_blocks[] = 0;                // Add 0 for each hour block
+        }
+        
+
+        //convert hourblocks to string.
+        $hour_blocks_string = '[' . implode(',', $hour_blocks) . ']';
+        
         $data = array(
             'date' => $date,
             'Floor' => $floorname,
             'Room' => $roomname,
             'Slot' => $slot,
-            'status' => "[0,0,0,0,0,0,0,0,0,0,0]"
+            'status' => $hour_blocks_string
+            //the culprit
         );
         
         $Max_slot=$roominfo->slotnumber;

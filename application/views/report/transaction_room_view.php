@@ -164,18 +164,19 @@
                               $timesIndex[$counter] = date('H:i', $time); // Convert timestamp to 'H:i' format
                               $counter++;
                           }
+                          $start_time = $timesIndex[$start_time_index];
+                          $end_time = $timesIndex[$end_time_index];
+                          $start_time_timestamp = strtotime($start_time);
+                          $end_time_timestamp = strtotime($end_time);
+                          $reserved_hour = ceil(abs($end_time_timestamp - $start_time_timestamp) / 3600);
+                          // echo $start_time . " - " . $end_time;
+                          // echo "<br>";
+                          echo $reserved_hour . " hour/s";
                       } else {
-                          echo "Invalid open or close time.";
+                          echo "Area does not exist anymore.";
                       }
 
-                      $start_time = $timesIndex[$start_time_index];
-                      $end_time = $timesIndex[$end_time_index];
-                      $start_time_timestamp = strtotime($start_time);
-                      $end_time_timestamp = strtotime($end_time);
-                      $reserved_hour = ceil(abs($end_time_timestamp - $start_time_timestamp) / 3600);
-                      // echo $start_time . " - " . $end_time;
-                      // echo "<br>";
-                      echo $reserved_hour . " hours";
+
                     ?></td>
                     <td colspan="1"><?php 
                         //Used Hour:

@@ -167,8 +167,8 @@
                             <th>2PM-3PM</th>
                             <th>3PM-4PM</th>
                             <th>4PM-5PM</th>
-                            <th>5PM-6PM</th>
-                            <th>6PM-7PM</th>
+                            <!-- <th>5PM-6PM</th>
+                            <th>6PM-7PM</th> -->
 
 
 
