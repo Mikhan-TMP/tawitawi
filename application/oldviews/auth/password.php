@@ -23,11 +23,7 @@
                 <h1 class="h3 mb-0 text-light"><?= $title; ?></h1>
                   
                 </div>
-                  <?php if ($this->session->flashdata('message')): ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?= $this->session->flashdata('message'); ?>
-                    </div>
-                <?php endif; ?>
+
                 <form class="user" method="post" action="">
                   <div class="form-group mt-4">
                     <label class="text-light small ml-2">Username</label>
@@ -52,10 +48,10 @@
                         <label for="showPasswordCheckbox" class="ml-2 small text-light">Show Password</label>  
                     <?= form_error('cpassword', '<small class="text-danger pl-3">', '</small>') ?>
                   </div>
-                    <button class="btn btn-danger btn-user btn-block mt-4" style="border:none; background: linear-gradient(180deg, #FFD602, #FAB703 , #D6890E);" type="submit">Submit and check email  <i class="fas fa-check"></i> </button>
+                    <button class="btn btn-danger btn-user btn-block mt-4" style="border:none;" type="submit">Submit and check Email <i class="fas fa-check"></i> </button>
                 </form>
                     <a href="<?= base_url();  ?>">
-                    <button class="btn btn-dark btn-block mt-2 rounded-4" style ="border:none; border-radius:15px ;" type="submit">Cancel</button>
+                    <button class="btn btn-dark btn-block mt-4 rounded-2" type="submit">Cancel</button>
               </div>
             </div>
           </div>
@@ -67,6 +63,23 @@
   </div>
 
 </div>
+         <!-- ALERT MESSAGES -->
+         <?php 
+        //get the toasterhelper
+          $this->load->helper('toast');
+
+          if ($this->session->flashdata('fpass_scs')) {
+           echo getAlertMessages('success', $this->session->flashdata('fpass_scs'));
+          }
+          if ($this->session->flashdata('fpass_fail')) {
+           echo getAlertMessages('error', $this->session->flashdata('fpass_fail'));
+          }
+          
+          //unset it after use
+          $this->session->unset_userdata('fpass_scs');
+          $this->session->unset_userdata('fpass_fail');
+        ?> 
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const togglePassword = document.querySelector('.toggle-password');

@@ -2,7 +2,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+          <h1 class="h3 mb-4 text-gray-800">Edit Librarian</h1>
 
           <a href="<?= base_url('master/users'); ?>" class="btn btn-secondary btn-icon-split mb-4">
             <span class="icon text-white">
@@ -16,7 +16,7 @@
               <div class="col-lg-6 m-auto">
                 <div class="card">          
                   <h3 class="mb-0 text-left text-light" 
-                    style="background: linear-gradient(180deg, #0F25EE, #1F2DB0);
+                    style="background: linear-gradient(180deg, #031084, #000748); 
                     border-top-left-radius:15px;
                     border-top-right-radius:15px;
                     padding: 1.5rem;
@@ -27,7 +27,7 @@
                     <div class="col-lg-6" style=" border-right: 1px solid #d1d3e2;">
                       <div class="form-group">
                         <input type="hidden"  class="form-control form-control-lg" name="u_id" value="<?= $users['id']; ?> ">
-                          <label for="u_username" class="text-dark" style="font-weight: bold;">User Name</label>
+                          <label for="u_username"  class="text-dark" style="font-weight: bold;">Username</label>
                           <input type="text"  class="form-control form-control-lg" name="u_username" value="<?= $users['username']; ?>"
                           style="border-radius:15px; font-size: 1rem; padding: 25px;">
                       </div>
@@ -48,26 +48,21 @@
                           <option disabled>Select Floor</option>
                           <option value="GF" <?= ($users['floor'] == 'GF') ? 'selected' : ''; ?>>Ground Floor</option>
                           <option value="2F" <?= ($users['floor'] == '2F') ? 'selected' : ''; ?>>2nd Floor</option>
-                          <option value="3F" <?= ($users['floor'] == '3F') ? 'selected' : ''; ?>>3rd Floor</option>
-                          <option value="4F" <?= ($users['floor'] == '4F') ? 'selected' : ''; ?>>4th Floor</option>
-                          <option value="5F" <?= ($users['floor'] == '5F') ? 'selected' : ''; ?>>5th Floor</option>
-                          <option value="6F" <?= ($users['floor'] == '6F') ? 'selected' : ''; ?>>6th Floor</option>
-                          <option value="7F" <?= ($users['floor'] == '7F') ? 'selected' : ''; ?>>7th Floor</option>
                         </select>
                       </div>
                       <div class="form-group">
                         <label for="u_fname" class="text-dark" style="font-weight: bold;">First name</label>
-                        <input type="text"  class="form-control form-control-lg" name="u_fname" value="<?= $users['fname']; ?>"
+                        <input type="text" minlength="3" maxlength="30" class="form-control form-control-lg" name="u_fname" value="<?= $users['fname']; ?>"
                         style="border-radius:15px; font-size: 1rem; padding: 25px;">
                       </div>
                       <div class="form-group">
                         <label for="u_lname" class="text-dark" style="font-weight: bold;">Last Name</label>
-                        <input type="text"  class="form-control form-control-lg" name="u_lname" value="<?= $users['lname']; ?>"
+                        <input type="text" minlength="3" maxlength="30"  class="form-control form-control-lg" name="u_lname" value="<?= $users['lname']; ?>"
                         style="border-radius:15px; font-size: 1rem; padding: 25px;">
                       </div>
                       <div class="form-group">
                         <label for="u_email" class="text-dark" style="font-weight: bold;">Email</label>
-                        <input type="text"  class="form-control form-control-lg" name="u_email" value="<?= $users['email']; ?>"
+                        <input type="text" required  class="form-control form-control-lg" name="u_email" value="<?= $users['email']; ?>"
                         style="border-radius:15px; font-size: 1rem; padding: 25px;">
                       </div>
                       <!-- <div class="form-group">
@@ -82,8 +77,15 @@
                         $i = 0; 
                         $permission = json_decode($users['permision'], true);
                         // print_r($permission);
+                        $skipTitles = ['Room Reservation', 'Attend Room', 'Room Status', 'Room', 'Reservation Seat', 'Reservation Room', 'Live Monitoring', 'Seat Reservation'];
+                        
                         foreach ($user_menu as $dt) :
                             $title = $dt['title'];
+                            
+                            // Skip rendering if the title is in $skipTitles
+                            if (in_array($title, $skipTitles)) {
+                                continue;
+                            }
                         ?>
                             <div class="form-group">            
                                 <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
@@ -92,12 +94,14 @@
                                 <?php else : ?>
                                     <input type="checkbox" class="custom-control-input" id=<?= 'access' . $dt['id'] ?> name=<?= 'access' . $dt['id'] ?> value="OFF" onchange="toggleSwitch(this.id)">
                                 <?php endif; ?>
-                                    <label class="custom-control-label" for=<?= 'access' . $dt['id'] ?>><?= '(' . $dt['id'] . ') ' . $user_menu[$i]['title']; ?></label>
+                                    <label class="custom-control-label" for=<?= 'access' . $dt['id'] ?>><?= '(' . $dt['id'] . ') ' . $title; ?></label>
                                 </div>              
                             </div>
-                        <?php $i++; endforeach; ?>
+                        <?php
+                        endforeach;
+                        ?>
                     </div>
-                    <button style="background: linear-gradient(180deg, #0F25EE, #1F2DB0); border:none; padding: 5px; border-radius: 15px;" type="submit" class="btn btn-success btn-icon-split mt-4 w-100">
+                    <button style="background: linear-gradient(180deg, #031084, #000748);  border:none; padding: 5px; border-radius: 15px;" type="submit" class="btn btn-success btn-icon-split mt-4 w-100">
                       <span class="text">Save Changes</span>
                     </button>
                   </div>
@@ -124,3 +128,4 @@
   }
   
 </script>
+

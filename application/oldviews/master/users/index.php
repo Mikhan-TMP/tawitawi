@@ -2,13 +2,13 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+          <h1 class="h3 mb-4 text-gray-800">Librarian Information</h1>
 
           <div class="row">
           <div class="col-lg-9">
             <a href="<?= base_url('master/a_users'); ?>"
                   class="btn btn-icon-split mb-4 shadow-sm text-light" 
-                  style="background: linear-gradient(180deg, #0F25EE, #1F2DB0);">
+                  style="background: linear-gradient(180deg, #031084, #000748); ">
                   <span class="icon text-white-600">
                     <i class="fas fa-plus-circle"></i>
                   </span>
@@ -23,18 +23,15 @@
                 <span class="text text-light">Librarian Access Control</span>
               </a>
             </div> -->
-            <div class="col-lg-5">
-              <?= $this->session->flashdata('message'); ?>
-            </div>
           </div>
 
           <!-- Data Table Users-->
-          <div class="card shadow mb-4">
+          <div class="card shadow mb-4" style="border-radius: 15px;">
             <div class="card-header py-3 d-flex" 
                     style="justify-content: space-between;
                           border-top-left-radius: 15px;
                           border-top-right-radius: 15px;
-                          background: linear-gradient(180deg, #0F25EE, #1F2DB0);
+                          background: linear-gradient(180deg, #031084, #000748); 
               ">
               <h6 class="m-0 text-light" 
                   style="font-size:1.5rem;
@@ -46,10 +43,10 @@
                   <thead style="color: #272727; font-weight: 500;">
                     <tr>                      
                       <!-- <th>ID</th> -->
-                      <th>Designation</th>                      
+                      <th>Floor Designation</th>                      
                       <th>Username</th>
-                      <th>First Name</th>
                       <th>Last Name</th>
+                      <th>First Name</th>
                       <th>Email</th>
                       <!-- <th>Position</th> -->
                       <th>Actions</th>
@@ -70,7 +67,7 @@
                         <td class=" align-middle"> <?= $dt['u_email']; ?>  </td>
                         <!-- <td class=" align-middle text-center"> Librarian   </td> -->
                         <td class="text-center align-middle">
-                          <a href="<?= base_url('master/e_users/') . $dt['e_id'] ?>" class="">
+                          <a href="<?= base_url('master/e_users/') . $dt['e_id'] ?>" class="" style="text-decoration:none">
                             <span class="text-dark" title="Edit">
                               <i class="fas fa-pen"></i>
                             </span>
@@ -94,3 +91,28 @@
 
         </div>
         <!-- End of Main Content -->
+
+                 <!-- ALERT MESSAGES -->
+                 <?php 
+        //get the toasterhelper
+          $this->load->helper('toast');
+
+          if ($this->session->flashdata('users_scs')) {
+           echo getAlertMessages('success', $this->session->flashdata('users_scs'));
+          }
+          if ($this->session->flashdata('users_neutral')) {
+           echo getAlertMessages('info', $this->session->flashdata('users_neutral'));
+          }
+          if ($this->session->flashdata('users_fail')) {
+           echo getAlertMessages('error', $this->session->flashdata('users_fail'));
+          }
+          if ($this->session->flashdata('users_validation')) {  
+            echo getAlertMessages('warning', $this->session->flashdata('users_validation'));
+          }
+          
+          //unset it after use
+          $this->session->unset_userdata('users_scs');
+          $this->session->unset_userdata('users_fail');
+          $this->session->unset_userdata('users_neutral');
+          $this->session->unset_userdata('users_validation');
+        ?> 

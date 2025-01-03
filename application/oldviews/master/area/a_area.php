@@ -2,7 +2,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+          <h1 class="h3 mb-4 text-gray-800">Add Area</h1>
 
           <a href="<?= base_url('master/area'); ?>" class="btn btn-secondary btn-icon-split mb-4">
             <span class="icon text-white">
@@ -14,7 +14,7 @@
           <form action="" method="POST" class="col-lg-5  p-0 m-auto">
             <div class="card" style="border-radius:15px;">
               <h3 class="mb-0 text-left text-light" 
-                    style="background: linear-gradient(180deg, #0F25EE, #1F2DB0);
+                    style="background: linear-gradient(180deg, #031084, #000748); 
                     border-top-left-radius:15px;
                     border-top-right-radius:15px;
                     padding: 1.5rem;
@@ -46,19 +46,19 @@
                       <option value="6F">6th Floor</option>
                       <option value="7F">7th Floor</option> -->
                     </select>
-                    <?= form_error('d_name', '<small class="text-danger">', '</small>') ?>
+                    <?= form_error('d_floor', '<small class="text-danger">', '</small>') ?>
                   </div>
                   <div class="form-group">
-                    <label for="d_name" class="text-dark" style="font-weight: bold;">Name</label>
-                    <input type="text" class="form-control form-control-lg" name="d_name" id="d_name"
+                    <label for="d_name" class="text-dark" style="font-weight: bold;">Area Name</label>
+                    <input type="text" minlength="2" maxlength="30" class="form-control form-control-lg" name="d_name" id="d_name"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Area Name">
                     <?= form_error('d_name', '<small class="text-danger">', '</small>') ?>
                   </div>
                   <div class="form-group">
                     <label for="d_seat" class="text-dark" style="font-weight: bold;">Number of Seat/s</label>
-                    <input type="number" class="form-control form-control-lg" name="d_seat" id="d_seat"
+                    <input type="number" min="1" class="form-control form-control-lg" name="d_seat" id="d_seat"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Number of Seat/s">
-                    <?= form_error('d_name', '<small class="text-danger">', '</small>') ?>
+                    <?= form_error('d_seat', '<small class="text-danger">', '</small>') ?>
                   </div>
                   <div class="form-group">
                     <label for="open_time" class="text-dark" style="font-weight: bold;">Opening Time</label>
@@ -67,24 +67,24 @@
                     <?= form_error('open_time', '<small class="text-danger">', '</small>') ?>
                   </div>
                   <div class="form-group">
-                    <label for="close_time" class="text-dark" style="font-weight: bold;">close time</label>
+                    <label for="close_time" class="text-dark" style="font-weight: bold;">Closing Time</label>
                     <input type="time" class="form-control form-control-lg" name="close_time" id="close_time"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;">
                     <?= form_error('close_time', '<small class="text-danger">', '</small>') ?>
                   </div>
                   <div class="form-group">
-                    <label for="min_slot" class="text-dark" style="font-weight: bold;">Min reservation hour (1hour ~2hour)</label>
+                    <label for="min_slot" class="text-dark" style="font-weight: bold;">Minimum reservation time (1hour ~ 2hours)</label>
                     <input type="number" class="form-control form-control-lg" name="min_slot" id="min_slot" min="1" max="2"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Minimum Reservation Hour">
                     <?= form_error('min_slot', '<small class="text-danger">', '</small>') ?>
                   </div>
                   <div class="form-group">
-                    <label for="max_slot"class="text-dark" style="font-weight: bold;">Max reservation hour(1hour ~8hour)</label>
+                    <label for="max_slot"class="text-dark" style="font-weight: bold;">Maximum reservation time (1hour ~ 8hours)</label>
                     <input type="number" class="form-control form-control-lg" name="max_slot" id="max_slot"min="1" max="8"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Maximum Reservation Hour">
-                    <?= form_error('max_slot', '<small class="text-danger">', '</small>') ?>
+                    <?= form_error('max_slot', '<small class="text-danger">', '</small><br>') ?>
                   </div>
-                  <button type="submit" style="background: linear-gradient(180deg, #0F25EE, #1F2DB0); border:none; padding: 5px; border-radius: 15px;" 
+                  <button type="submit" style="background: linear-gradient(180deg, #031084, #000748);  border:none; padding: 5px; border-radius: 15px;" 
                   class="btn btn-success btn-icon-split mt-4 w-100">
                     <span class="text">ADD AREA</span>
                   </button>
@@ -94,4 +94,13 @@
           </form>
         </div>
         <!-- /.container-fluid -->
-        
+        <?php 
+        //get the toasterhelper
+          $this->load->helper('toast');
+
+          if ($this->session->flashdata('warning')) {
+            echo getAlertMessages('warning', $this->session->flashdata('warning'));
+          }
+          //unset it after use
+          $this->session->unset_userdata('warning');
+        ?> 

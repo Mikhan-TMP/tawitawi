@@ -15,7 +15,6 @@
                     <div class="text-center">
                         <h1 class="h3 mb-0 text-gray-800"><?= $title; ?></h1>
                     </div>
-                    <?= $this->session->flashdata('message'); ?>
 
                     <form class="user" method="post" action="<?= base_url('auth/resetpassword/' . $verification_token); ?>">
                         <div class="form-group mt-4 mb-4">

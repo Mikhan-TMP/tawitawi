@@ -2,7 +2,7 @@
 <div class="container d-flex justify-content-center align-items-center mb-4">
 <div class="col-lg-7">
     <div class="text-center">
-        <img class="center img-fluid text-center mb-4" src="<?= base_url('images/logoMSU.png') ?> " width="130px;">
+        <img class="center img-fluid text-center mb-4" src="<?= base_url('images/LogoMSU.png') ?> " width="130px;">
             <h3 class="text-center text-white color-white" 
             style="
             font-family: 'Inter', sans-serif;
@@ -126,7 +126,7 @@
                         style="background: linear-gradient(180deg, #031084, #000748); border: none;">SUBMIT</button> -->
                     <button 
                         class="btn btn-danger btn-user btn-blockmx-auto w-100 p-3"
-                        style="background: linear-gradient(180deg, #FFD602, #FAB703 , #D6890E);
+                        style="background: linear-gradient(180deg, #031084, #000748);
                         border-radius: 10rem;
                         border: none; font-size:12px" 
                         type="submit">SIGN UP</button>
@@ -135,7 +135,7 @@
         </div>
         <div class="text-center mb-4">
         <a class="small text-light" href="<?= base_url();  ?>"> Already have an account? <span
-        style="color: #FFD602; font-style: italic;"> Log in </span> </a>
+        style="color: #000748; font-style: italic;"> Log in </span> </a>
         </div>
     </div>
         </div>

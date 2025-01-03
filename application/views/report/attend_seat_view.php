@@ -555,8 +555,10 @@ $this->session->unset_userdata('warning');
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'Yes, cancel it!'
     }).then((result) => {
-      // Close the Bootstrap modal if it's open
-      $('#cancelAllModal').modal('hide');
+      // $('#cancelAllModal').modal('hide');
+      $(document).trigger($.Event('keydown', { key: 'Escape', keyCode: 27, which: 27 }));
+      $('#cancelAllModal').find('[data-dismiss="modal"]').click();
+
       if (result.value) {
         Swal.fire({
           title: 'Enter password',
@@ -564,6 +566,7 @@ $this->session->unset_userdata('warning');
           inputAttributes: {
             autofocus: 'autofocus' // Ensure the input gets focus
           }
+          
         }).then((result) => {
           console.log("HERE!");
           if (result.value) {
@@ -600,6 +603,7 @@ $this->session->unset_userdata('warning');
                     response,
                     'error'
                   );
+                  console.log(response);
                 }
               }
             });

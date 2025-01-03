@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" href="<?= base_url('images/'); ?>LIBRARY.png" type="image/x-icon">
+  <link rel="icon" href="<?= base_url('images/'); ?>LogoMSU.png" type="image/x-icon">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -22,8 +22,8 @@
 <body>
   <div class="container border p-5 ">
     <div class="col text-center p-2">
-      <img src="<?= base_url('images/'); ?>LIBRARY.png" alt="" width="125px">
-      <h5 class="h5">Mindanao State University - General Santos City</h5>
+      <img src="<?= base_url('images/'); ?>LogoMSU.png" alt="" width="125px">
+      <h5 class="h5">Mindanao State University - Tawi College of Technology and Oceanography</h5>
     </div>
     <div class="row mb-2">
       <div class="col">
@@ -32,10 +32,10 @@
     </div>
     <div class="row mb-3">
       <div class="col-6">
-        <h1 class="h5">Building Code : <?= $room; ?> </h1>
+        <h1 class="h5">Building: <?= ($room) ? $room : "All"; ?> </h1>
       </div>
       <div class="col-6 text-right">
-            <h1 class="h5">Date : <?= $start; ?> ~ <?= $end; ?></h1>
+            <h1 class="h5">Date : <?= ($start && $end) ? $start . ' ~ ' . $end : "All"; ?></h1>
       </div>
     </div> 
     

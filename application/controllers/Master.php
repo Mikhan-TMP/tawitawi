@@ -3008,4 +3008,55 @@ public function markAllAsRead() {
       echo "Incorrect Password. Please Try again.";
     }
   }
+
+
+
+  public function upload_image()
+  {
+      // Load the helper for file uploads
+      $this->load->helper(['form', 'url']);
+      $this->load->library('upload');
+  
+      // Configure upload options
+      $config['upload_path']          = './assets/img';
+      $config['allowed_types'] = 'jpg|jpeg|png|gif'; // Allowed file types
+      $config['max_size']      = 12048; // Maximum file size in KB (2MB)
+      $config['encrypt_name']  = true; // To prevent file name conflicts
+  
+      $this->upload->initialize($config);
+  
+      if (!$this->upload->do_upload('imageFile')) {
+          // Handle upload error
+          $response = ['status' => 'error', 'message' => $this->upload->display_errors()];
+      } else {
+          // File uploaded successfully
+          $fileData = $this->upload->data();
+          $filePath = $fileData['full_path'];
+  
+          // Convert image to blob
+          $imageBlob = file_get_contents($filePath);
+  
+          // Save to database
+          $data = [
+              'id' => $this->input->post('id'), // Assuming the user ID is passed
+              'image' => $imageBlob,
+          ];
+  
+          $this->load->model('ProfileModel');
+          $result = $this->ProfileModel->update_profile_image($data);
+  
+          if ($result) {
+              $response = ['status' => 'success', 'message' => 'Image uploaded and saved successfully.'];
+          } else {
+              $response = ['status' => 'error', 'message' => 'Failed to save image to the database.'];
+          }
+  
+          // Delete the temporary file after saving it to the database
+          unlink($filePath);
+      }
+  
+      echo json_encode($response);
+  }
+
+  
 }

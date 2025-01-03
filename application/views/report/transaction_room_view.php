@@ -247,6 +247,9 @@
                           // Output the usage percentage
                           echo $usage . "%";
                         }
+                        else if ($transactions['in_status'] == "late-in" && $transactions['out_status'] == "late-exit") {
+                          echo "Late";
+                        }
                       }
                     ?></td>
                   </tr> 

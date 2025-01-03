@@ -65,37 +65,15 @@ body {
                   
             </div>
 
-            <div class="dropdown" id="notificationArea">
-                <!-- Notification Icon with Badge -->
-                <a class="btn position-relative mr-3" href="#" role="button" id="notificationDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-bell"></i> <!-- Font Awesome Bell Icon -->
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-light" id="notificationCount">
-                        0
-                    </span>
-                </a>
-              <!-- Notification Dropdown List -->
-            <!-- Notification Dropdown List -->
-            <ul class="dropdown-menu dropdown-menu-right cursor-pointer" style="padding: 10px; cursor: pointer;" aria-labelledby="notificationDropdown" id="notificationList">
-                <!-- "Mark All as Read" button will be dynamically shown or hidden -->
-                <div class="buts" style="display: flex; align-items: center;">
-                    <li class="dropdown-item text-muted text-center" id="markAllReadBtn" style="cursor: pointer; display: none; font-size:10px;">
-                        <i class="fas fa-check-circle"></i> Mark All as Read
-                    </li>
-                    <div id="divider" style="display: none; width: 1px; height: 20px; background-color: #adb5bd; margin: 0px 10px;"></div>
-                    <li class="dropdown-item text-muted text-center" id="goToNotifications" style="cursor: pointer; display: none; font-size:10px;">
-                        <i class="fas fa-bell"></i> Go to Notifications
-                    </li>
-                </div>
-                <!-- Existing Notifications will be dynamically inserted here -->
-                <li class="dropdown-item text-muted" id="noNotificationsMessage">No new notifications</li>
-            </ul>
 
-
-            </div>
             <li class="nav-item dropdown no-arrow" id="userDropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $account['name']; ?></span>
-                    <img class="img-profile rounded-circle" src="<?= base_url('images/LogoMSU.png')?>">
+                    <?php if (!empty($account['image'])): ?>
+                        <img class="img-profile rounded-circle" src="data:image/jpeg;base64,<?= base64_encode($account['image']); ?>">
+                    <?php else: ?>
+                        <img class="img-profile rounded-circle" src="<?= base_url('images/default-avatar.jpg') ?>">
+                    <?php endif; ?>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" id="userDropdownMenu">
@@ -115,7 +93,7 @@ body {
 
   
 
-<script>
+<!-- <script>
 function fetchUnreadNotifications() {
     $.ajax({
         url: '<?= base_url("master/getUnreadNotifications") ?>', // Your endpoint
@@ -255,5 +233,5 @@ setInterval(fetchUnreadNotifications, 5000);
     $("#markAllReadBtn").on("click", function() {
     markAllAsRead();
 });
-</script>
+</script> -->
 

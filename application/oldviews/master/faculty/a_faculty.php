@@ -2,7 +2,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <!-- h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1 -->
+          <h1 class="h3 mb-4 text-gray-800">Add Faculty</h1>
           <div class="row">
             <div class="col-lg-3">
               <a href="<?= base_url('master/faculty'); ?>" class="btn btn-secondary btn-icon-split mb-4">
@@ -12,18 +12,14 @@
                 <span class="text">Back</span>
               </a>
             </div>
-              <!-- Msg -->
-            <div class="col-lg-5 offset-lg-4">
-              <?= $this->session->flashdata('message'); ?>
-            </div>
 
             </div>
             <!-- content -->
             <div class="col-lg-6 p-0 m-auto">
               <?= form_open_multipart('master/add_faculty'); ?>
-              <div class="card">
+              <div class="card" style="border-radius:15px;">
                 <h3 class="mb-0 text-left text-light" 
-                    style="background: linear-gradient(180deg, #0F25EE, #1F2DB0);
+                    style="background: linear-gradient(180deg, #031084, #000748); 
                     border-top-left-radius:15px;
                     border-top-right-radius:15px;
                     padding: 1.5rem;
@@ -36,14 +32,14 @@
                       <div class="col-lg-6">
                         <div class="form-group ">
                           <label for="e_name" class="text-dark" style="font-weight: bold;">First Name</label>
-                          <input type="text" class="form-control col-lg" name="f_name" id="f_name" required
+                          <input type="text" minlength="2" maxlength="30" class="form-control col-lg" name="f_name" id="f_name" required
                           style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter First Name">
                         </div>
                       </div>
                       <div class="col-lg-6">
                         <div class="form-group ">
                           <label for="e_name" class="text-dark" style="font-weight: bold;">Middle Name</label>
-                          <input type="text" class="form-control col-lg" name="m_name" id="m_name"
+                          <input type="text" maxlength="30" class="form-control col-lg" name="m_name" id="m_name"
                           style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Middle Name">
                         </div>
                       </div>
@@ -53,14 +49,15 @@
                       <div class="col-lg-6">
                           <div class="form-group ">
                             <label for="e_name" class="text-dark" style="font-weight: bold;">Last Name</label>
-                            <input type="text" class="form-control col-lg" name="l_name" id="l_name" required
+                            <input type="text" minlength="2" maxlength="30" class="form-control col-lg" name="l_name" id="l_name" required
                             style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Last Name">                     
                           </div>
+                          <?= form_error('e_name', '<small class="text-danger">', '</small>') ?>
                       </div>
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label for="course" class="text-dark" style="font-weight: bold;">Department</label>
-                          <input type="text" class="form-control col-lg" name="course" id="course" required
+                          <input type="text" maxlength="30" class="form-control col-lg" name="course" id="course" required
                           style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Department">                            
                         </div>
                       </div>
@@ -70,7 +67,7 @@
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label for="srcode" class="text-dark" style="font-weight: bold;">Faculty ID </label>
-                          <input type="number" class="form-control col-lg" name="srcode" id="srcode" required
+                          <input type="text" maxlength="30" minlength="4" class="form-control col-lg" name="srcode" id="srcode" required
                           style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Faculty ID">                        
                         </div>
                       </div>
@@ -80,10 +77,28 @@
                             <input type="number" class="form-control col-lg" name="pin" id="pin" required
                             style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Pin">                        
                         </div>
-                      </div>                    
+                      </div>
+                      <div class="col-lg-6">
+                        <!-- <div class="form-group">
+                          rfid
+                          <label for="rfid" class="text-dark" style="font-weight: bold;">RFID</label>
+                          <input type="text" minlength="4" maxlength="30" class="form-control col-lg" name="rfid" id="rfid" required
+                          style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter RFID">
+                          <?= form_error('rfid', '<small class="text-danger">', '</small>') ?>
+                        </div> -->
+                      </div>
                     </div>
                     <!-- fourth row -->
                     <div class="row">
+                      <!-- <div class="col-lg-6">
+                        <div class="form-group">
+                          QR
+                          <label for="qrcode" class="text-dark" style="font-weight: bold;">QR Code</label>
+                          <input type="text" maxlength="30" minlength="4" class="form-control col-lg" name="qrcode" id="qrcode" required
+                          style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter QR Code">
+                          <?= form_error('qrcode', '<small class="text-danger">', '</small>') ?>
+                        </div>
+                      </div> -->
                       <div class="col-lg-6">
                         <div class="form-group ">
                             <label for="e_gender" class="text-dark" style="font-weight: bold;">Gender</label>
@@ -107,11 +122,11 @@
                     <!-- fifth row -->
                     <div class="row">
                       <div class="w-100">
-                        <button type="submit"style="background: linear-gradient(180deg, #0F25EE, #1F2DB0); border:none; padding: 5px; border-radius: 15px;" class="btn btn-success btn-icon-split mt-4 float-right w-100">
+                        <button type="submit"style="background: linear-gradient(180deg, #031084, #000748);  border:none; padding: 5px; border-radius: 15px;" class="btn btn-success btn-icon-split mt-4 float-right w-100">
                           <!-- <span class="icon text-white">
                               <i class="fas fa-plus-circle"></i>
                             </span> -->
-                        <span class="text">Add to system</span>
+                        <span class="text">ADD FACULTY</span>
                         </button>
                       </div>
                     </div>

@@ -13,69 +13,247 @@ body {
       <!-- Main Content -->
       <div id="content">
 
+        <!-- Sidebar Toggle (Topbar) -->
+
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top"
         style="border-bottom: 1px solid #00000017;">
-        <!-- <h1 class="text-center" >Library Management System</h1> -->
-        <!-- <div id="constructionModal" style="
-              position: fixed;
-              top: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
-              background-color: rgba(0, 0, 0, 0.8);
-              z-index: 1000;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              color: white;
-              text-align: center;
-              flex-direction: column;
-          ">
-              <h1 style="margin: 0; font-size: 2rem;">🚧 Page Under Construction 🚧</h1>
-              <p style="margin-top: 10px; font-size: 1.2rem;">We're working hard to get things ready. Please check back later!</p>
-          </div> -->
-        <h1 class="text-center" style="
-          color: #2D3748; 
-          font-size: 2rem;
-          font-weight: bold;
-          " >Library Management System</h1>
-        <!-- <p style="font-style: italic;"></p> -->
-        
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
+        <!-- <h1 class="text-center" >Library Management System</h1> -->
+        <h1 class="text-center responsive-heading">Library Reservation System</h1>
+
+            <style>
+            .responsive-heading {
+                color: #2D3748;
+                font-size: 2rem; /* Default font size for larger screens */
+                font-weight: bold;
+                text-align: center;
+            }
+
+            @media screen and (max-width: 768px) {
+                /* Styles for tablets and smaller devices */
+                .responsive-heading {
+                font-size: 20px;
+                }
+            }
+
+            @media screen and (max-width: 480px) {
+                /* Styles specifically for phones */
+                .responsive-heading {
+                font-size: 15px;
+                }
+            }
+            #userDropdown:hover {
+                /* background-color: #007bff; Change background color on hover */
+                background: none;
+                /* color: #fff; Change text color on hover */
+                transform: translateY(0px); 
+            }
+            </style>
+
+        <!-- <p style="font-style: italic;"></p> -->
+        
+
           
           <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
+          <ul class="navbar-nav ml-auto align-items-center">
 
             <!-- Nav Item - Alerts -->
             <div class="topbar-divider d-none d-sm-block">
                   
             </div>
 
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $account['name']; ?></span>
-                <!-- <img class="img-profile rounded-circle" src="<?= base_url('images/pp/') . $account['image']; ?>"> -->
-                <img class="img-profile rounded-circle" src="<?= base_url('images/logoMSU.png')?>">
-              </a>
-              <!-- settings logo -->
-                <!-- <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> -->
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
+            <div class="dropdown" id="notificationArea">
+                <!-- Notification Icon with Badge -->
+                <a class="btn position-relative mr-3" href="#" role="button" id="notificationDropdown" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-bell"></i> <!-- Font Awesome Bell Icon -->
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-light" id="notificationCount">
+                        0
+                    </span>
                 </a>
-              </div>
+              <!-- Notification Dropdown List -->
+            <!-- Notification Dropdown List -->
+            <ul class="dropdown-menu dropdown-menu-right cursor-pointer" style="padding: 10px; cursor: pointer;" aria-labelledby="notificationDropdown" id="notificationList">
+                <!-- "Mark All as Read" button will be dynamically shown or hidden -->
+                <div class="buts" style="display: flex; align-items: center;">
+                    <li class="dropdown-item text-muted text-center" id="markAllReadBtn" style="cursor: pointer; display: none; font-size:10px;">
+                        <i class="fas fa-check-circle"></i> Mark All as Read
+                    </li>
+                    <div id="divider" style="display: none; width: 1px; height: 20px; background-color: #adb5bd; margin: 0px 10px;"></div>
+                    <li class="dropdown-item text-muted text-center" id="goToNotifications" style="cursor: pointer; display: none; font-size:10px;">
+                        <i class="fas fa-bell"></i> Go to Notifications
+                    </li>
+                </div>
+                <!-- Existing Notifications will be dynamically inserted here -->
+                <li class="dropdown-item text-muted" id="noNotificationsMessage">No new notifications</li>
+            </ul>
+
+
+            </div>
+            <li class="nav-item dropdown no-arrow" id="userDropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $account['name']; ?></span>
+                    <img class="img-profile rounded-circle" src="<?= base_url('images/LogoMSU.png')?>">
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" id="userDropdownMenu">
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
+                    </a>
+                </div>
             </li>
-
-
           </ul>
 
         </nav>
         <!-- End of Topbar -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- pusher -->
+  <!-- <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script> -->
+
+
+  
+
+<script>
+function fetchUnreadNotifications() {
+    $.ajax({
+        url: '<?= base_url("master/getUnreadNotifications") ?>', // Your endpoint
+        method: 'GET',
+        success: function (response) {
+            console.log("Received notifications:", response);
+            const notifications = JSON.parse(response);
+            updateNotificationUI(notifications);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching notifications:", error);
+        }
+    });
+}
+
+// fetchUnreadNotifications();
+
+function updateNotificationUI(notifications) {
+    const notificationList = $("#notificationList");
+    const notificationCount = $("#notificationCount");
+    const noNotificationsMessage = $("#noNotificationsMessage");
+    const markAllReadBtn = $("#markAllReadBtn");
+    const goToNotificationsBtn = $("#goToNotifications"); // Reference to "Go to Notifications" button
+    const divider = $("#divider");
+
+    // Clear existing notifications (but keep the "Mark All as Read" button, "Go to Notifications" button, and the "No new notifications" message)
+    notificationList.find('li:not(#markAllReadBtn, #goToNotifications, #noNotificationsMessage)').remove();
+
+    if (notifications.length > 0) {
+        notificationCount.text(notifications.length);
+        noNotificationsMessage.hide(); // Hide "No new notifications" message
+        markAllReadBtn.show(); // Show the "Mark All as Read" button
+        goToNotificationsBtn.show(); // Show the "Go to Notifications" button
+        divider.show(); // Ensure the divider is visible when notifications exist
+
+        // Add notifications to the list
+        notifications.forEach(notification => {
+            const item = `<li class="dropdown-item ${notification.status === 'read' ? 'text-muted bg-gray-200' : ''}" data-id="${notification.id}" onclick="markNotificationAsRead(this)">${notification.message}</li>`;
+            notificationList.append(item);
+        });
+    } else {
+        notificationCount.text("0");
+        noNotificationsMessage.show(); // Show "No new notifications" if there are no unread notifications
+        markAllReadBtn.hide(); // Hide "Mark All as Read" button
+        goToNotificationsBtn.hide(); // Hide "Go to Notifications" button
+        divider.hide(); // Hide the divider if there are no notifications
+    }
+
+    // Bind click event for "Mark All as Read" button
+    markAllReadBtn.on("click", function() {
+        markAllAsRead();
+    });
+}
+
+function markAllAsRead() {
+    $.ajax({
+        url: '<?= base_url("master/markAllAsRead") ?>', // Your markAllAsRead endpoint
+        method: 'POST',
+        success: function(response) {
+            console.log("All notifications marked as read:", response);
+
+            // Hide the "Mark All as Read" button
+            $("#markAllReadBtn").hide();
+
+            // Update the UI to mark all notifications as read
+            $(".dropdown-item").each(function() {
+                $(this).addClass("text-muted bg-gray-200");
+                $(this).off('click'); // Disable further clicks
+            });
+
+            // Update the notification count to 0
+            $("#notificationCount").text("0");
+        },
+        error: function(xhr, status, error) {
+            console.error("Error marking all notifications as read:", error);
+        }
+    });
+}
+
+
+
+function markNotificationAsRead(element) {
+    const notificationId = $(element).data("id");
+
+    // Mark the notification as read on the server
+    $.ajax({
+        url: '<?= base_url("master/markAsRead") ?>', // Your markAsRead endpoint
+        method: 'POST',
+        data: { id: notificationId },
+        success: function(response) {
+            console.log("Notification marked as read:", response);
+            
+            // Update the notification UI
+            $(element).addClass("text-muted bg-gray-200"); // Optional: Change the appearance of the notification
+            $(element).off('click'); // Disable further clicking on this notification
+
+            // Decrease the unread count
+            let currentCount = parseInt(notificationCount.text());
+            if (currentCount > 0) {
+                notificationCount.text(currentCount - 1);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error marking notification as read:", error);
+        }
+    });
+}
+
+// function markAllAsRead() {
+//     $.ajax({
+//         url: '<?= base_url("master/markAllAsRead") ?>', // Your markAllAsRead endpoint
+//         method: 'POST',
+//         success: function(response) {
+//             console.log("All notifications marked as read:", response);
+
+//             // Hide the "Mark All as Read" button
+//             $("#markAllReadBtn").hide();
+
+//             // Update the UI to mark all notifications as read
+//             $(".dropdown-item").each(function() {
+//                 $(this).addClass("text-muted bg-gray-200");
+//                 $(this).off('click'); // Disable further clicks
+//             });
+
+//             // Update the notification count to 0
+//             $("#notificationCount").text("0");
+//         },
+//         error: function(xhr, status, error) {
+//             console.error("Error marking all notifications as read:", error);
+//         }
+//     });
+// }
+// Fetch notifications every 10 seconds
+setInterval(fetchUnreadNotifications, 5000);
+</script>
+<script>
+    $("#markAllReadBtn").on("click", function() {
+    markAllAsRead();
+});
+</script>
+

@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" href="<?= base_url('images/'); ?>logoMsu.png" type="image/x-icon">
+  <link rel="icon" href="<?= base_url('images/'); ?>LIBRARY.png" type="image/x-icon">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -22,8 +22,8 @@
 <body>
   <div class="container border p-5 ">
     <div class="col text-center p-2">
-      <img src="<?= base_url('images/'); ?>logoMsu.png" alt="" width="100px">
-      <h5 class="h5">MSU - Tawi-Tawi College of Technology and Oceanography</h5>
+      <img src="<?= base_url('images/'); ?>LIBRARY.png" alt="" width="125px">
+      <h5 class="h5">Mindanao State University - General Santos City</h5>
     </div>
     <div class="row mb-2">
       <div class="col">
@@ -72,27 +72,26 @@
                               echo "N/A";
                             else 
                               echo $atd['in_time']; ?></td>
-                    <td><?php if($atd['out_time']==NULL)
-                              echo "N/A";
-                            else 
-                              echo $atd['out_time']; ?></td>
             <td><?php if($atd['out_time']==NULL)
+                      echo "N/A";
+                    else 
+                      echo $atd['out_time']; ?></td>
+            <!-- <td><?php if($atd['out_time']==NULL)
                               echo "N/A";
                             else 
-                              echo $atd['out_time']; ?></td>
+                              echo $atd['out_time']; ?></td> -->
                     
                     <?php 
                           if(($atd['in_time']==NULL) || ($atd['out_time']==NULL)){                            
                             $duration = "N/A";
                           }
                           else{
-                            $duration = "N/A";
-                            /*
+                            // $duration = "N/A";
+                            
                             $time1 = new DateTime($atd['in_time']);
                             $time2 = new DateTime($atd['out_time']);
                             $interval = $time1->diff($time2);
                             $duration = $interval->format('%h Hours %i Minutes');
-                            */
                           }
                     ?>
                     <td><?= $duration ?> </t>

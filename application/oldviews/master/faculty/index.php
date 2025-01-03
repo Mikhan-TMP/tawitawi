@@ -6,7 +6,7 @@
           <!-- Page Heading -->
           <div class="row">
             <div class="col-lg">
-            <h1 class="h3 mb-4 text-gray-800">Faculty</h1>
+            <h1 class="h3 mb-4 text-gray-800">Faculty Information</h1>
               <!-- <a href="<?= base_url('admin') ?>" class="btn btn-md btn-info mb-2">Back</a> -->
             </div>
           </div>
@@ -16,7 +16,7 @@
                   <div class="card-body mb-0 ml-0 p-0">
                   <a href="<?= base_url('master/a_faculty'); ?>"
                     class="btn btn-icon-split mb-4 shadow-sm text-light" 
-                    style="background: linear-gradient(180deg, #0F25EE, #1F2DB0);">
+                    style="background: linear-gradient(180deg, #031084, #000748); ">
                     <span class="icon text-white-600">
                       <i class="fas fa-plus-circle"></i>
                     </span>
@@ -34,57 +34,107 @@
               <div class="col-sm-6">
                 <div class="card border-0 bg-transparent">
                   <div class="card-body mb-0 pb-0">
-                    <?= $this->session->flashdata('message'); ?>
-                    <?php
-                    if ($this->session->flashdata('success_message')) {
-                      echo '<div class="alert alert-success">' . $this->session->flashdata('success_message') . '</div>';
-                    }else if($this->session->flashdata('failed_message')) {
-                        echo '<div class="alert alert-danger">' . $this->session->flashdata('failed_message') . '</div>';
-                    }
-                    ?>
                   </div>
                 </div>
               </div>
-            <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title">Import New Faculty with Excel</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  </div>
-                  <div class="modal-body">
-                      <div class="container">
+              <!-- Modal for Importing Faculty with Excel -->
+              <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                  <div class="modal-content" style="border-radius: 8px;">
+                    
+                    <!-- Modal Header -->
+                    <div class="modal-header" style="background: linear-gradient(180deg, #031084, #000748);  color: white;">
+                      <h4 class="modal-title">Import New Faculty with Excel</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    
+                    <!-- Modal Body -->
+                    <div class="modal-body" style="background-color: #f8f9fa;">
+                      <div class="container-fluid">
+                        <!-- Information Section -->
+                        <div class="alert alert-info" role="alert">
+                          Please ensure your CSV file follows the structure below:
+                        </div>
+                        
+                        <!-- CSV Example Table -->
+                        <div class="table-responsive">
+                          <table class="table table-bordered" style="background-color: white;">
+                            <thead>
+                              <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Middle Name</th>
+                                <th>Faculy ID</th>
+                                <th>Department</th>
+                                <th>PIN</th>
+                                <!-- <th>QRCODE</th> -->
+                                <th>Gender</th>
+
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>John</td>
+                                <td>Doe</td>
+                                <td>M</td>
+                                <td>001122</td>
+                                <td>BS Computer Science</td>
+                                <!-- <td>123456</td> -->
+                                <td>512311</td>                             
+                                <td>Male</td>
+
+                              </tr>
+                              <tr>
+                                <td>Jane</td>
+                                <td>Smith</td>
+                                <td>A</td>
+                                <td>789012</td>
+                                <td>BS Computer Science</td>
+                                <td>654321</td>
+                                <!-- <td>123155</td> -->
+                                <td>Female</td>
+                                
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+          
+                        <!-- Form Section -->
                         <form method="post" action="<?php echo base_url();?>import/import_Faculty_File" enctype="multipart/form-data">
-                          <p><label>Select Excel File</label>
-                          <!-- <input type="file" name="uploadFile"  required accept=".xls, .xlsx, .csv" /></p> -->
-                          <input type="file" name="uploadFile"  required accept=".csv" /></p>
-                          <br />
-                          <input type="submit" name="submit" value="Upload" class="btn btn-info" />
+                          <div class="form-group">
+                            <label for="uploadFile">Select Excel File (CSV format only)</label>
+                            <input type="file" name="uploadFile" class="form-control-file" id="uploadFile" required accept=".csv" style=" font-size: 16px;">
+                          </div>
+                          
+                          <!-- Submit Button -->
+                          <div class="form-group">
+                            <input type="submit" name="submit" value="Upload" class="btn btn-info btn-block" style="background: linear-gradient(180deg, #031084, #000748);  font-size: 16px; padding: 10px;">
+                          </div>
                         </form>
                       </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                    
+                    <!-- Modal Footer -->
+                    <div class="modal-footer" style="border-top: none;">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal" style="font-size: 14px;">Close</button>
+                    </div>
+                    
                   </div>
                 </div>
               </div>
-            </div>
+
+
 
 
 
           </div>
 
-          <!-- Data Table employee-->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex" style="justify-content: space-between; border-top-left-radius: 15px; border-top-right-radius: 15px; background: linear-gradient(180deg, #0F25EE, #1F2DB0);">  
-              <!-- header title -->
+          <!-- Data Table Faculty-->
+          <div class="card shadow mb-4 m-auto" style="border-radius: 15px;">
+            <div class="card-header py-3 d-flex" style="justify-content: space-between; border-top-left-radius: 15px; border-top-right-radius: 15px; background: linear-gradient(180deg, #031084, #000748); ">  
               <h6 class="m-0 text-light" style="font-size:1.5rem; font-family: 'Inter', sans-serif;">DataTables Faculty</h6>
-              <!-- search bar -->
-              <!-- <div class="col-sm-12 col-md-6">
-                <div id="dataTable_filter" class="dataTables_filter">
-                <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable"></label>
-                </div>
-              </div> -->
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -93,17 +143,15 @@
                     <tr>
                       <th>#</th>
                       <th>ID Number</th>
-                      <th>NAME</th>
-                      <th>GENDER</th>
-                      <th>DEPARTMENT</th>
-                      <th>PIN</th>
-                      <!-- <th>RFID</th>
-                      <th>QRCODE</th> -->
-                      
-                      
+                      <th>Name <span style="font-weight: normal; font-style: italic;">(LN, FN, MN)<span></th>
+                      <th>Gender</th>
+                      <th>Department</th>
+                      <th>Pin</th>
+                      <!-- <th>RFID</th> -->
+                      <!-- <th>QRCODE</th> -->
                       <!-- th>IMAGE</th>
                       <th>BUILDING</th -->              
-                      <th>Actions</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                 
@@ -125,16 +173,16 @@
                                                   }; ?></td>
                         <!-- <td class=" align-middle"><?= $emp['college']; ?></td> -->
                         <td class=" align-middle"><?= $emp['course']; ?></td>
-                        <!-- <td class=" align-middle"><?= $emp['rfid']; ?></td>
-                        <td class=" align-middle"><?= $emp['qrcode']; ?></td> -->
+                        <!-- <td class=" align-middle"><?= $emp['rfid']; ?></td> -->
+                        <!-- <td class=" align-middle"><?= $emp['qrcode']; ?></td> -->
                         <!-- td class="text-center"><img src="<?= base_url('images/pp/') . $emp['image']; ?>" style="width: 55px; height:55px" class="img-rounded"></td>
                         <td class=" align-middle"><?= $emp['building']; ?></td -->
                         <td class=" align-middle"><?= $emp['pin']; ?></td>
                         <td class="text-center align-middle">
-                          <a href="<?= base_url('master/e_faculty/') . $emp['id'] ?>" class="">
+                          <a href="<?= base_url('master/e_faculty/') . $emp['id'] ?>" class="" style="text-decoration:none">
                           <span class="text-dark" title="Edit">
-                              <i class="fas fa-pen"></i>
-                            </span>
+                            <i class="fas fa-pen"></i>
+                          </span>
                           </a>&nbsp &nbsp
                           <a href="<?= base_url('master/d_faculty/') . $emp['id'] ?>" class="" onclick="return confirm('Deleted faculty will lost forever. Still want to delete?')">
                             <span class="icon text-danger" title="Delete">
@@ -157,7 +205,30 @@
       
         <!-- End of Main Content -->
 
+        <!-- ALERT MESSAGES -->
+        <?php 
+        //get the toasterhelper
+          $this->load->helper('toast');
+
+          if ($this->session->flashdata('faculty_scs')) {
+           echo getAlertMessages('success', $this->session->flashdata('faculty_scs'));
+          }
+          if ($this->session->flashdata('faculty_fail')) {
+           echo getAlertMessages('error', $this->session->flashdata('faculty_fail'));
+          }
+          
+          //unset it after use
+          $this->session->unset_userdata('faculty_scs');
+          $this->session->unset_userdata('faculty_fail');
+        ?> 
+
+
+
 <script>
+
+
+
+
 $(document).ready(function(){
 
 load_data();

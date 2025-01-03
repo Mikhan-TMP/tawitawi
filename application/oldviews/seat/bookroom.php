@@ -1,7 +1,7 @@
 <!-- Begin Page Content -->
 
 <div class="container-fluid">
-  <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+  <h1 class="h3 mb-4 text-gray-800">Room Reservation</h1>
   <!-- <a href="<?= base_url('Seat/bookroom'); ?>" class="btn btn-secondary btn-icon-split mb-4">
     <span class="icon text-white">
       <i class="fas fa-chevron-left"></i>
@@ -27,7 +27,7 @@
         </select>        
       </div>
       <div class="col-sm-1 col-1 mb-4">
-          <button type="submit" name="submit" value="Show"  class="btn btn-success btn-fill btn-block text-white" style="background: linear-gradient(180deg, #0F25EE, #1F2DB0); width: 100px;  border:none; border-radius: 15px">
+          <button type="submit" name="submit" value="Show"  class="btn btn-success btn-fill btn-block text-white" style="background: linear-gradient(180deg, #BE110E, #630908); width: 100px;  border:none; border-radius: 15px">
               <i class="fa fa-search"></i>
               Show</button>            
       </div>
@@ -37,7 +37,7 @@
                             style="justify-content: space-between;
                                   border-top-left-radius: 15px;
                                   border-top-right-radius: 15px;
-                                  background: linear-gradient(180deg, #0F25EE, #1F2DB0);
+                                  background: linear-gradient(180deg, #BE110E, #630908);
                       ">
                     <h6 class="m-0 text-light" 
                             style="font-size:1.5rem;
