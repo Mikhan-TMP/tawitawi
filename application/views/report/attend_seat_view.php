@@ -389,8 +389,7 @@ $this->session->unset_userdata('warning');
 <!-- End of Main Content -->
 <script>
   $(document).ready(function () {
-    // Initialize DataTable with sorting options
-    $('#dataTable').DataTable({
+    var table = $('#dataTable').DataTable({
       "order": [
         [1, 'desc'], // Sort by Date (Column index 1)
         [8, 'asc']  // Then sort by Time In (Column index 6)
@@ -406,8 +405,11 @@ $this->session->unset_userdata('warning');
 
     // Export CSV button logic
     $('#exportCsv').on('click', function () {
+      // Temporarily disable pagination and draw all data
+      table.page.len(-1).draw();
+
       var csv = [];
-      var rows = $(".table tr:visible");
+      var rows = $(".table tr"); // Get all rows (not just visible ones)
 
       // Get headers
       var headers = [];
@@ -436,9 +438,13 @@ $this->session->unset_userdata('warning');
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
+
+      // Restore the pagination (if necessary)
+      table.page.len(10).draw(); // Reset the page length back to 10 (or your original value)
     });
   });
 </script>
+
 
 <script>
   $('#dataTable').on('click', '.confirm-end-booking', function (e) {
@@ -603,7 +609,6 @@ $this->session->unset_userdata('warning');
                     response,
                     'error'
                   );
-                  console.log(response);
                 }
               }
             });

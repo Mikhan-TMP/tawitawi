@@ -195,8 +195,8 @@ class Admin extends CI_Controller
     $config['upload_path']          = './assets/images_L';
     $config['allowed_types']        = 'gif|jpg|png|jpeg|webp';
     $config['max_size']             = 204800;
-    $config['max_width']            = 1920;
-    $config['max_height']           = 1080;
+    $config['max_width']            = 1024;
+    $config['max_height']           = 768;
 
     $this->load->library('upload', $config);
 
@@ -216,10 +216,10 @@ class Admin extends CI_Controller
       $width = $data['image_width'];
       $height = $data['image_height'];
        // Calculate the aspect ratio
-       if (round($width / $height, 2) != round(16 / 9, 2)) {
-        unlink($data['full_path']); // Delete the file if it's not 16:9
-        $error = array('error' => 'The uploaded image must have a 16:9 aspect ratio.');
-        $this->session->set_flashdata('cms_fail', 'The uploaded image must have a 16:9 aspect ratio.');
+       if (round($width / $height, 2) != round(4 / 3, 2)) {
+        unlink($data['full_path']); // Delete the file if it's not 4:3
+        $error = array('error' => 'The uploaded image must have a 4:3 aspect ratio.');
+        $this->session->set_flashdata('cms_fail', 'The uploaded image must have a 4:3 aspect ratio.');
         redirect('/admin/cms');
       } else {
           // Success
@@ -234,8 +234,8 @@ function do_upload_S(){  // small image
   $config['upload_path']          = './assets/images_S';
   $config['allowed_types']        = 'gif|jpg|png|jpeg|webp';
   $config['max_size']             = 204800;
-  $config['max_width']            = 1920;
-  $config['max_height']           = 1080;
+  $config['max_width']            = 1024;
+  $config['max_height']           = 768;
 
   $this->load->library('upload', $config);
   if (!$this->upload->do_upload('customFile')) {
@@ -251,9 +251,9 @@ function do_upload_S(){  // small image
       $height = $data['image_height'];
 
       // Calculate and validate aspect ratio
-      if (round($width / $height, 2) != round(16 / 9, 2)) {
-          unlink($data['full_path']); // Delete file if not 16:9
-          $this->session->set_flashdata('cms_fail', 'The uploaded image must have a 16:9 aspect ratio.');
+      if (round($width / $height, 2) != round(4 / 3, 2)) {
+          unlink($data['full_path']); // Delete file if not 4:3
+          $this->session->set_flashdata('cms_fail', 'The uploaded image must have a 4:3 aspect ratio.');
           redirect('/admin/cms');
       } else {
           // Success - file is valid and has the correct aspect ratio
@@ -266,9 +266,9 @@ function do_upload_S(){  // small image
 function vid_upload(){ //VIDEO UPLOAD
     $config['upload_path']          = './assets/videos';
     $config['allowed_types']        = 'mp4';
-    $config['max_size']             = 58142592;
-    $config['max_width']            = 1024;
-    $config['max_height']           = 768;
+    $config['max_size']             = 153600; // 150MB
+    // $config['max_width']            = 480;
+    // $config['max_height']           = 360;
 
     $this->load->library('upload', $config);
 

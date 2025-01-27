@@ -49,7 +49,7 @@
                       <div class="col-lg-6">
                           <div class="form-group ">
                             <label for="e_name" class="text-dark" style="font-weight: bold;">Last Name</label>
-                            <input type="text" minlength="2" maxlength="30" class="form-control col-lg" name="l_name" id="l_name" required
+                            <input type="text" minlength="2" maxlength="30" class="form-control col-lg" name="l_name" id="l_name" required value="<?= set_value('l_name'); ?>"
                             style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Last Name">                     
                           </div>
                           <?= form_error('e_name', '<small class="text-danger">', '</small>') ?>
@@ -57,7 +57,7 @@
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label for="course" class="text-dark" style="font-weight: bold;">Department</label>
-                          <input type="text" maxlength="30" class="form-control col-lg" name="course" id="course" required
+                          <input type="text" maxlength="30" class="form-control col-lg" name="course" id="course" required value="<?= set_value('course'); ?>"
                           style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Department">                            
                         </div>
                       </div>
@@ -67,14 +67,14 @@
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label for="srcode" class="text-dark" style="font-weight: bold;">Faculty ID </label>
-                          <input type="text" maxlength="30" minlength="4" class="form-control col-lg" name="srcode" id="srcode" required
+                          <input type="text" maxlength="30" minlength="4" class="form-control col-lg" name="srcode" id="srcode" required value="<?= set_value('srcode'); ?>"
                           style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Faculty ID">                        
                         </div>
                       </div>
                       <div class="col-lg-6">
                         <div class="form-group">
                             <label for="pin" class="text-dark" style="font-weight: bold;">Pin</label>
-                            <input type="number" class="form-control col-lg" name="pin" id="pin" required
+                            <input type="number" class="form-control col-lg" name="pin" id="pin" required value="<?= set_value('pin'); ?>"
                             style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Pin">                        
                         </div>
                       </div>
@@ -104,14 +104,14 @@
                             <label for="e_gender" class="text-dark" style="font-weight: bold;">Gender</label>
                             <br>
                             <div class="form-check form-check-inline my-0">
-                              <input class="form-check-input" type="radio" name="e_gender" id="m" value="M" checked>
+                              <input class="form-check-input" type="radio" name="e_gender" id="m" value="M" checked  value="<?= set_value('e_gender'); ?>">
                               <label class="form-check-label" for="m">
                                 Male
                               </label>
                               <?= form_error('e_gender', '<small class="text-danger">', '</small>') ?>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="e_gender" id="f" value="F">
+                              <input class="form-check-input" type="radio" name="e_gender" id="f" value="F" value="<?= set_value('e_gender'); ?>">
                               <label class="form-check-label" for="f">
                                 Female
                               </label>

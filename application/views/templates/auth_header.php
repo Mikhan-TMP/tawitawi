@@ -13,6 +13,7 @@
   <!-- SWEET ALERT 2-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <link rel="stylesheet" href="sweetalert2.min.css"> 
+  <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/sweetalert2.min.css"> 
 
   <!-- Custom fonts for this template-->
   <link rel="icon" href="<?= base_url('images/'); ?>LogoMSU.png" type="image/x-icon">

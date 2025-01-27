@@ -25,7 +25,7 @@
                   <div class="form-group row">
                     <div class="col">
                       <label for="u_username" class="text-dark" style="font-weight: bold;">Librarian Username</label>
-                      <input type="text" required min-length="6" max-length="30" class="form-control col-lg" name="u_username" id="u_username"
+                      <input type="text" required min-length="6" max-length="30" class="form-control col-lg" name="u_username" id="u_username"  value="<?= set_value('u_username'); ?>"
                       style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Librarian Username">
                       <?= form_error('u_username', '<small class="text-danger">', '</small>') ?>
                     </div>
@@ -45,7 +45,8 @@
                                   /* background-color: #fff; */
                                   color: #6e707e;
                                   /* border-color: #a5a8bc; */
-                                  border: 1px solid #d1d3e2;">
+                                  border: 1px solid #d1d3e2;"
+                        value="<?= set_value('u_floor'); ?>">
                         <option disabled selected>Select Floor</option>
                         <option value="GF" >Ground Floor</option>
                         <option value="2F">2nd Floor</option>
@@ -61,7 +62,7 @@
                   <div class="form-group row">
                   <div class="col">
                     <label for="u_fname" class="text-dark" style="font-weight: bold;">First Name</label>
-                    <input type="text" minlength="2" maxlength="30" required class="form-control form-control-lg" name="u_fname"  id="u_fname"
+                    <input type="text" minlength="2" maxlength="30" required class="form-control form-control-lg" name="u_fname"  id="u_fname"  value="<?= set_value('u_fname'); ?>"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter First Name">
                     <?= form_error('u_fname', '<small class="text-danger">', '</small>') ?>
                   </div>
@@ -70,7 +71,7 @@
                   
                   <div class="col">
                     <label for="u_lname" class="text-dark" style="font-weight: bold;">Last Name</label>
-                    <input type="text" minlength="2" maxlength="30" required  class="form-control form-control-lg" name="u_lname"  id="u_lname"
+                    <input type="text" minlength="2" maxlength="30" required  class="form-control form-control-lg" name="u_lname"  id="u_lname"  value="<?= set_value('u_lname'); ?>"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Last Name">
                     <?= form_error('u_lname', '<small class="text-danger">', '</small>') ?>
                   </div>                
@@ -79,7 +80,7 @@
                   
                   <div class="col">
                     <label for="u_email" class="text-dark" style="font-weight: bold;">Email</label>
-                    <input type="text"   class="form-control form-control-lg" name="u_email"  id="u_email"
+                    <input type="text"   class="form-control form-control-lg" name="u_email"  id="u_email"  value="<?= set_value('u_email'); ?>"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Email">
                   <?= form_error('u_email', '<small class="text-danger">', '</small>') ?>
                   </div>
@@ -87,7 +88,7 @@
                   <div class="form-group row">
                     <div class="col">
                       <label for="u_password" class="text-dark" style="font-weight: bold;">Key (password)</label>
-                      <input type="password"  class="form-control col-lg" name="u_password" id="u_password"
+                      <input type="password"  class="form-control col-lg" name="u_password" id="u_password"   value="<?= set_value('u_password'); ?>"
                       style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter Key">
                       <?= form_error('u_password', '<small class="text-danger">', '</small>') ?>
                     </div>
@@ -95,7 +96,7 @@
                   <div class="form-group row">
                     <div class="col">
                       <label for="c_password" class="text-dark" style="font-weight: bold;">Confirm Key </label>
-                      <input type="password" class="form-control col-lg" name="c_password" id="c_password"
+                      <input type="password" class="form-control col-lg" name="c_password" id="c_password" value="<?= set_value('c_password'); ?>"
                       style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Confirm Key">
                       <?= form_error('u_password', '<small class="text-danger">', '</small>') ?>
                       

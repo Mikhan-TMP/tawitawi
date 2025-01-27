@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                   <hr>
                   <div class="container-fluid">
-                  <h5>School Announcement</h5>
+                  <!-- <h5>School Announcement</h5>
                      <div class="container-fluid" style="display: flex; justify-content: start;">
                         <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups"><br>
                            <div>
@@ -56,16 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
                               Add Image
                               </button>
                            </div>
-                           <!-- MODAL -->
+
                            <div class="modal" id="imgamodal">
                               <div class="modal-dialog">
                                  <div class="modal-content">
-                                    <!-- Modal Header -->
                                     <div class="modal-header">
                                        <h4 class="modal-title">Upload Image</h4>
                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
-                                    <!-- Modal body -->
                                     <form action="<?= base_url()?>Admin/do_upload_L" method="post" enctype="multipart/form-data" onsubmit="showLoadingScreen();">
                                        <div class="modal-body">
                                           <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups" style="display: flex; justify-content: center; align-items: center; margin: 20px;">
@@ -81,9 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                              <img id="frame" src="" class="img-fluid" height="150px"/>
                                           </div>
                                        </div>
-                                       <!-- end Modal body -->
 
-                                       <!-- Modal footer -->
                                        <div class="modal-footer">
                                           <input type="submit" name="Upload" class="btn btn-secondary" id="inputGroupFileAddon03">
                                           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -95,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                      </div>
 
-                     <!-- SHOW AND DELETE --> 
                      <div class="card shadow-sm p-3 mb-5 bg-body rounded">
                         <div class="card-body">
                            <div class="container-fluid">
@@ -134,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                     ?>
 
                                  </div>
-                                 <!-- start Modal -->
                                  <div class="modal" id="<?php echo "vid".$id;?>">
                                     <div class="modal-dialog">
                                        <div class="modal-content" style="width: 1100px; margin-left: -300px;">
@@ -147,20 +141,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                             $i++;
                                             if($i == $id){
                                               ?>  
-                                          <!-- Modal Header -->
                                           <div class="modal-header">
                                              <h5 class="modal-title"><?php echo $k ?></h5>
                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
                                           </div>
-                                          <!-- Modal body -->
                                           <div class="modal-body d-flex justify-content-center">
                                           <img class="rounded" src="<?php echo base_url($images)."/".$k;?>" id="" style="width: 1000px;" >
                                           </div>
-                                          <!-- Modal footer -->
                                           <div class="modal-footer">
                                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                           </div>
-                                          <!-- End modal -->
                                           <?php  }
                                           }?>
                                           
@@ -174,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
                            </div>
                         </div>
                      </div>
-                  <hr>
+                  <hr> -->
                   <h5>Librarian Announcement</h5>
                      <div class="container-fluid" style="display: flex; justify-content: start;">
                         <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups"><br>
@@ -204,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                 </label>
                                              </div>
                                           </div>
-                                          <p class="text-danger small text-center" style="margin-top: 10px;">* Please upload an image with a 16:9 aspect ratio.</p>
+                                          <p class="text-danger small text-center" style="margin-top: 10px;">* Please upload an image with a 4:3 aspect ratio.</p>
                                           <img id="frames" src="" class="img-fluid" height="150px"/>
                                        </div>
                                     </div>
@@ -295,8 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>                           
                      </div>
                   <hr>
-                  <h5>Highlights</h5>
-                        <!-- MODAL -->
+                  <!-- <h5>Highlights</h5>
                         <div class="container-fluid">
                            <div style="display: flex; justify-content: start;">
                               <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
@@ -308,15 +297,12 @@ document.addEventListener('DOMContentLoaded', function() {
                                  <div class="modal" id="uploadMod">
                                     <div class="modal-dialog">
                                        <div class="modal-content">
-                                          <!-- Modal Header -->
                                           <div class="modal-header">
                                              <h4 class="modal-title">Upload Video</h4>
                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
                                           </div>
-                                          <!-- Modal Body -->
                                           <form action="<?= base_url()?>Admin/vid_upload" method="post" enctype="multipart/form-data" onsubmit="showLoadingScreen();">
                                              <div class="modal-body">
-                                                <!-- Video Uploading -->
                                                 <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups" style="display: flex; justify-content: center; align-items: center; margin: 20px;">
                                                    <div class="input-group mb-3">
                                                       <div class="custom-file">
@@ -332,7 +318,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                                    <video id="videoElement" width="320" height="240" controls></video>
                                                 </div>
                                              </div>
-                                             <!-- Modal Footer -->
                                              <div class="modal-footer">
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                 <input type="submit" name="Upload" class="btn btn-secondary" id="inputGroupFileAddon03">
@@ -344,7 +329,6 @@ document.addEventListener('DOMContentLoaded', function() {
                               </div>
                            </div>
                         </div>
-                        <!-- Videos -->
                         <div class="card shadow-sm p-3 mb-5 bg-body rounded">
                            <div class="card-body">
                               <div class="container-fluid">
@@ -386,8 +370,9 @@ document.addEventListener('DOMContentLoaded', function() {
                               </div>
                            </div>     
                         </div>
-               <br>
+               <br> -->
                </section>
+            </div>
          </div>
       </div>
    </div>

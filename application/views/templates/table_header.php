@@ -22,7 +22,8 @@
   <link href="<?= base_url('assets/'); ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-  <link rel="stylesheet" href="sweetalert2.min.css">
+  <link rel="stylesheet" href="sweetalert2.min.css"> 
+  <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/sweetalert2.min.css"> 
   <style>
     .nav-item.active {
         background: linear-gradient(180deg, #031084, #000748);  /* Light gray background */

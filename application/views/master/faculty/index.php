@@ -213,6 +213,9 @@
           if ($this->session->flashdata('faculty_scs')) {
            echo getAlertMessages('success', $this->session->flashdata('faculty_scs'));
           }
+          if ($this->session->flashdata('faculty_neutral')) {
+            echo getAlertMessages('info', $this->session->flashdata('faculty_neutral'));
+           }
           if ($this->session->flashdata('faculty_fail')) {
            echo getAlertMessages('error', $this->session->flashdata('faculty_fail'));
           }
@@ -220,6 +223,7 @@
           //unset it after use
           $this->session->unset_userdata('faculty_scs');
           $this->session->unset_userdata('faculty_fail');
+          $this->session->unset_userdata('faculty_neutral');
         ?> 
 
 

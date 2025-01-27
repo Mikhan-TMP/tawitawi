@@ -56,25 +56,19 @@ public function area()
 
   public function a_area()
   {
-    // Add Department
-    // $d['title'] = 'Library Area Add';
     $d['title'] = 'Area';
     $d['room'] = $this->db->get('area')->result_array();
     $d['account'] = $this->Admin_model->getAdmin($this->session->userdata['username']);
     // Form Validation    
     $this->form_validation->set_rules('d_floor', 'Area floor', 'required');
-    $this->form_validation->set_rules('d_name', 'Area name', 'required');
+    // $this->form_validation->set_rules('d_name', 'Area name', 'required');
+    $this->form_validation->set_rules('d_name', 'Area name', 'required|regex_match[/^[a-zA-Z\s]+(?:\s[0-9]+)?$/]');
     $this->form_validation->set_rules('d_seat', 'Number', 'required|numeric');
     $this->form_validation->set_rules('open_time', 'OPEN TIME', 'required');
     $this->form_validation->set_rules('close_time', 'CLOSE TIME', 'required');
     $this->form_validation->set_rules('min_slot', 'MIN HOUR', 'required|numeric');
     $this->form_validation->set_rules('max_slot', 'MAX HOUR', 'required|numeric');
 
-    // if(empty($this->input->post('d_floor'))){
-    //   $this->session->set_flashdata('warning', 'The floor cannot be empty.');
-    //   echo "<script>window.history.back();</script>";
-    //   exit;
-    // }
     if ($this->form_validation->run() == false) {
       $this->load->view('templates/header', $d);
       $this->load->view('templates/sidebar');
@@ -102,13 +96,16 @@ public function area()
       $rows = $this->db->affected_rows();
       if ($rows > 0) {
         $this->session->set_flashdata('area_scs', 'Area has been Added Successfully!');
-      } else {
+      }  else {
         $this->session->set_flashdata('area_err', 'Failed to add an Area!');
       }
+
       // $this->notifications('add area', $data);
-      $this->load->model('Notif_model');
-      $this->Notif_model->notifications('add area', $data);
+      // $this->load->model('Notif_model');
+      // $this->Notif_model->notifications('add area', $data);
+      
       redirect('master/area');
+
     }
 
   }
@@ -127,7 +124,8 @@ public function area()
     // $this->form_validation->set_rules('min_slot', 'MIN HOUR', 'required');
     // $this->form_validation->set_rules('max_slot', 'MAX HOUR', 'required');
     $this->form_validation->set_rules('d_floor', 'Area floor', 'required');
-    $this->form_validation->set_rules('d_name', 'Area name', 'required');
+    // $this->form_validation->set_rules('d_name', 'Area name', 'required');
+    $this->form_validation->set_rules('d_name', 'Area name', 'required|regex_match[/^[a-zA-Z\s]+(?:\s[0-9]+)?$/]');
     $this->form_validation->set_rules('d_seat', 'Number', 'required|numeric');
     $this->form_validation->set_rules('open_time', 'OPEN TIME', 'required');
     $this->form_validation->set_rules('close_time', 'CLOSE TIME', 'required');
@@ -139,7 +137,7 @@ public function area()
       $this->load->view('templates/header', $d);
       $this->load->view('templates/sidebar');
       $this->load->view('templates/topbar');
-      $this->load->view('master/area/e_area', $d); // Edit Department Page
+      $this->load->view('master/area/e_area', $d); // Edit Area Page
       $this->load->view('templates/footer');
     } 
     else {      
@@ -251,7 +249,9 @@ public function area()
       $rows = $this->db->affected_rows();
       if ($rows > 0) {
         $this->session->set_flashdata('area_scs', 'Area has been Edited Successfully!');
-      } else {
+      }elseif ($rows == 0) {
+        $this->session->set_flashdata('area_neutral', 'No changes were made.');
+      }else {
         $this->session->set_flashdata('area_fail', 'Failed to Edit an Area!');
       }
 
@@ -1172,7 +1172,7 @@ public function users()
 
         // Set errors in flashdata
         $this->session->set_flashdata('faculty_fail', $errors);
-        redirect('master/faculty/e_faculty/'.$e_id);
+        redirect('master/faculty/a_faculty/'.$e_id);
       // $this->session->set_flashdata('faculty_fail', 'Please fill out the form correctly!');
       // redirect('master/faculty');
     }
@@ -1261,8 +1261,12 @@ public function users()
         $this->session->set_flashdata('faculty_scs', "Successfully updated a faculty!");
       }
       else if ($rows == 0) {
-        $this->session->set_flashdata('faculty_fail', "No changes were made to a faculty!");
+        $this->session->set_flashdata('faculty_neutral', "No changes were made to a faculty!");
       }
+      else {
+        $this->session->set_flashdata('faculty_fail', "Failed to update a faculty!");
+      }
+
       redirect('master/faculty');
     }
 
@@ -3009,7 +3013,124 @@ public function markAllAsRead() {
     }
   }
 
+  public function import_database(){
 
+
+    // API endpoint
+    // $url = 'https://api.sandbox.centralizedinc.com/management/v1.0/integrations/students';
+    $url = $this->config->item('api_endpoint');
+    
+    $token = $this->HttpGetTokenToTawi();
+        if (!$token) {
+            $response = [
+                'status' => 401,
+                'message' => 'Unauthorized: Failed to get token.'
+            ];
+            $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(401)
+                ->set_output(json_encode($response));
+            return;
+        }
+
+    // Initialize cURL
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER => [
+            'Authorization: Bearer ' . $token,
+            'Content-Type: application/json'
+        ]
+    ]);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); // Get the HTTP response code
+    if (curl_errno($ch)) {
+      $error = curl_error($ch);
+      curl_close($ch);
+      echo 'Error: ' . $error;
+      return;
+    }
+    curl_close($ch);
+
+    $data = json_decode($response, true);
+
+    if ( !$data) {
+      echo 'Failed to fetch data. HTTP Code: ' . $httpCode;
+      return;
+    }
+    
+    foreach ($data['data']['rows'] as $student) {
+        // Check if srcode or rfid already exists
+        $this->db->where('srcode', $student['id_number']);
+        // $this->db->or_where('rfid', $student['rfid']);
+        $existing_student = $this->db->get('student')->row_array();
+
+        $data = [
+          'first_name' => $student['first_name'],
+          'middle_name' => $student['middle_name'],
+          'last_name' => $student['last_name'],
+          'srcode' => $student['id_number'],
+          // 'college' => $student['department'],
+          'college' => $student['college'],
+          'rfid' => $student['rfid']
+        ];
+
+        if ($existing_student) {
+          $this->db->where('srcode', $student['id_number']);
+          $this->db->update('student', $data);
+          $this->session->set_flashdata('student_neutral', 'Some students already have a record on your database. Their data was updated.');
+          continue;
+        }
+
+        // Insert data into the database
+        if (!$this->db->insert('student', $data)) {
+          $this->session->set_flashdata('student_fail', 'Error inserting student to the database.');
+          return;
+        }
+      }
+
+      $this->session->set_flashdata('student_scs', 'Students succesfully imported from the Enrollment System\'s database.');
+      redirect('master/student');
+    }
+
+  public function HttpGetTokenToTawi(){
+    $authURL = $this->config->item('auth_url');
+      //please hide this in env or config.
+        $postData = [
+                "username" => $this->config->item('username'),
+                "secret" => $this->config->item('password')
+        ];
+
+        $ch = curl_init($authURL);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json'
+        ]);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+            curl_close($ch);
+            echo 'Error: ' . $error;
+            return;
+        }
+
+        curl_close($ch);
+
+        if ($httpCode == 200) {
+            $data = json_decode($response, true);
+            $token = $data['data']['token'];
+
+            return $token;
+        } else {
+            echo 'Failed to authenticate. HTTP Code: ' . $httpCode;
+        }
+  }
 
   public function upload_image()
   {

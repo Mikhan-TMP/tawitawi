@@ -205,7 +205,7 @@
                         if ($transactions['in_status'] == "cancelled" || $transactions['out_status'] == "cancelled") {
                           echo "Cancelled";
                         }
-                        else if ($transactions['in_status'] == "occupied" && $transactions['out_status'] == "exit") {
+                        else if ($transactions['in_status'] == "occupied" && $transactions['out_status'] == "exit" || $transactions['in_status'] == "occupied" && $transactions['out_status'] == "early-exit" || $transactions['in_status'] == "occupied" && $transactions['out_status'] == "late-exit") {
                           $out_time_timestamp = strtotime($out_time);
                           $in_time_timestamp = strtotime($in_time);
                           $diff = $out_time_timestamp - $in_time_timestamp;

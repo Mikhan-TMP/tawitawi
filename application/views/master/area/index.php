@@ -63,7 +63,7 @@
                                         <i class="fas fa-pen"></i>
                                     </span>
                                 </a>&nbsp &nbsp
-                                <a href="#" class="" style="text-decoration:none" onclick="event.preventDefault(); Swal.fire({
+                                <!-- <a href="#" class="" style="text-decoration:none" onclick="event.preventDefault(); Swal.fire({
                                     title: 'Are you sure?',
                                     text: '<?= ($dpt['availability'] == 0 ? 'This action will unlock the area.' : 'This action will lock the area.') ?>',
                                     icon: 'warning',
@@ -82,7 +82,7 @@
                                         <i
                                             class="fas <?= ($dpt['availability'] == 0 ? 'fa-lock' : 'fa-unlock') ?>"></i>
                                     </span>
-                                </a>&nbsp &nbsp
+                                </a>&nbsp &nbsp -->
                                 <a href="<?= base_url('master/d_area/') . $dpt['id'] ?>" class=""
                                     onclick="return confirm('Deleted room will lost forever. Still want to delete?')">
                                     <span class="icon text-danger" title="Delete">
@@ -115,6 +115,9 @@
   if ($this->session->flashdata('area_fail')) {
     echo getAlertMessages('error', $this->session->flashdata('area_fail'));
   }
+  if ($this->session->flashdata('area_neutral')) {
+    echo getAlertMessages('info', $this->session->flashdata('area_neutral'));
+  }
   if ($this->session->flashdata('success')) {
     echo getAlertMessages('success', $this->session->flashdata('success'));
   }
@@ -124,6 +127,7 @@
   //unset it after use
   $this->session->unset_userdata('area_scs');
   $this->session->unset_userdata('area_fail');
+  $this->session->unset_userdata('area_neutral');
   $this->session->unset_userdata('success');
   $this->session->unset_userdata('warning');
 ?>

@@ -150,7 +150,7 @@
                                         <thead style="color: #272727; font-weight: 500;">
                                             <tr>
                                                 <th>Name</th>
-                                                <th>PIN</th>
+                                                <!-- <th>PIN</th> -->
                                                 <th>Student ID</th>
                                                 <th>College</th>
                                                 <th>Course</th>
@@ -165,13 +165,13 @@
                                             <tr>
                                                 <td><?= isset($attend['username']) ? $attend['username'] : "no data"; ?>
                                                 </td>
-                                                <td>
+                                                <!-- <td>
                                                     <?php
                                                         $srcode = $attend['srcode'];
                                                         $student = $this->db->get_where('student', ['srcode' => $srcode])->row_array();
                                                         echo isset($student['pin']) ? $student['pin'] : "-";
                                                         ?>
-                                                </td>
+                                                </td> -->
                                                 <td><?= isset($attend['srcode']) ? $attend['srcode'] : "no data"; ?>
                                                 </td>
                                                 <td><?= isset($attend['college']) ? $attend['college'] : "-"; ?></td>

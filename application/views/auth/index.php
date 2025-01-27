@@ -141,17 +141,17 @@
                             width:100%;
                             " type="submit">Login</button>
                         </form>
-                        <div class="text-center mt-2">
+                        <!-- <div class="text-center mt-2">
                           <p class="text-light small">Don't have an account?
                           <a class="font-style-italic" style="color: #000748; font-style: italic; " href="<?= base_url('auth/account'); ?>">Sign Up</a>
                           </p>
                           
-                        </div>
+                        </div> -->
                 </div>
               </div>
-              <div class="text-center mt-0">
+              <!-- <div class="text-center mt-0">
                 <a class="small"  style="color: #000748;" href="<?= base_url('auth/forgotpassword'); ?>">Forgot Password?</a>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
