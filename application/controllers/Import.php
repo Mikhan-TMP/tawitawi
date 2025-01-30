@@ -61,7 +61,8 @@ class Import extends CI_Controller {
                       $inserdata[$i]['college'] = $value['F'];
                       $inserdata[$i]['course'] = $value['G'];
                       $inserdata[$i]['schoolyear'] = $value['H'];
-                      $inserdata[$i]['pin'] = $value['I'];
+                      $inserdata[$i]['birthdate'] = $value['I'];
+                      $inserdata[$i]['pin'] = $value['J'];
                       
                       // $inserdata[$i]['email'] = $value['G'];
                       // $inserdata[$i]['year'] = $value['I'];

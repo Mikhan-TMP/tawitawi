@@ -637,7 +637,7 @@ class Kiosk extends CI_Controller
     if($data == NULL){
       echo "no student record";
       return;
-    } 
+    }
     else{
      $srcode = $data['srcode'];
      $username = ($data['first_name'].' '.$data['last_name']) ; 
@@ -677,9 +677,9 @@ class Kiosk extends CI_Controller
     $this->db->insert('attend', $data);
 
     // $this->load->controller('Master');
-    $type = 'stud_timein';
-    $this->load->model('Notif_model');
-    $this->Notif_model->notifications($type, $data);
+    // $type = 'stud_timein';
+    // $this->load->model('Notif_model');
+    // $this->Notif_model->notifications($type, $data);
     // $this->master->notifications($type, $data);
 
     echo "time in success";
@@ -735,7 +735,8 @@ class Kiosk extends CI_Controller
       $code_type = $this->input->get("code_type");
       $code = $this->input->get("code");
       $kiosk_id = $this->input->get("kiosk_id");
-  
+      $isStudent = TRUE;
+      // Check the code type and adjust the query condition accordingly
       if ($code_type == 'qr' || $code_type == 'QR') {
           $data = $this->db->get_where('student', ['qrcode' => $code])->row_array();
       } else if ($code_type == 'rfid' || $code_type == 'RFID') {
@@ -748,10 +749,32 @@ class Kiosk extends CI_Controller
       }
   
       if ($data == NULL) {
+        //check if the query is for faculty uncomment for additional pain in the ass
+        // if ($code_type == 'qr' || $code_type == 'QR') {
+        //     $data = $this->db->get_where('faculty', ['qrcode' => $code])->row_array();
+        //     $isStudent = FALSE;
+        // } else if ($code_type == 'rfid' || $code_type == 'RFID') {
+        //     $data = $this->db->get_where('faculty', ['rfid' => $code])->row_array();
+        //     $isStudent = FALSE;
+        // } else if ($code_type == 'pin' || $code_type == 'PIN') {
+        //     $data = $this->db->get_where('faculty', ['pin' => $code])->row_array();
+        //     $isStudent = FALSE;
+        // } else {
+        //     echo "invalid code type";
+        //     return;
+        // }
+        if ($data == NULL) {
           echo "no student record";
           return;
+        }
       }
-  
+      //check the flag if true or false
+      if ($isStudent) {
+        $category = 'student';
+      }
+      else {
+        $category = 'faculty';
+      }
       // Check for today's attendance record with incomplete "out_time"
       $records = $this->db->get_where('attend', [
           'srcode' => $data['srcode'],
@@ -771,6 +794,7 @@ class Kiosk extends CI_Controller
   
           $data = [
               'username' => $username,
+              'category' => $category,
               'qrcode' => ($code_type == 'qr' ? $code : ""),
               'RFID' => ($code_type == 'rfid' ? $code : ""),
               'pin' => ($code_type == 'pin' ? $code : ""),
@@ -1491,7 +1515,267 @@ public function TapQRPair()
       // echo "The current time is later than the end time. Booking has no time out yet.";
       
   }
+
+
+
+  public function TimeInOutforTest()
+  {
+      date_default_timezone_set("Asia/Manila");
+      // DATE TODAY
+      $Sdate = date('Y-m-d', time());
+      // DATE AND TIME TODAY
+      $date = date('Y-m-d H:i:s', time());
   
+      $code_type = $this->input->post("code_type");
+      $code = $this->input->post("code");
+      $kiosk_id = $this->input->post("kiosk_id");
+      $isStudent = TRUE;
+      // Check the code type and adjust the query condition accordingly
+      if ($code_type == 'qr' || $code_type == 'QR') {
+          $data = $this->db->get_where('student', ['qrcode' => $code])->row_array();
+      } else if ($code_type == 'rfid' || $code_type == 'RFID') {
+          $data = $this->db->get_where('student', ['rfid' => $code])->row_array();
+      } else if ($code_type == 'pin' || $code_type == 'PIN') {
+          $data = $this->db->get_where('student', ['pin' => $code])->row_array();
+      } else {
+          // echo "invalid code type";
+          //load the view Testing 
+          $this->load->view('Testing');
+          return;
+      }
+  
+      if ($data == NULL) {
+        //check if the query is for faculty uncomment for additional pain in the ass
+        // if ($code_type == 'qr' || $code_type == 'QR') {
+        //     $data = $this->db->get_where('faculty', ['qrcode' => $code])->row_array();
+        //     $isStudent = FALSE;
+        // } else if ($code_type == 'rfid' || $code_type == 'RFID') {
+        //     $data = $this->db->get_where('faculty', ['rfid' => $code])->row_array();
+        //     $isStudent = FALSE;
+        // } else if ($code_type == 'pin' || $code_type == 'PIN') {
+        //     $data = $this->db->get_where('faculty', ['pin' => $code])->row_array();
+        //     $isStudent = FALSE;
+        // } else {
+        //     echo "invalid code type";
+        //     return;
+        // }
+        if ($data == NULL) {
+          $this->session->set_flashdata('error', 'No student record found.');
+          $this->load->view('Testing');
+          return;
+        }
+      }
+      //check the flag if true or false
+      if ($isStudent) {
+        $category = 'student';
+      }
+      else {
+        $category = 'faculty';
+      }
+      // Check for today's attendance record with incomplete "out_time"
+      $records = $this->db->get_where('attend', [
+          'srcode' => $data['srcode'],
+          'date' => $Sdate,
+          'out_time' => NULL // Check if "out_time" is NULL
+      ])->row_array();
+      if ($records) {
+          // If an incomplete record exists, proceed to "time-out"
+          $this->db->where('id', $records['id']);
+          $this->db->update('attend', ['out_time' => $date]);
+          
+          $this->session->set_flashdata('success', 'Time out Success!');
+          $this->load->view('Testing');
+          return;
+      } else {
+          // Create a new "time-in" record
+          $srcode = $data['srcode'];
+          $username = ($data['first_name'] . ' ' . $data['last_name']);
+  
+          $data = [
+              'username' => $username,
+              'category' => $category,
+              'qrcode' => ($code_type == 'qr' ? $code : ""),
+              'RFID' => ($code_type == 'rfid' ? $code : ""),
+              'pin' => ($code_type == 'pin' ? $code : ""),
+              'srcode' => $srcode,
+              'kiosk' => $kiosk_id,
+              'in_time' => $date,
+              'date' => $Sdate
+          ];
+  
+          $this->db->insert('attend', $data);
+          $this->session->set_flashdata('success', 'Time in Success!');
+          $this->load->view('Testing');
+          return;
+      }
+  }
+
+  public function reservationTesting()
+  {    
+    
+    // if($this->input->post("device") != null) {      
+      $device = $this->input->post("device");
+      $user_id = $this->input->post("user_id");
+      $code_type = $this->input->post("code_type");
+      $code = $this->input->post("code");        
+      $floor = $this->input->post("floor"); // desired floor
+      $room = $this->input->post("room");// desired room
+      $slot = $this->input->post("slot");// desired slot
+      $date = $this->input->post("date");  // desired date       
+      $stime = $this->input->post("stime");// desired stiem
+      $etime = $this->input->post("etime");// desired etime
+      
+      $data = array(
+        'device' => $this->input->post("device"),
+        'user_id' => $this->input->post("user_id"),
+        'code_type' => $this->input->post("code_type"),
+        'code' => $this->input->post("code"),
+        'floor' => $this->input->post("floor"),
+        'room' => $this->input->post("room"),
+        'slot_id' => $this->input->post("slot"),
+        'date' => $this->input->post("date"),
+        'start_time' => $this->input->post("stime"),
+        'end_time' => $this->input->post("etime"),
+        'at_time' => date("Y-m-d H:i:s", strtotime("today"))
+        );
+        
+        $this->db->insert('booking', $data);
+        //GENERATE BY GETTING SEAT LIST FIRST
+        $floorname =  $floor;
+        $roomname =  $room;
+        $d = $this->db->get_where('slot',['date'=>$date,'Floor'=>$floorname,'Room'=>$roomname])->result_array();        
+        $roominfo = $this->db->get_where('area',['floor'=>$floorname,'room'=>$roomname])->row();
+    
+        if ($d != NULL )
+        {
+          $slotdata = $this->db->get_where('slot', ['date'=>$date,'Floor' =>$floor,'Room' =>$room,'Slot' =>$slot])->row();
+          if($slotdata != NULL){
+              // echo gettype($slotdata);
+              // echo json_encode($slotdata);
+              //$timeslot = explode(",",$slotdata->status) ;
+              $slottemp = trim($slotdata->status, "[");
+              $slottemp = trim($slottemp, "]");
+              //  $timeslot = explode(",",$slotdata->status) ;
+              $timeslot = explode(",",$slottemp) ;
+              // echo gettype($timeslot);
+              //  print_r($timeslot);          
+            if($timeslot[$stime] =='1' )
+            {  // occupied 
+              $this->session->set_flashdata('warning', 'Seat is already Occupied');
+              $this->load->view('Testing');           
+            }
+            else{     // vacant 
+                for($i=$stime; $i<$etime; $i++)            
+                  $timeslot[$i] = '1';
+                  $data = array(                
+                    'status' => '['.implode(',',$timeslot).']'
+                  );              
+                $this->db->where('id', $slotdata->id);
+                $this->db->update('slot', $data);
+                // Generate the time slots
+                $counter = 0; // Initialize counter
+                for ($time = $open_time; $time <= $close_time; $time = strtotime('+1 hour', $time)) {
+                  $times[$counter] = date('H:i', $time);
+                  // echo $times[$counter];
+                  $counter++;
+                }
+              }
+              $this->session->set_flashdata('success', 'Reservation Success!');
+              $this->load->view('Testing');
+          }
+          else {
+            $this->session->set_flashdata('error', 'Reservation error!');
+            $this->load->view('Testing');
+          }
+        }
+        else{      
+            $slot=0;
+            $open_time = $roominfo->opentime;
+            $close_time = $roominfo->closetime;
+            //get the area information.
+            $start_hour = (int)date('H', strtotime($open_time));
+            $end_hour = (int)date('H', strtotime($close_time));
+              // Generate the hourly ranges and fill the array with zeros
+              for ($i = $start_hour; $i < $end_hour; $i++) {
+                $hour_ranges[] = "$i-" . ($i + 1); // Example: "8-9", "9-10"
+                $hour_blocks[] = 0;                // Add 0 for each hour block
+              }
+        
+
+          //convert hourblocks to string.
+          $hour_blocks_string = '[' . implode(',', $hour_blocks) . ']';
+          
+          $data = array(
+              'date' => $date,
+              'Floor' => $floorname,
+              'Room' => $roomname,
+              'Slot' => $slot,
+              'status' => $hour_blocks_string
+              //the culprit
+          );
+          
+          $Max_slot=$roominfo->slotnumber;
+          for ($slot=1;$slot<=$Max_slot;$slot++){
+            $data['Slot'] = $slot;
+            $this->db->insert('slot', $data);
+          }               
+          $slotdata = $this->db->get_where('slot', ['date'=>$date,'Floor' =>$floor,'Room' =>$room,'Slot' =>$slot])->row();
+          if($slotdata != NULL){
+              // echo gettype($slotdata);
+              // echo json_encode($slotdata);
+              //$timeslot = explode(",",$slotdata->status) ;
+              $slottemp = trim($slotdata->status, "[");
+              $slottemp = trim($slottemp, "]");
+              //  $timeslot = explode(",",$slotdata->status) ;
+              $timeslot = explode(",",$slottemp) ;
+              // echo gettype($timeslot);
+              //  print_r($timeslot);          
+            if($timeslot[$stime] =='1' )
+            {  // occupied 
+              $this->session->set_flashdata('warning', 'Seat is already Occupied');
+              $this->load->view('Testing');           
+            }
+            else{     // vacant 
+                for($i=$stime; $i<$etime; $i++)            
+                  $timeslot[$i] = '1';
+                  $data = array(                
+                    'status' => '['.implode(',',$timeslot).']'
+                  );              
+                $this->db->where('id', $slotdata->id);
+                $this->db->update('slot', $data);
+                // Generate the time slots
+                $counter = 0; // Initialize counter
+                for ($time = $open_time; $time <= $close_time; $time = strtotime('+1 hour', $time)) {
+                  $times[$counter] = date('H:i', $time);
+                  // echo $times[$counter];
+                  $counter++;
+                }
+              }
+              $this->session->set_flashdata('success', 'Reservation Success!');
+              $this->load->view('Testing');
+          }
+          else {
+            $this->session->set_flashdata('error', 'Reservation error!');
+            $this->load->view('Testing');
+          }
+    }
+  }
+
+  public function getSeatstest(){
+    // Get POST data
+      $room = $this->input->post('room');
+      $floor = $this->input->post('floor');
+      // Fetch seat data
+      $seats = $this->db->get_where('area', ['room' => $room, 'floor' => $floor])->result_array();
+
+      $floorname =  $floor;
+      $roomname =  $room;
+      $d = $this->db->get_where('slot',['date'=>$date,'Floor'=>$floorname,'Room'=>$roomname])->result_array();        
+      $roominfo = $this->db->get_where('area',['floor'=>$floorname,'room'=>$roomname])->row();
+
+
+      echo json_encode($seats);
+    }
 }
 
 

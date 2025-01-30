@@ -416,7 +416,9 @@ public function area()
     ]);
     // $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
     // $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim');
-    $this->form_validation->set_rules('pin', 'PIN', 'required|trim|numeric');
+    $this->form_validation->set_rules('pin', 'PIN', 'required|trim|numeric|is_unique[student.pin]', [
+      'is_unique' => 'This PIN already exists. Please try again.'
+    ]);
     $this->form_validation->set_rules('year', 'Year', 'required|trim');
     $this->form_validation->set_rules('course', 'course', 'required|trim');
     $this->form_validation->set_rules('college', 'college', 'required|trim');
@@ -3059,38 +3061,78 @@ public function markAllAsRead() {
       echo 'Failed to fetch data. HTTP Code: ' . $httpCode;
       return;
     }
-    
+    $studentCounter = 0;
+    $addCounter = 0;
+    $editCounter = 0;
+    $failedAddCounter = 0;
+    $failedEditCounter = 0;
+    $neutralEditCounter = 0;
     foreach ($data['data']['rows'] as $student) {
+        $studentCounter++;
         // Check if srcode or rfid already exists
         $this->db->where('srcode', $student['id_number']);
         // $this->db->or_where('rfid', $student['rfid']);
         $existing_student = $this->db->get('student')->row_array();
 
-        $data = [
-          'first_name' => $student['first_name'],
-          'middle_name' => $student['middle_name'],
-          'last_name' => $student['last_name'],
-          'srcode' => $student['id_number'],
-          // 'college' => $student['department'],
-          'college' => $student['college'],
-          'rfid' => $student['rfid']
-        ];
-
+        // $data = [
+        //   'first_name' => $student['first_name'],
+        //   'middle_name' => $student['middle_name'],
+        //   'last_name' => $student['last_name'],
+        //   'srcode' => $student['id_number'],
+        //   'college' => $student['college'],
+        //   'rfid' => $student['rfid']
+        // ];
+        // check if birthdate is set, if not, set it to 0000-00-00
+        if (empty($student['birthdate'])) {
+          $student['birthdate'] = '0000-00-00';
+        }
+        //convert the birthdate into 
+        $data = array_filter([
+            'first_name' => $student['first_name'] ?? null,
+            'middle_name' => $student['middle_name'] ?? null,
+            'last_name' => $student['last_name'] ?? null,
+            'birthdate' => $student['birthdate'] ?? null,
+            'srcode' => $student['id_number'] ?? null,
+            'college' => $student['college'] ?? null,
+            'rfid' => $student['rfid'] ?? null
+        ]);
+        
+        //IF THE STUDENT IS EXISTING, UPDATE
         if ($existing_student) {
           $this->db->where('srcode', $student['id_number']);
           $this->db->update('student', $data);
-          $this->session->set_flashdata('student_neutral', 'Some students already have a record on your database. Their data was updated.');
+          if ($this->db->affected_rows() > 0) {
+            $editCounter++;
+          } elseif ($this->db->affected_rows() === 0) {
+            $neutralEditCounter++;
+          } else {
+            $failedEditCounter++;
+          }
           continue;
         }
-
-        // Insert data into the database
+        // IF THE STUDENT IS NEW, ADD
         if (!$this->db->insert('student', $data)) {
-          $this->session->set_flashdata('student_fail', 'Error inserting student to the database.');
-          return;
+          $failedAddCounter++;
+          continue;
+        }else{
+          $addCounter++;
+          continue;
         }
       }
-
-      $this->session->set_flashdata('student_scs', 'Students succesfully imported from the Enrollment System\'s database.');
+      
+      // $this->session->set_flashdata('student_scs', 'Students succesfully imported from the Enrollment System\'s database.');
+      // $this->session->set_flashdata('student_scs', "Succesfully imported $studentCounter student records, added $addCounter new student records and updated $editCounter existing student records. $failedAddCounter student records failed to be added and $failedEditCounter student records failed to be updated.");
+      $this->session->set_flashdata('student_neutral', 
+          "<i class='fas fa-check-circle text-success'></i> Succesfully imported $studentCounter student records." . PHP_EOL .
+          "---------------------------------" . PHP_EOL .
+          "<i class='fas fa-plus-circle text-primary'></i> Added $addCounter new student records." . PHP_EOL .
+          "---------------------------------" . PHP_EOL .
+          "<i class='fas fa-edit text-warning'></i> Updated $editCounter existing student records." . PHP_EOL .
+          "---------------------------------" . PHP_EOL .
+          "<i class='fas fa-times-circle text-danger'></i> $failedAddCounter student records failed to be added." . PHP_EOL .
+          "---------------------------------" . PHP_EOL .
+          "<i class='fas fa-times-circle text-danger'></i> $failedEditCounter student records failed to be updated."
+      );
       redirect('master/student');
     }
 

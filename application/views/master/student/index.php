@@ -32,9 +32,9 @@
                     </button>
                     <button id="ImportDatabase" type="button" class="btn btn-secondary btn-icon-split mb-4 shadow-sm">
                         <span class="icon text-white-600">
-                            <i class="fas fa-file-export"></i>
+                            <i class="fas fa-database"></i>
                         </span>
-                        <span class="text">Database Import</span>
+                        <span class="text">Import Data</span>
                     </button>
                     <!-- <button type="button" class="btn btn-secondary btn-icon-split mb-4 shadow-sm" data-toggle="modal" data-target=".bd-example-modal-xl-export">
                   <span class="icon text-white-600">
@@ -93,7 +93,7 @@
                                             <th>Department </th>
                                             <th>Course </th>
                                             <th>Year </th>
-                                            <!-- <th>QR</th> -->
+                                            <th>Birthdate</th>
                                             <th>PIN</th>
                                             <!-- <th>RFID</th> -->
 
@@ -102,27 +102,27 @@
                                     <tbody>
                                         <tr>
                                             <td>20241001</td>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>M</td>
-                                            <td>Male</td>
-                                            <td>CCIS</td>
-                                            <td>BS Computer Science</td>
-                                            <td>4</td>
-                                            <!-- <td>1234562</td> -->
-                                            <td>51231</td>
-                                        </tr>
-                                        <tr>
-                                            <td>20241002</td>
-                                            <td>Jane</td>
-                                            <td>Smith</td>
-                                            <td>A</td>
+                                            <td>Trish</td>
+                                            <td>Balbastro</td>
+                                            <td>P</td>
                                             <td>Female</td>
                                             <td>CCIS</td>
                                             <td>BS Computer Science</td>
                                             <td>4</td>
-                                            <td>1234561</td>
-                                            <!-- <td>42123</td> -->
+                                            <td>2002-01-18</td>
+                                            <td>51231</td>
+                                        </tr>
+                                        <tr>
+                                            <td>20241002</td>
+                                            <td>Mike</td>
+                                            <td>Balbastro</td>
+                                            <td>A</td>
+                                            <td>Male</td>
+                                            <td>CCIS</td>
+                                            <td>BS Computer Science</td>
+                                            <td>4</td>
+                                            <td>2002-04-12</td>
+                                            <td>42123</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -262,6 +262,7 @@
                                 <th scope="col">College</th>
                                 <th scope="col">Course</th>
                                 <th scope="col">Year</th>
+                                <th scope="col">Birthdate</th>
                                 <th scope="col">Pin</th>
                                 <!-- <th scope="col">QRCODE</th> -->
                                 <!-- <th scope="col">RFID</th> -->
@@ -291,6 +292,7 @@
                                 <td class=" align-middle"><?= $emp['college']; ?></td>
                                 <td class=" align-middle"><?= $emp['course']; ?></td>
                                 <td class=" align-middle"><?= $emp['schoolyear']; ?></td>
+                                <td class=" align-middle"><?= date('M. j, Y', strtotime($emp['birthdate'])); ?></td>
                                 <td class=" align-middle"><?= $emp['pin']; ?></td>
                                 <!-- <td class=" align-middle"><?= $emp['qrcode']; ?></td> -->
                                 <!-- <td class=" align-middle"><?= $emp['rfid']; ?></td> -->
@@ -338,14 +340,21 @@
           if($this->session->flashdata('student_validation')) {
             echo getAlertMessages('error', $this->session->flashdata('student_validation'));
           }
+          if($this->session->flashdata('student_add')) {
+            echo getAlertMessages('warning', $this->session->flashdata('student_add'));
+          }
+          if($this->session->flashdata('student_update')) {
+            echo getAlertMessages('warning', $this->session->flashdata('student_update'));
+          }
           
           //unset it after use
           $this->session->unset_userdata('student_scs');
           $this->session->unset_userdata('student_fail');
           $this->session->unset_userdata('student_neutral');
           $this->session->unset_userdata('student_validation');
+          $this->session->unset_userdata('student_add');
+          $this->session->unset_userdata('student_update');
         ?>
-
 <script>
   // document.addEventListener("DOMContentLoaded", function () {
   //     // Initialize the DataTable
@@ -585,7 +594,7 @@
         $('#ImportDatabase').on('click', function() {
             Swal.fire({
                 title: 'Import Database',
-                text: 'Are you sure you want to import the database?',
+                text: 'Are you sure you want to import student data from the Enrollment System?',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -596,11 +605,17 @@
                 if (result.isConfirmed) {
                     //go to master controller.
                     window.location.href = "<?= base_url('master/import_database') ?>";
-                    Swal.fire(
-                        'Import Started!',
-                        'The database import process has begun.',
-                        'success'
-                    );
+                    Swal.fire({
+                        title: 'Import Started!',
+                        text: 'The database import process has begun.',
+                        icon: 'success',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
                 }
             });
         });

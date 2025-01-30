@@ -150,8 +150,9 @@
                                         <thead style="color: #272727; font-weight: 500;">
                                             <tr>
                                                 <th>Name</th>
+                                                <th>Category</th>
                                                 <!-- <th>PIN</th> -->
-                                                <th>Student ID</th>
+                                                <th>ID</th>
                                                 <th>College</th>
                                                 <th>Course</th>
                                                 <th>Kiosk</th>
@@ -172,6 +173,7 @@
                                                         echo isset($student['pin']) ? $student['pin'] : "-";
                                                         ?>
                                                 </td> -->
+                                                <td><?= isset($attend['category']) ? $attend['category'] : "no data"; ?></td>
                                                 <td><?= isset($attend['srcode']) ? $attend['srcode'] : "no data"; ?>
                                                 </td>
                                                 <td><?= isset($attend['college']) ? $attend['college'] : "-"; ?></td>

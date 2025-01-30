@@ -109,8 +109,8 @@ class Public_model extends CI_Model
     INNER JOIN  student
     ON  attend.srcode = student.srcode
     WHERE  1 
-    ORDER BY attend.date DESC 
-    LIMIT  200";
+    ORDER BY attend.date DESC";
+    // LIMIT  200";
 
     return $this->db->query($query)->result_array();
   }
@@ -168,12 +168,16 @@ class Public_model extends CI_Model
       attend.date,
       student.college AS 'college',
       student.course AS 'course',
+      faculty.college AS 'f_college',
+      faculty.course AS 'f_course',
       student.gender AS 'gender'    
       FROM  attend
-      INNER JOIN  student
-      ON  attend.srcode = student.srcode
-      WHERE  1
-      ORDER BY  `date` DESC";
+      LEFT JOIN student
+      ON attend.srcode = student.srcode
+      LEFT JOIN faculty
+      ON attend.srcode = faculty.srcode
+      WHERE 1
+      ORDER BY `date` DESC";
 
     return $this->db->query($query)->result_array();
     /*   
