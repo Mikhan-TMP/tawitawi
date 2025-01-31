@@ -257,6 +257,7 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Student ID</th>
+                                <!-- <th scope="">Username</th> -->
                                 <th>Name <span style="font-weight: normal; font-style: italic;">(LN, FN, MN)<span></th>
                                 <th scope="col">Gender</th>
                                 <th scope="col">College</th>
@@ -282,6 +283,7 @@
                                 <td class=" align-middle"><?= $i++; ?></td>
                                 <!-- td class=" align-middle"><?= $emp['id']; ?></td -->
                                 <td class=" align-middle"><?= $emp['srcode']; ?></td>
+                                <!-- <td class=" align-middle"><?= $emp['username']; ?></td> -->
                                 <td class=" align-middle">
                                     <?= $emp['last_name'].", ".$emp['first_name']." ".$emp['middle_name'] ; ?></td>
                                 <td class=" align-middle"><?php if ($emp['gender'] == 'M') {

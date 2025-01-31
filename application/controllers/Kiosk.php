@@ -1776,6 +1776,157 @@ public function TapQRPair()
 
       echo json_encode($seats);
     }
+
+    public function HttpGetTimeInOut()
+    {
+        //get the timezone
+        date_default_timezone_set("Asia/Manila");
+        // DATE TODAY
+        $Sdate = date('Y-m-d', time());
+        // DATE AND TIME TODAY
+        $date = date('Y-m-d H:i:s', time());
+        //get the value of kiosk_id
+        $kiosk_id = $this->input->get("kiosk_id");
+        //get the username
+        if ($this->input->get("username") !== null) {
+          $userName = $this->input->get("username");
+        }
+        //get the password
+        if ($this->input->get("password") !== null) {
+          $userName = $this->input->get("password");
+        }
+
+        //get the srcode
+        if ($this->input->get("studentID") !== null) {
+          $studentID = $this->input->get("studentID");
+        }
+
+        //if they use codes, get code_type
+        if ($this->input->get('code_type') !== null) {
+          $code_type = $this->input->get("code_type");
+        }
+
+        if ($this->input->get('kiosk_id') !== null) {
+            $kiosk_id = $this->input->get("kiosk_id");
+        }
+
+        if (isset($kiosk_id) && empty($kiosk_id) || !isset($kiosk_id)) {
+            http_response_code(400);
+            echo json_encode(array("status" => "error", "message" => "(kiosk_id) Empty parameter(s) detected."));
+            return;
+        }
+
+        //validations
+        if ($this->input->get('code') !== null) {
+          // check if $code_type = either pin, rfid, or qr
+        //   if ($code_type == 'pin' || $code_type == 'PIN') {
+        if ($code_type == 'birthdate' || $code_type == 'BIRTHDATE') {
+            $pin = $this->input->get("code");
+          } else if ($code_type == 'rfid' || $code_type = 'RFID') {
+            $rfid = $this->input->get("code");
+          } else if ($code_type == "qr" || $code_type == 'QR'){
+            $qr = $this->input->get('code');
+          }else{
+            http_response_code(400);
+            echo json_encode(array("status" => "error", "message" => "Invalid input code."));
+            return;
+          }
+        }
+        //idk how this shit works. only god knows how. prolly not.
+        if (isset($studentID) && empty($studentID) || !isset($studentID)) {
+            http_response_code(400);
+            echo json_encode(array("status" => "error", "message" => "(studentID) Empty parameter(s) detected."));
+            return;
+        }else{
+            //check the three if empty or null.
+            if (isset($code_type) && empty($code_type)){
+                http_response_code(400);
+                echo json_encode(array("status" => "error", "message" => "(codetype )Empty parameter(s) detected."));
+                return;
+            }else{
+            if (isset($pin) && empty($pin) || isset($rfid) && empty($rfid) || isset($qr) && empty($qr)){
+                http_response_code(400);
+                echo json_encode(array("status" => "error", "message" => "(PIN RFID QR)Empty parameter(s) detected."));
+                return;
+            }else{
+                if (isset($pin)) {
+                    $data = $this->db->get_where('student', ['pin' => $pin, 'srcode' => $studentID])->row_array();
+                    } 
+                else if (isset($rfid)) {
+                        $data = $this->db->get_where('student', ['pin' => $pin, 'srcode' => $studentID])->row_array();
+                    } 
+                else if (isset($qr)) {
+                        $data = $this->db->get_where('student', ['pin' => $pin, 'srcode' => $studentID])->row_array();
+                    }
+                }
+            }
+        }
+        //check the username and password if empty or null
+        if (isset ($userName) && empty($userName) || isset($password) && empty($password)) {
+            http_response_code(400);
+            echo json_encode(array("status" => "error", "message" => "(UN PASS) Empty parameter(s) detected."));
+            return;
+        }
+        else if (isset($userName) && !empty($userName) || isset($password) && !empty($password)) {
+          $data = $this->db->get_where('student', ['username' => $userName])->row_array();
+          //verification (in php hash)
+          if ($data != NULL && password_verify($password, $data['password'])) {
+              $data = $data;
+          } else {
+              http_response_code(400);
+              echo json_encode(array("status" => "error", "message" => "Incorrect password."));
+              $data = NULL;
+              return;
+          }
+          //perform other verification if not the same hashing method. idk if i can tho.
+          /***********************************************************/
+          /* HERE LIES MIKHAN WHO DOESN'T KNOW HOW TO IMPLEMENT THAT */
+          /***********************************************************/
+        }
+        //check if there is a student record for the parameters above.
+        if ($data == NULL) {
+            http_response_code(200);
+            echo json_encode(array("status" => "error", "message" => "No student record found."));
+            return;
+        }
+
+        // Check for today's attendance record with incomplete "out_time"
+        $records = $this->db->get_where('attend', [
+            'srcode' => $data['srcode'],
+            'date' => $Sdate,
+            'out_time' => NULL // Check if "out_time" is NULL
+        ])->row_array();
+
+        if ($records) {
+            // If an incomplete record exists, proceed to "time-out"
+            $this->db->where('id', $records['id']);
+            $this->db->update('attend', ['out_time' => $date]);
+            http_response_code(200);
+            echo json_encode(array("status" => "success", "message" => "Time-out success"));
+            return;
+        } else {
+            // Create a new "time-in" record
+            $srcode = $data['srcode'];
+            $category = 'student';
+            $username = ($data['first_name'] . ' ' . $data['last_name']);
+            $data = [
+                'username' => $username,
+                'category' => $category,
+                // 'qrcode' => ($code_type == 'qr' ? $code : ""),
+                // 'RFID' => ($code_type == 'rfid' ? $code : ""),
+                // 'pin' => ($code_type == 'pin' ? $code : ""),
+                'srcode' => $srcode,
+                'kiosk' => $kiosk_id,
+                'in_time' => $date,
+                'date' => $Sdate
+            ];
+            $this->db->insert('attend', $data);
+            http_response_code(200);
+            echo json_encode(array("status" => "success", "message" => "Time-in success"));
+            return;
+        }
+    }
+
 }
 
 

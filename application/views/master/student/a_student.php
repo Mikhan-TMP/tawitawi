@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <!-- Pin -->
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                         <div class="form-group mt-4" style="    
                         display: flex;
                         flex-direction: column;
@@ -101,7 +101,7 @@
                                 style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter PIN">
                             <?= form_error('pin', '<small class="text-danger">', '</small>') ?>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-lg-6">
                         <div class="form-group mt-4" style="    display: flex;flex-direction: column;">
                             <label for="d-id" class="text-dark" style="font-weight: bold;">College</label>
@@ -118,6 +118,14 @@
                                 id="course" required style="border-radius:15px; font-size: 1rem; padding: 25px;"
                                 placeholder="Enter Course">
                             <?= form_error('course', '<small class="text-danger">', '</small>') ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mt-4" style="display: flex;flex-direction: column;">
+                            <label for="birthdate" class="text-dark" style="font-weight: bold;">Birthdate</label>
+                            <input type="date" class="form-control col-lg" name="birthdate" id="birthdate" required
+                                style="border-radius:15px; font-size: 1rem; padding: 25px;">
+                            <?= form_error('birthdate', '<small class="text-danger">', '</small>') ?>
                         </div>
                     </div>
                     <div class="col-lg-6">

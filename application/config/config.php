@@ -535,8 +535,11 @@ $config['proxy_ips'] = '';
 | is fully developed and implemented.
 |
 */
-$config['api_endpoint'] = 'https://api.sandbox.centralizedinc.com/management/v1.0/integrations/students';
-$config['auth_url'] = 'https://api.sandbox.centralizedinc.com/iam/v1.0/integrations/auth';
+// $config['api_endpoint'] = 'https://api.sandbox.centralizedinc.com/management/v1.0/integrations/students';
+$config['api_endpoint'] = 'http://192.168.1.141:3000/getAllStudents';
+
+// $config['auth_url'] = 'https://api.sandbox.centralizedinc.com/iam/v1.0/integrations/auth';
+$config['auth_url'] = 'http://192.168.1.141:3000/givemetheToken';
 
 $config['username'] =  'psbd_1';
 $config['password'] =  's4FhJ3ZPRK62X8K';
