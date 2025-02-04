@@ -40,7 +40,7 @@
                         <div class="form-group mt-4" style="display: flex; flex-direction: column;">
                             <label for="e_name" class="text-dark" style="font-weight: bold;">Middle Name</label>
                             <input type="text" minlength="1" maxlength="30" class="form-control col-lg" name="m_name"
-                                id="m_name" required style="border-radius:15px; font-size: 1rem; padding: 25px;"
+                                id="m_name" style="border-radius:15px; font-size: 1rem; padding: 25px;"
                                 placeholder="Enter Middle Name">
                             <?= form_error('m_name', '<small class="text-danger">', '</small>') ?>
                         </div>

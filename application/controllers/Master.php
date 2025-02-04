@@ -409,7 +409,7 @@ public function area()
   {
 
     $this->form_validation->set_rules('f_name', 'first name', 'required|trim|regex_match[/^[a-zA-Z ]+$/]');
-    $this->form_validation->set_rules('m_name', 'middle name', 'required|trim|alpha');
+    $this->form_validation->set_rules('m_name', 'middle name', 'trim|alpha');
     $this->form_validation->set_rules('l_name', 'last name', 'required|trim|regex_match[/^[a-zA-Z ]+$/]');
     $this->form_validation->set_rules('srcode', 'Student ID ', 'required|trim|is_unique[student.srcode] ', [
       'is_unique' => 'This Student ID already exists. Please try again.'
@@ -448,7 +448,7 @@ public function area()
     else{
       $data = [
         'first_name' => $this->input->post('f_name'),
-        'middle_name' => $this->input->post('m_name'),
+        'middle_name' => (empty($this->input->post('m_name')) ? "" : $this->input->post('m_name')),
         'last_name' => $this->input->post('l_name'),
         'srcode' => $this->input->post('srcode'),
         'gender' => $this->input->post('e_gender'),
@@ -481,16 +481,19 @@ public function area()
   public function edit_student()
   {
     $this->form_validation->set_rules('f_name', 'first name', 'required|trim|regex_match[/^[a-zA-Z ]+$/]');
-    $this->form_validation->set_rules('m_name','middle name', 'required|trim|regex_match[/^[a-zA-Z ]+$/]');
+    $this->form_validation->set_rules('m_name','middle name', 'trim|regex_match[/^[a-zA-Z ]+$/]');
     $this->form_validation->set_rules('l_name', 'last name', 'required|trim|regex_match[/^[a-zA-Z ]+$/]');
     $this->form_validation->set_rules('srcode', 'sr code ', 'required|trim');
+    $this->form_validation->set_rules('birthdate', 'birthdate', 'required');
     // $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim');
-    $this->form_validation->set_rules('pin', 'PIN', 'required|trim|numeric');
+    // $this->form_validation->set_rules('pin', 'PIN', 'required|trim|numeric');
     // $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
     // $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
     $this->form_validation->set_rules('year', 'Year', 'required|trim');
     $this->form_validation->set_rules('course', 'course', 'required|trim');
     $this->form_validation->set_rules('college', 'college', 'required|trim');
+
+    $pin = date('mdY', strtotime($this->input->post('birthdate')));
 
     if ($this->form_validation->run() == false) {
       $errors = validation_errors();
@@ -502,7 +505,7 @@ public function area()
         $e_id = $this->input->post('e_id');   
         $data = [
             'first_name' => $this->input->post('f_name'),
-            'middle_name' => $this->input->post('m_name'),
+            'middle_name' => (empty($this->input->post('m_name')) ? "" : $this->input->post('m_name')),
             'last_name' => $this->input->post('l_name'),
             'srcode' => $this->input->post('srcode'),
             'gender' => $this->input->post('e_gender'),
@@ -511,10 +514,12 @@ public function area()
             'email' => $this->input->post('email'),
             // rfid
             // 'rfid' => $this->input->post('rfid'),
-            'pin' => $this->input->post('pin'),
+            'pin' => $pin,
             'schoolyear' => $this->input->post('year'),
             'course' => $this->input->post('course'),
-            'college' => $this->input->post('college')
+            'college' => $this->input->post('college'),
+            'birthdate' => date('Y-m-d', strtotime($this->input->post('birthdate'))),
+
         ];
     
         $this->db->update('student', $data, ['id' => $e_id]);
@@ -3152,17 +3157,22 @@ public function markAllAsRead() {
     $url = $this->config->item('api_endpoint');
     
     $token = $this->HttpGetTokenToTawi();
-    if (!$token) {
-        $response = [
-            'status' => 401,
-            'message' => 'Unauthorized: Failed to get token.'
-        ];
-        $this->output
-            ->set_content_type('application/json')
-            ->set_status_header(401)
-            ->set_output(json_encode($response));
-        return;
+    if (!$token){
+      $this->session->set_flashdata('student_neutral', 'Unauthorized: Failed to get token.');
+      redirect('master/student');
     }
+    
+    // if (!$token) {
+    //     $response = [
+    //         'status' => 401,
+    //         'message' => 'Unauthorized: Failed to get token.'
+    //     ];
+    //     $this->output
+    //         ->set_content_type('application/json')
+    //         ->set_status_header(401)
+    //         ->set_output(json_encode($response));
+    //     return;
+    // }
 
     // Initialize cURL
     $ch = curl_init($url);
@@ -3179,16 +3189,19 @@ public function markAllAsRead() {
     if (curl_errno($ch)) {
         $error = curl_error($ch);
         curl_close($ch);
-        echo 'Error: ' . $error;
-        return;
+        $this->session->set_flashdata('student_neutral', 'Error: ' . $error);
+        redirect('master/student');
     }
     curl_close($ch);
 
     $data = json_decode($response, true);
 
     if (!$data) {
-        echo 'Failed to fetch data. HTTP Code: ' . $httpCode;
-        return;
+        $this->session->set_flashdata('student_neutral', 'API Error: Failed to fetch data.');
+        // $this->session->set_flashdata('student_neutral', 'Error: ' . $error);
+        redirect('master/student');
+        // echo 'Failed to fetch data. HTTP Code: ' . $httpCode;
+        // return;
     }
 
     $studentCounter = 0;

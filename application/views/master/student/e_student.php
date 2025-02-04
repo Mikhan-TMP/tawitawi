@@ -130,14 +130,15 @@
                         </div>
                       </div>
 
-                      <div class="col-lg-6">
+                      <!-- <div class="col-lg-6">
                         <div class="form-group">
                           <label for="pin" class="text-dark" style="font-weight: bold;"">PIN</label>
-                          <input type="number" class="form-control col-lg" name="pin" id="pin" value="<?= $student['pin']; ?>"
+                          <input type="hidden" class="form-control col-lg" name="pin" id="pin" value="<?= $student['pin']; ?>"
                           style="border-radius:15px; font-size: 1rem; padding: 25px;">
                           <?= form_error('pin', '<small class="text-danger">', '</small>') ?>
                         </div>
-                      </div>
+                      </div> -->
+
 
                       <div class="col-lg-6">
                         <div class="form-group">                        
@@ -145,6 +146,14 @@
                           <input type="text" minlength="2" maxlength="30" class="form-control" name="srcode" id="srcode" value="<?= $student['srcode']; ?>"
                           style="border-radius:15px; font-size: 1rem; padding: 25px;">
                           <?= form_error('e_name', '<small class="text-danger">', '</small>') ?>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group mt-4" style="display: flex;flex-direction: column;">
+                            <label for="birthdate" class="text-dark" style="font-weight: bold;">Birthdate</label>
+                            <input type="date" class="form-control col-lg" name="birthdate" id="birthdate" value="<?= $student['birthdate']; ?>"
+                                style="border-radius:15px; font-size: 1rem; padding: 25px;">
+                            <?= form_error('birthdate', '<small class="text-danger">', '</small>') ?>
                         </div>
                       </div>
                       <div class="col-lg-6">

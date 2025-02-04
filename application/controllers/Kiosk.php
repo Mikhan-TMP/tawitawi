@@ -1826,6 +1826,7 @@ class Kiosk extends CI_Controller
             return;
         }
     }
+
     public function HttpGetUserInfo(){
         date_default_timezone_set("Asia/Manila");
         //--------------------------------------------------------------//
@@ -1998,6 +1999,7 @@ class Kiosk extends CI_Controller
         http_response_code(200);
         echo json_encode(array("status" => "success", "message" => "User found.", "data" => $data));
     }
+    
     public function HttpGetReservationList(){
         date_default_timezone_set("Asia/Manila");
         //--------------------------------------------------------------//
@@ -2233,7 +2235,6 @@ class Kiosk extends CI_Controller
             }    
         
     }
-
     public function HttpGetAreaList(){
         $floorname =  $this->input->get("floorname");
         if (!isset($floorname)){
@@ -2330,7 +2331,33 @@ class Kiosk extends CI_Controller
             }
         }
     }
-    public function HttpPostSeatTimeIn(){}
+    public function HttpPostSeatTimeIn(){
+        date_default_timezone_set("Asia/Manila");
+        $time = date('H:i:s', time());
+        $book_id = $this->input->get('book_id');
+        if (empty($book_id)){
+            http_response_code(400);
+            echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+            return;
+        }
+        
+        $data  =$this->db->get_where('booking', ['id' => $book_id])->row_array();
+        if($data){
+            $queryUpdate = "UPDATE `booking` SET `in_time` = '" . $time . "', `in_status` = 'occupied'  WHERE  `id` = '$book_id'";
+            if ($this->db->query($queryUpdate)){   
+                http_response_code(200);
+                echo json_encode(array("status" => "success", "message" => "Time in success."));
+            }else{
+                http_response_code(500);
+                echo json_encode(array("status" => "error", "message" => "Error updating database."));
+            }
+        }
+        else{
+            http_response_code(200);
+            echo json_encode(array("status" => "error", "message" => "No booking data found."));
+            return;
+        }
+    }
     
 
     /*
@@ -2348,7 +2375,7 @@ class Kiosk extends CI_Controller
 
     http://{serverIP}/{serverName}/Kiosk/ReqBookSeat                                            DONE HttpPostSeatReservation
 
-    http://{serverIP}/{serverName}/Kiosk/GetSeatList?floorname={floorname}&roomname={roomname}&date={currentDate}
+    http://{serverIP}/{serverName}/Kiosk/GetSeatList?floorname={floorname}&roomname={roomname}&date={currentDate} DONE httpGet
      */
 }
 
