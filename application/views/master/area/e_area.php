@@ -3,16 +3,32 @@
 
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Edit Area</h1>
-
-          <a href="<?= base_url('master/area'); ?>" class="btn btn-secondary btn-icon-split mb-4">
-            <span class="icon text-white">
-              <i class="fas fa-chevron-left"></i>
-            </span>
-            <span class="text">Back</span>
-          </a>
+            <a href="<?= base_url('master/area'); ?>" class="btn btn-secondary btn-icon-split">
+              <span class="icon text-white">
+                <i class="fas fa-chevron-left"></i>
+              </span>
+              <span class="text">Back</span>
+            </a>
+            <!-- <div class="tooltip-container">
+              <div class="ex-icon">
+                <i class="fas fa-exclamation-circle text-danger" style="font-size: 1.5rem; margin-left: .5rem; cursor: pointer;" data-toggle="modal" data-target="#infoModal"> </i>
+              </div>
+            </div> -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script>
+              $(document).ready(function(){
+                Swal.fire({
+                  title: 'Library Area Information',
+                  text: "This page is used to edit the library areas. Editing the area may affect existing bookings. Please ensure there are no bookings for this area or refrain from editing the area if possible.",
+                  icon: 'info',
+                  confirmButtonText: 'Close'
+                });
+              });
+            </script>
 
           <form action="" method="POST" class="col-lg-5 p-0 m-auto">
-            <div class="card">
+            <div class="card" style="border-radius: 15px;">
             <h3 class="mb-0 text-left text-light" 
                   style="background: linear-gradient(180deg, #031084, #000748); 
                   border-top-left-radius:15px;
@@ -20,7 +36,7 @@
                   padding: 1.5rem;
                   font-size: 1.5rem;">
                   Update Area Data</h3>
-              <div class="card-body">                
+              <div class="card-body" >                
                 <div class="form-group">
                   <label for="department_id" class="text-dark" style="font-weight: bold;">Area ID</label>
                   <input type="text" readonly class="form-control-plaintext form-control-lg" name="d_id" value="<?= $d_old['id']; ?>"
@@ -64,13 +80,13 @@
                 </div>
                 <div class="form-group">
                     <label for="open_time" class="text-dark" style="font-weight: bold;">Opening Time</label>
-                    <input type="time" class="form-control form-control-lg" name="open_time" id="open_time" value="<?= $d_old['opentime']; ?>"
+                    <input type="time"  class="form-control form-control-lg" name="open_time" id="open_time" value="<?= $d_old['opentime']; ?>" readonly
                     style="border-radius:15px; font-size: 1rem; padding: 25px;">
                     <?= form_error('open_time', '<small class="text-danger">', '</small>') ?>
                   </div>
                   <div class="form-group">
                     <label for="close_time" class="text-dark" style="font-weight: bold;">Closing Time</label>
-                    <input type="time" class="form-control form-control-lg" name="close_time" id="close_time" value="<?= $d_old['closetime']; ?>"
+                    <input type="time" class="form-control form-control-lg" name="close_time" id="close_time" value="<?= $d_old['closetime']; ?>" readonly
                     style="border-radius:15px; font-size: 1rem; padding: 25px;">
                     <?= form_error('close_time', '<small class="text-danger">', '</small>') ?>
                   </div>

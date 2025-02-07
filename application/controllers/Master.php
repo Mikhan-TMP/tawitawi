@@ -3035,144 +3035,15 @@ public function markAllAsRead() {
     }
   }
 
-  // public function import_database(){
-  //   // API endpoint
-  //   $url = $this->config->item('api_endpoint');
-    
-  //   $token = $this->HttpGetTokenToTawi();
-  //       if (!$token) {
-  //           $response = [
-  //               'status' => 401,
-  //               'message' => 'Unauthorized: Failed to get token.'
-  //           ];
-  //           $this->output
-  //               ->set_content_type('application/json')
-  //               ->set_status_header(401)
-  //               ->set_output(json_encode($response));
-  //           return;
-  //       }
-
-  //   // Initialize cURL
-  //   $ch = curl_init($url);
-  //   curl_setopt_array($ch, [
-  //       CURLOPT_RETURNTRANSFER => true,
-  //       CURLOPT_HTTPHEADER => [
-  //           'Authorization: Bearer ' . $token,
-  //           'Content-Type: application/json'
-  //       ]
-  //   ]);
-    
-  //   $response = curl_exec($ch);
-  //   $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); // Get the HTTP response code
-  //   if (curl_errno($ch)) {
-  //     $error = curl_error($ch);
-  //     curl_close($ch);
-  //     echo 'Error: ' . $error;
-  //     return;
-  //   }
-  //   curl_close($ch);
-
-  //   $data = json_decode($response, true);
-
-  //   if ( !$data) {
-  //     echo 'Failed to fetch data. HTTP Code: ' . $httpCode;
-  //     return;
-  //   }
-  //   $studentCounter = 0;
-  //   $addCounter = 0;
-  //   $editCounter = 0;
-  //   $failedAddCounter = 0;
-  //   $failedEditCounter = 0;
-  //   $neutralEditCounter = 0;
-  //   foreach ($data['data']['rows'] as $student) {
-  //       $studentCounter++;
-  //       // Check if srcode or rfid already exists
-  //       $this->db->where('srcode', $student['id_number']);
-  //       // $this->db->or_where('rfid', $student['rfid']);
-  //       $existing_student = $this->db->get('student')->row_array();
-
-  //       // $data = [
-  //       //   'first_name' => $student['first_name'],
-  //       //   'middle_name' => $student['middle_name'],
-  //       //   'last_name' => $student['last_name'],
-  //       //   'srcode' => $student['id_number'],
-  //       //   'college' => $student['college'],
-  //       //   'rfid' => $student['rfid']
-  //       // ];
-  //       // check if birthdate is set, if not, set it to 0000-00-00
-  //       if (empty($student['birthdate'])) {
-  //         $student['birthdate'] = '0000-00-00';
-  //       }
-  //       //convert the birthdate into 
-  //       $data = array_filter([
-  //           'first_name' => $student['first_name'] ?? null,
-  //           'middle_name' => $student['middle_name'] ?? null,
-  //           'last_name' => $student['last_name'] ?? null,
-  //           'birthdate' => $student['birthdate'] ?? null,
-  //           'srcode' => $student['id_number'] ?? null,
-  //           'college' => $student['college'] ?? null,
-  //           'rfid' => $student['rfid'] ?? null
-  //       ]);
-        
-  //       //IF THE STUDENT IS EXISTING, UPDATE
-  //       if ($existing_student) {
-  //         $this->db->where('srcode', $student['id_number']);
-  //         $this->db->update('student', $data);
-  //         if ($this->db->affected_rows() > 0) {
-  //           $editCounter++;
-  //         } elseif ($this->db->affected_rows() === 0) {
-  //           $neutralEditCounter++;
-  //         } else {
-  //           $failedEditCounter++;
-  //         }
-  //         continue;
-  //       }
-  //       // IF THE STUDENT IS NEW, ADD
-  //       if (!$this->db->insert('student', $data)) {
-  //         $failedAddCounter++;
-  //         continue;
-  //       }else{
-  //         $addCounter++;
-  //         continue;
-  //       }
-  //     }
-      
-  //     // $this->session->set_flashdata('student_scs', 'Students succesfully imported from the Enrollment System\'s database.');
-  //     // $this->session->set_flashdata('student_scs', "Succesfully imported $studentCounter student records, added $addCounter new student records and updated $editCounter existing student records. $failedAddCounter student records failed to be added and $failedEditCounter student records failed to be updated.");
-  //     $this->session->set_flashdata('student_neutral', 
-  //         "<i class='fas fa-check-circle text-success'></i> Succesfully imported $studentCounter student records." . PHP_EOL .
-  //         "---------------------------------" . PHP_EOL .
-  //         "<i class='fas fa-plus-circle text-primary'></i> Added $addCounter new student records." . PHP_EOL .
-  //         "---------------------------------" . PHP_EOL .
-  //         "<i class='fas fa-edit text-warning'></i> Updated $editCounter existing student records." . PHP_EOL .
-  //         "---------------------------------" . PHP_EOL .
-  //         "<i class='fas fa-times-circle text-danger'></i> $failedAddCounter student records failed to be added." . PHP_EOL .
-  //         "---------------------------------" . PHP_EOL .
-  //         "<i class='fas fa-times-circle text-danger'></i> $failedEditCounter student records failed to be updated."
-  //     );
-  //     redirect('master/student');
-  // }
-  public function import_database() {
+  public function import_database(){
     // API endpoint
     $url = $this->config->item('api_endpoint');
     
     $token = $this->HttpGetTokenToTawi();
-    if (!$token){
-      $this->session->set_flashdata('student_neutral', 'Unauthorized: Failed to get token.');
-      redirect('master/student');
-    }
-    
-    // if (!$token) {
-    //     $response = [
-    //         'status' => 401,
-    //         'message' => 'Unauthorized: Failed to get token.'
-    //     ];
-    //     $this->output
-    //         ->set_content_type('application/json')
-    //         ->set_status_header(401)
-    //         ->set_output(json_encode($response));
-    //     return;
-    // }
+        if (!$token) {
+            $this->session->set_flashdata('student_neutral', 'Unauthorized: Failed to get token.');
+            redirect('master/student');
+        }
 
     // Initialize cURL
     $ch = curl_init($url);
@@ -3187,122 +3058,74 @@ public function markAllAsRead() {
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); // Get the HTTP response code
     if (curl_errno($ch)) {
-        $error = curl_error($ch);
-        curl_close($ch);
-        $this->session->set_flashdata('student_neutral', 'Error: ' . $error);
-        redirect('master/student');
+      $error = curl_error($ch);
+      curl_close($ch);
+      $this->session->set_flashdata('student_neutral', 'Error: ' . $error);
+      redirect('master/student');
     }
     curl_close($ch);
 
     $data = json_decode($response, true);
 
-    if (!$data) {
-        $this->session->set_flashdata('student_neutral', 'API Error: Failed to fetch data.');
-        // $this->session->set_flashdata('student_neutral', 'Error: ' . $error);
-        redirect('master/student');
-        // echo 'Failed to fetch data. HTTP Code: ' . $httpCode;
-        // return;
+    if ( !$data) {
+      $this->session->set_flashdata('student_neutral', 'API Error: Failed to fetch data.');
+      redirect('master/student');
     }
-
     $studentCounter = 0;
     $addCounter = 0;
     $editCounter = 0;
     $failedAddCounter = 0;
     $failedEditCounter = 0;
     $neutralEditCounter = 0;
-    
-    $batchSize = 500; // Set batch size for insert/update operations
-    $students = $data['data']['rows']; // Get the full list of students
-    $totalRecords = count($students);
-    
-    // Process students in batches
-    $insertData = [];
-    $updateData = [];
-    
-    for ($i = 0; $i < $totalRecords; $i++) {
-        $student = $students[$i];
-        $studentCounter++;
 
-        // Check if srcode or rfid already exists
+    //NOTE: CURRENTLY, BATCH UPDATE AND INSERT SHOULD BE IMPLEMENTED HERE It is actually implemented on the commented code but i encountered an error. nonethless,  this is good for demos. not for datas up to 10k plus
+    foreach ($data['data']['rows'] as $student) {
+      $studentCounter++;
+      // Check if srcode or rfid already exists
+      $this->db->where('srcode', $student['id_number']);
+      // $this->db->or_where('rfid', $student['rfid']);
+      $existing_student = $this->db->get('student')->row_array();
+
+
+      $data = array_filter([
+        'first_name' => $student['first_name'] ?? null,
+        'middle_name' => $student['middle_name'] ?? null,
+        'last_name' => $student['last_name'] ?? null,
+        'gender' => $student['gender'] ?? null,
+        'course' => $student['department'] ?? null,
+        'schoolyear' => $student['school_year'] ?? null,
+        'birthdate' => date('Y-m-d', strtotime($student['birthdate'])) ?? null,
+        'srcode' => $student['id_number'] ?? null,
+        'college' => $student['college'] ?? null,
+        'rfid' => $student['rfid'] ?? null,
+        // 'pin' => substr($student['id_number'], -6) . str_replace(['-', ' '], '', $student['birthdate']) ?? null
+        'pin' => date('mdY', strtotime($student['birthdate'])) ?? null
+      ]);
+      
+      //IF THE STUDENT IS EXISTING, UPDATE
+      if ($existing_student) {
         $this->db->where('srcode', $student['id_number']);
-        $existing_student = $this->db->get('student')->row_array();
-
-        // // Handle missing birthdate
-        // if (empty($student['birthdate'])) {
-        //     $student['birthdate'] = '2000-01-01';
-        // }
-
-        $data = array_filter([
-            'first_name' => $student['first_name'] ?? null,
-            'middle_name' => $student['middle_name'] ?? null,
-            'last_name' => $student['last_name'] ?? null,
-            'gender' => $student['gender'] ?? null,
-            'course' => $student['department'] ?? null,
-            'schoolyear' => $student['school_year'] ?? null,
-            'birthdate' => date('Y-m-d', strtotime($student['birthdate'])) ?? null,
-            'srcode' => $student['id_number'] ?? null,
-            'college' => $student['college'] ?? null,
-            'rfid' => $student['rfid'] ?? null,
-            // 'pin' => substr($student['id_number'], -6) . str_replace(['-', ' '], '', $student['birthdate']) ?? null
-            'pin' => str_replace(['-', ' '], '', $student['birthdate']) ?? null
-
-        ]);
-
-        // If the student exists, update
-        if ($existing_student) {
-            $updateData[] = [
-                'first_name' => $student['first_name'],
-                'middle_name' => $student['middle_name'],
-                'last_name' => $student['last_name'],
-                'gender' => $student['gender'],
-                'course' => $student['department'],
-                'schoolyear' => $student['school_year'],
-                'birthdate' => date('Y-m-d', strtotime($student['birthdate'])),
-                'college' => $student['college'],
-                'rfid' => $student['rfid'],
-                'srcode' => $student['id_number'],
-                'pin' => str_replace(['-', ' '], '', $student['birthdate'])
-            ];
-
-            // Check if the batch size is reached for updates
-            if (count($updateData) >= $batchSize) {
-                $this->db->update_batch('student', $updateData, 'srcode');
-                $editCounter += count($updateData);
-                $updateData = []; // Clear after bulk update
-            }
+        $this->db->update('student', $data);
+        if ($this->db->affected_rows() > 0) {
+          $editCounter++;
+        } elseif ($this->db->affected_rows() === 0) {
+          $neutralEditCounter++;
         } else {
-            // If the student is new, add
-            $insertData[] = $data;
-
-            // Check if the batch size is reached for insert
-            if (count($insertData) >= $batchSize) {
-                if (!$this->db->insert_batch('student', $insertData)) {
-                    $failedAddCounter += count($insertData);
-                } else {
-                    $addCounter += count($insertData);
-                }
-                $insertData = []; // Clear after batch insert
-            }
+          $failedEditCounter++;
         }
+        continue;
+      }
+      // IF THE STUDENT IS NEW, ADD
+      if (!$this->db->insert('student', $data)) {
+        $failedAddCounter++;
+        continue;
+      }else{
+        $addCounter++;
+        continue;
+      }
     }
-
-    // Final batch insert/update if there are remaining records
-    if (count($insertData) > 0) {
-        if (!$this->db->insert_batch('student', $insertData)) {
-            $failedAddCounter += count($insertData);
-        } else {
-            $addCounter += count($insertData);
-        }
-    }
-
-    if (count($updateData) > 0) {
-        $this->db->update_batch('student', $updateData, 'srcode');
-        $editCounter += count($updateData);
-    }
-
-    // Set flash data to display results
     $this->session->set_flashdata('student_neutral', 
-        "<i class='fas fa-check-circle text-success'></i> Successfully imported $studentCounter student records." . PHP_EOL .
+        "<i class='fas fa-check-circle text-success'></i> Succesfully imported $studentCounter student records." . PHP_EOL .
         "---------------------------------" . PHP_EOL .
         "<i class='fas fa-plus-circle text-primary'></i> Added $addCounter new student records." . PHP_EOL .
         "---------------------------------" . PHP_EOL .
@@ -3313,7 +3136,168 @@ public function markAllAsRead() {
         "<i class='fas fa-times-circle text-danger'></i> $failedEditCounter student records failed to be updated."
     );
     redirect('master/student');
-}
+    }
+//   public function import_database() {
+//     // API endpoint
+//     $url = $this->config->item('api_endpoint');
+    
+//     $token = $this->HttpGetTokenToTawi();
+//     if (!$token){
+//       $this->session->set_flashdata('student_neutral', 'Unauthorized: Failed to get token.');
+//       redirect('master/student');
+//     }
+    
+//     // if (!$token) {
+//     //     $response = [
+//     //         'status' => 401,
+//     //         'message' => 'Unauthorized: Failed to get token.'
+//     //     ];
+//     //     $this->output
+//     //         ->set_content_type('application/json')
+//     //         ->set_status_header(401)
+//     //         ->set_output(json_encode($response));
+//     //     return;
+//     // }
+
+//     // Initialize cURL
+//     $ch = curl_init($url);
+//     curl_setopt_array($ch, [
+//         CURLOPT_RETURNTRANSFER => true,
+//         CURLOPT_HTTPHEADER => [
+//             'Authorization: Bearer ' . $token,
+//             'Content-Type: application/json'
+//         ]
+//     ]);
+    
+//     $response = curl_exec($ch);
+//     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); // Get the HTTP response code
+//     if (curl_errno($ch)) {
+//         $error = curl_error($ch);
+//         curl_close($ch);
+//         $this->session->set_flashdata('student_neutral', 'Error: ' . $error);
+//         redirect('master/student');
+//     }
+//     curl_close($ch);
+
+//     $data = json_decode($response, true);
+
+//     if (!$data) {
+//         $this->session->set_flashdata('student_neutral', 'API Error: Failed to fetch data.');
+//         // $this->session->set_flashdata('student_neutral', 'Error: ' . $error);
+//         redirect('master/student');
+//         // echo 'Failed to fetch data. HTTP Code: ' . $httpCode;
+//         // return;
+//     }
+
+//     $studentCounter = 0;
+//     $addCounter = 0;
+//     $editCounter = 0;
+//     $failedAddCounter = 0;
+//     $failedEditCounter = 0;
+//     $neutralEditCounter = 0;
+    
+//     $batchSize = 500; // Set batch size for insert/update operations
+//     $students = $data['data']['rows']; // Get the full list of students
+//     $totalRecords = count($students);
+    
+//     // Process students in batches
+//     $insertData = [];
+//     $updateData = [];
+    
+//     for ($i = 0; $i < $totalRecords; $i++) {
+//         $student = $students[$i];
+//         $studentCounter++;
+
+//         // Check if srcode or rfid already exists
+//         $this->db->where('srcode', $student['id_number']);
+//         $existing_student = $this->db->get('student')->row_array();
+
+//         // // Handle missing birthdate
+//         // if (empty($student['birthdate'])) {
+//         //     $student['birthdate'] = '2000-01-01';
+//         // }
+
+//         $data = array_filter([
+//             'first_name' => $student['first_name'] ?? null,
+//             'middle_name' => $student['middle_name'] ?? null,
+//             'last_name' => $student['last_name'] ?? null,
+//             'gender' => $student['gender'] ?? null,
+//             'course' => $student['department'] ?? null,
+//             'schoolyear' => $student['school_year'] ?? null,
+//             'birthdate' => date('Y-m-d', strtotime($student['birthdate'])) ?? null,
+//             'srcode' => $student['id_number'] ?? null,
+//             'college' => $student['college'] ?? null,
+//             'rfid' => $student['rfid'] ?? null,
+//             // 'pin' => substr($student['id_number'], -6) . str_replace(['-', ' '], '', $student['birthdate']) ?? null
+//             'pin' => ltrim(date('njY', strtotime($student['birthdate'])), '0') ?? null
+//         ]);
+
+//         // If the student exists, update
+//         if ($existing_student) {
+//             $updateData[] = [
+//                 'first_name' => $student['first_name'],
+//                 'middle_name' => $student['middle_name'],
+//                 'last_name' => $student['last_name'],
+//                 'gender' => $student['gender'],
+//                 'course' => $student['department'],
+//                 'schoolyear' => $student['school_year'],
+//                 'birthdate' => date('Y-m-d', strtotime($student['birthdate'])),
+//                 'college' => $student['college'],
+//                 'rfid' => $student['rfid'],
+//                 'srcode' => $student['id_number'],
+//                 'pin' => str_replace(['-', ' '], '', $student['birthdate'])
+//             ];
+
+//             // Check if the batch size is reached for updates
+//             if (count($updateData) >= $batchSize) {
+//                 $this->db->update_batch('student', $updateData, 'srcode');
+//                 $editCounter += count($updateData);
+//                 $updateData = []; // Clear after bulk update
+//             }
+//         } else {
+//             // If the student is new, add
+//             $insertData[] = $data;
+
+//             // Check if the batch size is reached for insert
+//             if (count($insertData) >= $batchSize) {
+//                 if (!$this->db->insert_batch('student', $insertData)) {
+//                     $failedAddCounter += count($insertData);
+//                 } else {
+//                     $addCounter += count($insertData);
+//                 }
+//                 $insertData = []; // Clear after batch insert
+//             }
+//         }
+//     }
+
+//     // Final batch insert/update if there are remaining records
+//     if (count($insertData) > 0) {
+//         if (!$this->db->insert_batch('student', $insertData)) {
+//             $failedAddCounter += count($insertData);
+//         } else {
+//             $addCounter += count($insertData);
+//         }
+//     }
+
+//     if (count($updateData) > 0) {
+//         $this->db->update_batch('student', $updateData, 'srcode');
+//         $editCounter += count($updateData);
+//     }
+
+//     // Set flash data to display results
+//     $this->session->set_flashdata('student_neutral', 
+//         "<i class='fas fa-check-circle text-success'></i> Successfully imported $studentCounter student records." . PHP_EOL .
+//         "---------------------------------" . PHP_EOL .
+//         "<i class='fas fa-plus-circle text-primary'></i> Added $addCounter new student records." . PHP_EOL .
+//         "---------------------------------" . PHP_EOL .
+//         "<i class='fas fa-edit text-warning'></i> Updated $editCounter existing student records." . PHP_EOL .
+//         "---------------------------------" . PHP_EOL .
+//         "<i class='fas fa-times-circle text-danger'></i> $failedAddCounter student records failed to be added." . PHP_EOL .
+//         "---------------------------------" . PHP_EOL .
+//         "<i class='fas fa-times-circle text-danger'></i> $failedEditCounter student records failed to be updated."
+//     );
+//     redirect('master/student');
+// }
 
 
   public function HttpGetTokenToTawi(){

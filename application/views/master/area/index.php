@@ -1,14 +1,117 @@
+<style>
+  /* Basic reset and styling */
+
+/* Tooltip container */
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Icon styling */
+.ex-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+/* SVG Animation: Rotate and scale effect */
+.ex-icon i {
+  transition: transform 0.5s ease-in-out;
+}
+
+.ex-icon:hover i{
+  transform: rotate(360deg) scale(1.2);
+}
+
+
+/* Tooltip Arrow */
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+/* Show tooltip on hover */
+.tooltip-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+.tooltip-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  animation: bounce 0.6s ease;
+}
+
+</style>
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">Library Area Information</h1>
-    <div class="">
-        <a href="<?= base_url('master/a_area'); ?>" class="btn btn-icon-split mb-4 shadow-sm text-light" style="background: linear-gradient(180deg, #031084, #000748);  ">
+    <div class="d-flex align-items-center mb-4 w-100 " style="cursor: pointer">
+        <a href="<?= base_url('master/a_area'); ?>" class="btn btn-icon-split shadow-sm text-light" style="background: linear-gradient(180deg, #031084, #000748);  ">
             <span class="icon text-white-600">
                 <i class="fas fa-plus-circle"></i>
             </span>
             <span class="text" style="color:#272727; color: white; font-weight: 500; text-transform: Uppercase;">Add Area</span>
         </a>
+        <!-- Add a ! icon -->
+        <div class="tooltip-container">
+          <div class="ex-icon">
+            <i class="fas fa-exclamation-circle text-danger" style="font-size: 1.5rem; margin-left: 1rem; cursor: pointer;" data-toggle="modal" data-target="#infoModal"> </i>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="infoModalLabel">Library Area Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>This page is used to manage the library areas.</p>
+                <p>Adding a new area will automatically create a booking record for the area.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
     <!-- Data Table Department-->
     <div class="card shadow mb-4" style="border-radius:15px;">
@@ -83,8 +186,19 @@
                                             class="fas <?= ($dpt['availability'] == 0 ? 'fa-lock' : 'fa-unlock') ?>"></i>
                                     </span>
                                 </a>&nbsp &nbsp -->
-                                <a href="<?= base_url('master/d_area/') . $dpt['id'] ?>" class=""
-                                    onclick="return confirm('Deleted room will lost forever. Still want to delete?')">
+                                <a href="#" class="" onclick="event.preventDefault(); Swal.fire({
+                                    title: 'Are you sure?',
+                                    text: 'Deleted room will be lost forever. Additionally, existing bookings and past bookings may have an error. Please refrain from deleting the area unless absolutely necessary.',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Yes, delete it!'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = '<?= base_url('master/d_area/') . $dpt['id'] ?>';
+                                    }
+                                });">
                                     <span class="icon text-danger" title="Delete">
                                         <i class="fas fa-trash-alt"></i>
                                     </span>

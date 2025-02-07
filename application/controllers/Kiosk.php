@@ -1917,7 +1917,7 @@ class Kiosk extends CI_Controller
         // Fetch booking data
         if (isset($bdate) || isset($qr) || isset($pin) || isset($rfid)) {
             if (isset($bdate)) {
-                $this->db->where(['code' => $bdate]);
+                $this->db->where(['code' => $studentID . '_' . $bdate]);
             }
             if (isset($qr)) {
                 $this->db->or_where(['code' => $qr]);
@@ -2105,7 +2105,7 @@ class Kiosk extends CI_Controller
         //check all the parameters if null or empty.
         if (($device === null) || ($user_id === null) || ($floor === null) || ($room === null) || ($slot === null) || ($date === null) || ($stime === null) || ($etime === null)) {
             http_response_code(400);
-            echo json_encode(array("status" => "error", "message" => "W Empty parameter(s) detected."));
+            echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
             return;
         }
         //set the data array to save in the booking table.
@@ -2184,11 +2184,11 @@ class Kiosk extends CI_Controller
                 }
             }
         }
-        if ($data == NULL) {
-            http_response_code(200);
-            echo json_encode(array("status" => "error", "message" => "No data found with the given parameters."));
-            return;
-        }
+            if ($data == NULL) {
+                http_response_code(200);
+                echo json_encode(array("status" => "error", "message" => "No data found with the given parameters."));
+                return;
+            }
             if(!$this->db->insert('booking', $data)){
                 http_response_code(500);
                 echo json_encode(array("status" => "error", "message" => "Error inserting data to database."));
