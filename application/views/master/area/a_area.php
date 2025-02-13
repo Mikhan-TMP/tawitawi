@@ -63,13 +63,13 @@
                   </div>
                   <div class="form-group">
                     <label for="open_time" class="text-dark" style="font-weight: bold;">Opening Time</label>
-                    <input type="time" class="form-control form-control-lg" name="open_time" id="open_time"  value="<?= set_value('open_time'); ?>"
+                    <input type="time" class="form-control form-control-lg" name="open_time" id="open_time"  value="08:00"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;">
                     <?= form_error('open_time', '<small class="text-danger">', '</small>') ?>
                   </div>
                   <div class="form-group">
                     <label for="close_time" class="text-dark" style="font-weight: bold;">Closing Time</label>
-                    <input type="time" class="form-control form-control-lg" name="close_time" id="close_time" value="<?= set_value('close_time'); ?>"
+                    <input type="time" class="form-control form-control-lg" name="close_time" id="close_time" value="17:00"
                     style="border-radius:15px; font-size: 1rem; padding: 25px;">
                     <?= form_error('close_time', '<small class="text-danger">', '</small>') ?>
                   </div>

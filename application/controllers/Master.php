@@ -10,6 +10,7 @@ class Master extends CI_Controller
     $this->load->library('form_validation');
     $this->load->model('Public_model');
     $this->load->model('Admin_model');    
+    $this->load->model('Student_model');
   }
   public function index()
   {
@@ -2454,7 +2455,8 @@ public function markAllAsRead() {
     $countOnly = $this->input->get('countOnly');
 
     if (!$startDate || !$endDate || !$course || !$college) {
-        show_error('Invalid input parameters', 400);
+      $this->session->set_flashdata('error', 'Invalid Parameters.');
+      redirect('attendance');
     }
 
     $this->load->model('Excel');
@@ -3385,5 +3387,467 @@ public function markAllAsRead() {
       echo json_encode($response);
   }
 
+  // public function export_to_koha(){
+  //   //get the student model and fetch all the students
+  //   $students = $this->Student_model->get_students();
+  //   // echo '<pre>';
+  //   // print_r($students);
+  //   // echo '<pre>';
+  //   //get the koha api for adding patrons from the config
+  //   $add_patrons_koha_url = $this->config->item('add_patrons');
+  //   $get_patrons_koha_url = $this->config->item('get_patrons');
+
+  //   //check if the patron already exists in the koha library use the api
+  //   $ch = curl_init($get_patrons_koha_url);
+  //   curl_setopt_array($ch, [
+  //       CURLOPT_RETURNTRANSFER => true,
+  //       CURLOPT_HTTPHEADER => [
+  //           'Content-Type: application/json'
+  //       ],
+  //       CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+  //       CURLOPT_USERNAME => $this->config->item('koha_username'),
+  //       CURLOPT_PASSWORD => $this->config->item('koha_password')
+  //   ]);
+
+  //   $koha_students_response = curl_exec($ch);
+  //   $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); // Get the HTTP response code
+  //   if (curl_errno($ch)) {
+  //     $error = curl_error($ch);
+  //     curl_close($ch);
+  //     $this->session->set_flashdata('student_neutral', 'Error: ' . $error);
+  //     redirect('master/student');
+  //   }
+  //   curl_close($ch);
+
+  //   $response = json_decode($koha_students_response, true);
+
+  //   if(!is_array($response)){
+  //     $this->session->set_flashdata('student_neutral', 'Invalid Koha Response. Please try again.');
+  //     redirect('master/student');
+  //   }
+  //   // echo '<pre>';
+  //   // print_r($response);
+  //   // echo '<pre>';
+
+  //   // Extract Koha card numbers
+  //   $koha_cardnumbers = array_column($response, 'cardnumber');
+
+  //   //if the scrode of the student, matches with the koha library cardnumber, don't include it in the payload.
+  //   foreach ($students as $student) {
+  //       $studentnumber = preg_replace('/[^0-9]/', '', $student['srcode']);
+  //       if (!in_array($studentnumber, $koha_cardnumbers)) {
+  //           $students_to_add[] = [
+  //             'cardnumber' => $studentnumber,
+  //             'firstname' => $student['first_name'],
+  //             'middle_name' => $student['middle_name'] ?? null,
+  //             'surname' => $student['last_name'],
+  //             'gender' => $student['gender'],
+  //             'email' => $student['email'] ?? null,
+  //             'library_id' => 'TTL',
+  //             'category_id' => 'S',
+  //             'user_id' => $student['first_name'] . $student['last_name']
+  //           ];
+  //       }
+  //   }
+
+  //   print_r($students_to_add);
+
+  //   if (!empty($students_to_add)) {
+  //       $ch = curl_init($add_patrons_koha_url);
+  //       curl_setopt_array($ch, [
+  //           CURLOPT_RETURNTRANSFER => true,
+  //           CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+  //           CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+  //           CURLOPT_USERNAME => $this->config->item('koha_username'),
+  //           CURLOPT_PASSWORD => $this->config->item('koha_password'),
+  //           CURLOPT_POST => true,
+  //           CURLOPT_POSTFIELDS => json_encode($students_to_add)
+  //       ]);
+    
+  //       $add_response = curl_exec($ch);
+  //       $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  //       curl_close($ch);
+  //       print_r($add_response);
+  //       if ($httpCode === 201) {
+  //           $this->session->set_flashdata('student_scs', 'Students added successfully to Koha.');
+  //       } else {
+  //           $this->session->set_flashdata('student_fail', $add_response);
+  //       }
+  //       // redirect('master/student');
+  //   } else {
+  //       $this->session->set_flashdata('student_neutral', 'All students may already exist in Koha.');
+  //       // redirect('master/student');
+  //   }
+
+  // }
+  // public function export_to_koha(){
+  //     // Get students
+  //     $students = $this->Student_model->get_students();
+
+  //     // Get Koha API URLs
+  //     $add_patrons_koha_url = $this->config->item('add_patrons');
+  //     //fetch patrons from koha
+  //     $response = $this->get_patrons_from_koha();
+  //     // $response = json_decode($koha_students_response, true);
+  //     if (empty($response) || !is_array($response)) {
+  //         // log_message('error', 'Invalid response from Koha: ' . $koha_students_response);
+  //         $this->session->set_flashdata('student_neutral', 'Invalid Koha Response. Please try again.');
+  //         redirect('master/student');
+  //         return;
+  //     }
+
+  //     // Extract Koha card numbers
+  //     $koha_cardnumbers = array_column($response, 'cardnumber');
+
+  //     // Initialize counters
+  //     $added_count = 0;
+  //     $failed_count = 0;
+  //     $passerror_count = 0;
+
+  //     foreach ($students as $student) {
+  //         $studentnumber = preg_replace('/[^0-9]/', '', $student['srcode']);
+          
+  //         if (!in_array($studentnumber, $koha_cardnumbers)) {
+  //             $student_data = [
+  //                 'cardnumber' => $studentnumber,
+  //                 'firstname' => $student['first_name'],
+  //                 'middle_name' => $student['middle_name'] ?? null,
+  //                 'surname' => $student['last_name'],
+  //                 'gender' => $student['gender'],
+  //                 'email' => $student['email'] ?? null,
+  //                 'library_id' => 'TTL',
+  //                 'category_id' => 'ST', //(S) STAFF, (B) Board, (ST) Student
+  //                 'userid' => $student['first_name'] . $student['last_name']
+  //             ];
+
+  //             // Send each student individually
+  //             $ch = curl_init($add_patrons_koha_url);
+  //             curl_setopt_array($ch, [
+  //                 CURLOPT_RETURNTRANSFER => true,
+  //                 CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+  //                 CURLOPT_USERPWD => $this->config->item('koha_username') . ":" . $this->config->item('koha_password'),
+  //                 CURLOPT_POST => true,
+  //                 CURLOPT_POSTFIELDS => json_encode($student_data)
+  //             ]);
+
+  //             $add_response = curl_exec($ch);
+  //             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+  //             //POST PASS
+  //             //get the student's patronid from koha that matches the cardnumber and studentID
+  //             $koharesponse = $this->get_patrons_from_koha();
+  //             // echo "\nRESPONSE: ";
+  //             // echo "<pre>";
+  //             // print_r($koharesponse);
+  //             // echo "<pre>";
+
+  //             $cardnumbers = array_column($koharesponse, 'cardnumber');
+  //             // echo "\ncard numbers: ";
+  //             // echo "<pre>";
+  //             // print_r($cardnumbers);
+  //             // echo "<pre>";
+  //             $koha_patronid = (array_column($koharesponse, 'patron_id'));
+
+  //             $patron_id = $koha_patronid[array_search($studentnumber, $cardnumbers)];
+  //             // echo "\nPatron ID: ";
+  //             // echo "<pre>";
+  //             // print_r($patron_id);
+  //             // echo "<pre>";
+              
+  //             $change_pass_url = 'http://192.168.1.68:8080/api/v1/patrons/' . $patron_id . '/password';
+  //             $ch = curl_init($change_pass_url);
+  //             $passwordStudent = ucfirst(substr($student['first_name'], 0, 1)) . 
+  //             lcfirst(substr($student['last_name'], 0, 1)) . '@' . $student['pin'];
+  //             $student_password = [
+  //                 'password' => $passwordStudent,
+  //                 'password_2' => $passwordStudent
+  //             ];
+  //             curl_setopt_array($ch, [
+  //                 CURLOPT_RETURNTRANSFER => true,
+  //                 CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+  //                 CURLOPT_USERPWD => $this->config->item('koha_username') . ":" . $this->config->item('koha_password'),
+  //                 CURLOPT_POST => true,
+  //                 CURLOPT_POSTFIELDS => json_encode($student_password)
+  //             ]);
+
+  //             $pass_response = curl_exec($ch);
+  //             $httpCodePass = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  //             curl_close($ch);
+
+  //             if ($httpCode === 201 && $httpCodePass === 200) {
+  //               $added_count++;
+  //             }
+  //             else if ($httpCode === 201 && $httpCodePass !== 200) {
+  //               $failed_count++;
+  //               $passerror_count++;
+  //             }
+  //             else if (!$httpCodePass === 200 && !$httpCode === 201) {
+  //               $failed_count++;
+  //             }
+  //         }
+  //     }
+      
+  //     // Flash messages
+  //     if ($added_count > 0 && $passerror_count === 0) {
+  //         $this->session->set_flashdata('student_scs', "$added_count student(s) added successfully to Koha Library!");
+  //     } 
+  //     if ($failed_count > 0) {
+  //         $this->session->set_flashdata('student_fail', "$failed_count students failed to be added to Koha.");
+  //     }
+  //     if ($added_count === 0 && $failed_count === 0) {
+  //         $this->session->set_flashdata('student_neutral', 'All students may already exist in Koha. Please check the the Koha server.');
+  //     }
+  //     redirect('master/student');
+  // }
+//one by one
+  // public function export_to_koha()
+  // {
+  //     // Get students from the local system
+  //     $students = $this->Student_model->get_students();
+  //     if (empty($students)) {
+  //         $this->session->set_flashdata('student_neutral', 'No students to process.');
+  //         redirect('master/student');
+  //         return;
+  //     }
   
+  //     // Get Koha API URLs
+  //     $add_patrons_koha_url = $this->config->item('add_patrons');
+  
+  //     // Fetch existing Koha patrons **once**
+  //     $response = $this->get_patrons_from_koha();
+  //     if (empty($response) || !is_array($response)) {
+  //         $this->session->set_flashdata('student_neutral', 'Invalid Koha Response. Please try again.');
+  //         redirect('master/student');
+  //         return;
+  //     }
+  
+  //     // Extract Koha card numbers into a set for fast lookup
+  //     $koha_cardnumbers = array_column($response, 'cardnumber');
+  //     $koha_patron_ids = array_column($response, 'patron_id', 'cardnumber');
+  
+  //     // **Filter only students who are NOT in Koha**
+  //     $new_students = array_filter($students, function ($student) use ($koha_cardnumbers) {
+  //         $studentnumber = preg_replace('/[^0-9]/', '', $student['srcode']);
+  //         return !in_array($studentnumber, $koha_cardnumbers);
+  //     });
+  
+  //     if (empty($new_students)) {
+  //         $this->session->set_flashdata('student_neutral', 'All students already exist in Koha.');
+  //         redirect('master/student');
+  //         return;
+  //     }
+  
+  //     // Initialize counters
+  //     $added_count = 0;
+  //     $failed_count = 0;
+  //     $passerror_count = 0;
+  
+  //     // Prepare cURL session
+  //     $ch = curl_init();
+  //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  //     curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+  //     curl_setopt($ch, CURLOPT_USERPWD, $this->config->item('koha_username') . ":" . $this->config->item('koha_password'));
+  //     curl_setopt($ch, CURLOPT_POST, true);
+  
+  //     foreach ($new_students as $student) {
+  //         $studentnumber = preg_replace('/[^0-9]/', '', $student['srcode']);
+  
+  //         // Prepare student data
+  //         $student_data = [
+  //             'cardnumber'  => $studentnumber,
+  //             'firstname'   => $student['first_name'],
+  //             'middle_name' => $student['middle_name'] ?? null,
+  //             'surname'     => $student['last_name'],
+  //             'gender'      => $student['gender'],
+  //             'email'       => $student['email'] ?? null,
+  //             'library_id'  => 'TTL',
+  //             'category_id' => 'ST', // (S) STAFF, (B) Board, (ST) Student
+  //             'userid'      => $student['first_name'] . $student['last_name']
+  //         ];
+  
+  //         // Send student to Koha
+  //         curl_setopt($ch, CURLOPT_URL, $add_patrons_koha_url);
+  //         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($student_data));
+  //         $add_response = curl_exec($ch);
+  //         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  
+  //         if ($httpCode !== 201) {
+  //             $failed_count++;
+  //             continue;
+  //         }
+  
+  //         // Fetch updated Koha patron list **once after adding students**
+  //         $koharesponse = $this->get_patrons_from_koha();
+  //         $koha_cardnumbers = array_column($koharesponse, 'cardnumber');
+  //         $koha_patron_ids = array_column($koharesponse, 'patron_id', 'cardnumber');
+  
+  //         if (!isset($koha_patron_ids[$studentnumber])) {
+  //             $failed_count++;
+  //             continue;
+  //         }
+  
+  //         $patron_id = $koha_patron_ids[$studentnumber];
+  
+  //         // Generate student password
+  //         $passwordStudent = ucfirst(substr($student['first_name'], 0, 1)) . 
+  //             lcfirst(substr($student['last_name'], 0, 1)) . '@' . ($student['pin'] ?? '1234');
+  
+  //         $student_password = [
+  //             'password'   => $passwordStudent,
+  //             'password_2' => $passwordStudent
+  //         ];
+  
+  //         // Send password update
+  //         curl_setopt($ch, CURLOPT_URL, "http://192.168.1.68:8080/api/v1/patrons/$patron_id/password");
+  //         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($student_password));
+  //         $pass_response = curl_exec($ch);
+  //         $httpCodePass = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  
+  //         if ($httpCodePass === 200) {
+  //             $added_count++;
+  //         } else {
+  //             $failed_count++;
+  //             $passerror_count++;
+  //         }
+  //     }
+  
+  //     curl_close($ch);
+  
+  //     // Flash messages
+  //     if ($added_count > 0 && $passerror_count === 0) {
+  //         $this->session->set_flashdata('student_scs', "$added_count student(s) added successfully to Koha Library!");
+  //     }
+  //     if ($failed_count > 0) {
+  //         $this->session->set_flashdata('student_fail', "$failed_count students failed to be added to Koha.");
+  //     }
+  //     if ($added_count === 0 && $failed_count === 0) {
+  //         $this->session->set_flashdata('student_neutral', 'All students already exist in Koha.');
+  //     }
+  
+  //     redirect('master/student');
+  // }
+
+  //parallel
+  public function export_to_koha()
+{
+    // Get students
+    $students = $this->Student_model->get_students();
+    if (empty($students)) {
+        $this->session->set_flashdata('student_neutral', 'No students to process.');
+        redirect('master/student');
+        return;
+    }
+
+    // Get Koha existing patrons
+    $response = $this->get_patrons_from_koha();
+    if (empty($response) || !is_array($response)) {
+        $this->session->set_flashdata('student_neutral', 'Invalid Koha Response. Please try again.');
+        redirect('master/student');
+        return;
+    }
+
+    // Extract existing Koha card numbers
+    $koha_cardnumbers = array_column($response, 'cardnumber');
+
+    // Filter only students who are NOT in Koha
+    $new_students = array_filter($students, function ($student) use ($koha_cardnumbers) {
+        return !in_array(preg_replace('/[^0-9]/', '', $student['srcode']), $koha_cardnumbers);
+    });
+
+    if (empty($new_students)) {
+        $this->session->set_flashdata('student_neutral', 'All students already exist in Koha.');
+        redirect('master/student');
+        return;
+    }
+
+    $add_patrons_koha_url = $this->config->item('add_patrons');
+    $koha_username = $this->config->item('koha_username');
+    $koha_password = $this->config->item('koha_password');
+
+    // Initialize Multi Curl
+    $multiCurl = curl_multi_init();
+    $handles = [];
+
+    foreach ($new_students as $student) {
+        $studentnumber = preg_replace('/[^0-9]/', '', $student['srcode']);
+        $student_data = [
+            'cardnumber'  => $studentnumber,
+            'firstname'   => $student['first_name'],
+            'middle_name' => $student['middle_name'] ?? null,
+            'surname'     => $student['last_name'],
+            'gender'      => $student['gender'],
+            'email'       => $student['email'] ?? null,
+            'library_id'  => 'TTL',
+            'category_id' => 'ST',
+            'userid'      => $student['first_name'] . $student['last_name']
+        ];
+
+        // Create individual cURL handle
+        $ch = curl_init($add_patrons_koha_url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+            CURLOPT_USERPWD        => "$koha_username:$koha_password",
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => json_encode($student_data)
+        ]);
+
+        // Add handle to multi-curl
+        curl_multi_add_handle($multiCurl, $ch);
+        $handles[] = $ch;
+    }
+
+    // Execute multi-curl requests
+    $running = null;
+    do {
+        curl_multi_exec($multiCurl, $running);
+        curl_multi_select($multiCurl);
+    } while ($running > 0);
+
+    // Collect results
+    $added_count = 0;
+    $failed_count = 0;
+    foreach ($handles as $ch) {
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($httpCode === 201) {
+            $added_count++;
+        } else {
+            $failed_count++;
+        }
+        curl_multi_remove_handle($multiCurl, $ch);
+        curl_close($ch);
+    }
+
+    curl_multi_close($multiCurl);
+
+    // Flash messages
+    if ($added_count > 0) {
+        $this->session->set_flashdata('student_scs', "$added_count student(s) added successfully to Koha Library!");
+    }
+    if ($failed_count > 0) {
+        $this->session->set_flashdata('student_fail', "$failed_count students failed to be added to Koha.");
+    }
+
+    redirect('master/student');
+}
+  public function get_patrons_from_koha(){
+      // Fetch existing patrons from Koha
+      $get_patrons_koha_url = $this->config->item('get_patrons');
+
+      $ch = curl_init($get_patrons_koha_url);
+      
+      curl_setopt_array($ch, [
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+          CURLOPT_USERPWD => $this->config->item('koha_username') . ":" . $this->config->item('koha_password')
+      ]);
+
+      $koha_students_response = curl_exec($ch);
+      curl_close($ch);
+
+      $response = json_decode($koha_students_response, true);
+
+      return $response;
+  }
+
 }

@@ -527,7 +527,7 @@ $config['proxy_ips'] = '';
 
 /*
 |--------------------------------------------------------------------------
-| API CONFIGURATIONS
+| API CONFIGURATIONS FOR EMS
 |--------------------------------------------------------------------------
 |
 | This configuration is for importing data from the existing Enrollment System
@@ -543,3 +543,15 @@ $config['auth_url'] = 'http://192.168.1.141:3000/givemetheToken';
 
 $config['username'] =  'psbd_1';
 $config['password'] =  's4FhJ3ZPRK62X8K';
+/*
+|--------------------------------------------------------------------------
+| API CONFIGURATIONS FOR KOHA
+|--------------------------------------------------------------------------
+*/
+
+$config['koha_username'] = 'admin';
+$config['koha_password'] = 'Zxcqwe123$';
+
+$config['list_all_libraries'] = 'http://192.168.1.68:8080/api/v1/libraries';
+$config['add_patrons'] = 'http://192.168.1.68:8080/api/v1/patrons';
+$config['get_patrons'] = 'http://192.168.1.68:8080/api/v1/patrons';

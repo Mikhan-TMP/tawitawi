@@ -1306,29 +1306,14 @@ class Kiosk extends CI_Controller
         } else {
             // echo "invalid code type";
             //load the view Testing 
-            $this->load->view('Testing');
-            return;
+            redirect('manual/manualAttendance');
         }
     
         if ($data == NULL) {
-            //check if the query is for faculty uncomment for additional pain in the ass
-            // if ($code_type == 'qr' || $code_type == 'QR') {
-            //     $data = $this->db->get_where('faculty', ['qrcode' => $code])->row_array();
-            //     $isStudent = FALSE;
-            // } else if ($code_type == 'rfid' || $code_type == 'RFID') {
-            //     $data = $this->db->get_where('faculty', ['rfid' => $code])->row_array();
-            //     $isStudent = FALSE;
-            // } else if ($code_type == 'pin' || $code_type == 'PIN') {
-            //     $data = $this->db->get_where('faculty', ['pin' => $code])->row_array();
-            //     $isStudent = FALSE;
-            // } else {
-            //     echo "invalid code type";
-            //     return;
-            // }
             if ($data == NULL) {
             $this->session->set_flashdata('error', 'No student record found.');
-            $this->load->view('Testing');
-            return;
+            redirect('manual/manualAttendance');
+
             }
         }
         //check the flag if true or false
@@ -1350,8 +1335,7 @@ class Kiosk extends CI_Controller
             $this->db->update('attend', ['out_time' => $date]);
             
             $this->session->set_flashdata('success', 'Time out Success!');
-            $this->load->view('Testing');
-            return;
+            redirect('manual/manualAttendance');
         } else {
             // Create a new "time-in" record
             $srcode = $data['srcode'];
@@ -1364,15 +1348,14 @@ class Kiosk extends CI_Controller
                 'RFID' => ($code_type == 'rfid' ? $code : ""),
                 'pin' => ($code_type == 'pin' ? $code : ""),
                 'srcode' => $srcode,
-                'kiosk' => $kiosk_id,
+                'kiosk' => "Manual",
                 'in_time' => $date,
                 'date' => $Sdate
             ];
     
             $this->db->insert('attend', $data);
             $this->session->set_flashdata('success', 'Time in Success!');
-            $this->load->view('Testing');
-            return;
+            redirect('manual/manualAttendance');
         }
     }
 
@@ -1693,220 +1676,496 @@ class Kiosk extends CI_Controller
     //     }
     // }
 
+    // public function HttpGetTimeInOut()
+    // {
+    //     //get the timezone
+    //     date_default_timezone_set("Asia/Manila");
+    //     // DATE TODAY
+    //     $Sdate = date('Y-m-d', time());
+    //     // DATE AND TIME TODAY
+    //     $date = date('Y-m-d H:i:s', time());
+
+    //     //get the srcode
+    //     if ($this->input->get("studentID") !== null) {
+    //       $studentID = $this->input->get("studentID");
+    //     }
+
+    //     //get the code types.
+    //     if ($this->input->get('code_type') !== null) {
+    //       $code_type = $this->input->get("code_type");
+    //     }
+
+    //     if ($this->input->get('kiosk_id') !== null) {
+    //         $kiosk_id = $this->input->get("kiosk_id");
+    //     }
+
+    //     if (isset($kiosk_id) && empty($kiosk_id) || !isset($kiosk_id)) {
+    //         http_response_code(400);
+    //         echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+    //         return;
+    //     }
+
+    //     //idk how this shit works. only god knows how. prolly not.
+    //     //translation: if studentID is set AND student ID is empty OR student ID is not set. how tf did this work.
+    //     if (isset($studentID) && empty($studentID) || !isset($studentID)) {
+    //         http_response_code(400);
+    //         echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+    //         return;
+    //     }else{
+    //         //check the code type first if empty or null.
+    //         if (isset($code_type) && empty($code_type) || !isset($code_type)){
+    //             http_response_code(400);
+    //             echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+    //             return;
+    //         }
+    //         else{
+    //             //validations
+    //             if ($this->input->get('code') !== null) {
+    //                 if ($code_type == 'birthdate' || $code_type == 'BIRTHDATE') {
+    //                     $bdate = $this->input->get("code");
+    //                 } else if ($code_type == 'rfid' || $code_type = 'RFID') {
+    //                     $rfid = $this->input->get("code");
+    //                 } else if ($code_type == "qr" || $code_type == 'QR'){
+    //                     $qr = $this->input->get('code');
+    //                 } else if ($code_type == 'pin' || $code_type == 'PIN'){
+    //                     $pin = $this->input->get("code");
+    //                 }
+    //                 else{
+    //                     http_response_code(400);
+    //                     echo json_encode(array("status" => "error", "message" => "Invalid code type."));
+    //                     return;
+    //                 }
+    //             } else{
+    //                 http_response_code(400);
+    //                 echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+    //                 return;
+    //             }
+
+    //             if (isset($bdate) && empty($bdate) || isset($rfid) && empty($rfid) || isset($qr) && empty($qr) || isset($pin) && empty($pin)){
+    //                 http_response_code(400);
+    //                 echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+    //                 return;
+    //             }
+    //             else {
+    //                 if (isset($bdate)) {
+    //                     $data = $this->db->get_where('student', ['pin' => $bdate, 'srcode' => $studentID])->row_array();
+    //                 } 
+    //                 else if (isset($rfid)) {
+    //                     $data = $this->db->get_where('student', ['rfid' => $rfid, 'srcode' => $studentID])->row_array();
+    //                 } 
+    //                 else if (isset($qr)) {
+    //                     $data = $this->db->get_where('student', ['qrcode' => $qr, 'srcode' => $studentID])->row_array();
+    //                 }
+    //                 else if (isset($pin)) {
+    //                     $data = $this->db->get_where('student', ['pin' => $pin, 'srcode' => $studentID])->row_array();
+    //                 }
+    //                 else{
+    //                     $data = NULL;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     //check if there is a student record for the parameters above.
+    //     if ($data == NULL) {
+    //         http_response_code(200);
+    //         echo json_encode(array("status" => "error", "message" => "No student record found."));
+    //         return;
+    //     }
+
+    //     // Check for today's attendance record with incomplete "out_time"
+    //     $records = $this->db->get_where('attend', [
+    //         'srcode' => $data['srcode'],
+    //         'date' => $Sdate,
+    //         'out_time' => NULL // Check if "out_time" is NULL
+    //     ])->row_array();
+
+    //     if ($records) {
+    //         // If an incomplete record exists, proceed to "time-out"
+    //         $this->db->where('id', $records['id']);
+    //         $this->db->update('attend', ['out_time' => $date]);
+    //         http_response_code(200);
+    //         echo json_encode(array("status" => "success", "message" => "Time-out success"));
+    //         return;
+    //     } else {
+    //         // Create a new "time-in" record
+    //         $srcode = $data['srcode'];
+    //         $category = 'student';
+    //         $username = ($data['first_name'] . ' ' . $data['last_name']);
+    //         $data = [
+    //             'username' => $username,
+    //             'category' => $category,
+    //             // 'qrcode' => ($code_type == 'qr' ? $code : ""),
+    //             // 'RFID' => ($code_type == 'rfid' ? $code : ""),
+    //             // 'pin' => ($code_type == 'pin' ? $code : ""),
+    //             'srcode' => $srcode,
+    //             'kiosk' => $kiosk_id,
+    //             'in_time' => $date,
+    //             'date' => $Sdate
+    //         ];
+    //         $this->db->insert('attend', $data);
+    //         http_response_code(200);
+    //         echo json_encode(array("status" => "success", "message" => "Time-in success"));
+    //         return;
+    //     }
+    // }
     public function HttpGetTimeInOut()
     {
-        //get the timezone
+        // Get the timezone
         date_default_timezone_set("Asia/Manila");
-        // DATE TODAY
-        $Sdate = date('Y-m-d', time());
-        // DATE AND TIME TODAY
-        $date = date('Y-m-d H:i:s', time());
-
-        //get the srcode
-        if ($this->input->get("studentID") !== null) {
-          $studentID = $this->input->get("studentID");
-        }
-
-        //get the code types.
-        if ($this->input->get('code_type') !== null) {
-          $code_type = $this->input->get("code_type");
-        }
-
-        if ($this->input->get('kiosk_id') !== null) {
-            $kiosk_id = $this->input->get("kiosk_id");
-        }
-
-        if (isset($kiosk_id) && empty($kiosk_id) || !isset($kiosk_id)) {
+    
+        // Date variables
+        $Sdate = date('Y-m-d', time()); // Date today
+        $date = date('Y-m-d H:i:s', time()); // Date and time today
+    
+        // Get parameters
+        $studentID = $this->input->get("studentID") ?? null;
+        $code_type = $this->input->get("code_type") ?? null;
+        $kiosk_id = $this->input->get("kiosk_id") ?? null;
+        $code = $this->input->get("code") ?? null;
+    
+        // Validate kiosk_id
+        if (empty($kiosk_id)) {
             http_response_code(400);
-            echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+            echo json_encode(["status" => "error", "message" => "Empty parameter(s) detected."]);
             return;
         }
-
-        //idk how this shit works. only god knows how. prolly not.
-        //translation: if studentID is set AND student ID is empty OR student ID is not set. how tf did this work.
-        if (isset($studentID) && empty($studentID) || !isset($studentID)) {
+    
+        // Validate code_type
+        if (empty($code_type)) {
             http_response_code(400);
-            echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+            echo json_encode(["status" => "error", "message" => "Empty parameter(s) detected."]);
             return;
-        }else{
-            //check the code type first if empty or null.
-            if (isset($code_type) && empty($code_type) || !isset($code_type)){
+        }
+    
+        // Require studentID only for birthdate validation
+        if (strtolower($code_type) === "birthdate" && empty($studentID)) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "message" => "Student ID is required when using birthdate."]);
+            return;
+        }
+    
+        // Validate code
+        if (empty($code)) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "message" => "Missing code."]);
+            return;
+        }
+    
+        // Identify the type of code
+        $bdate = $rfid = $qr = $pin = null;
+        switch (strtolower($code_type)) {
+            case 'birthdate':
+                $bdate = $code;
+                break;
+            case 'rfid':
+                $rfid = $code;
+                break;
+            case 'qr':
+                $qr = $code;
+                break;
+            case 'pin':
+                $pin = $code;
+                break;
+            default:
                 http_response_code(400);
-                echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+                echo json_encode(["status" => "error", "message" => "Invalid code type."]);
                 return;
-            }
-            else{
-                //validations
-                if ($this->input->get('code') !== null) {
-                    if ($code_type == 'birthdate' || $code_type == 'BIRTHDATE') {
-                        $bdate = $this->input->get("code");
-                    } else if ($code_type == 'rfid' || $code_type = 'RFID') {
-                        $rfid = $this->input->get("code");
-                    } else if ($code_type == "qr" || $code_type == 'QR'){
-                        $qr = $this->input->get('code');
-                    } else if ($code_type == 'pin' || $code_type == 'PIN'){
-                        $pin = $this->input->get("code");
-                    }
-                    else{
-                        http_response_code(400);
-                        echo json_encode(array("status" => "error", "message" => "Invalid code type."));
-                        return;
-                    }
-                } else{
-                    http_response_code(400);
-                    echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
-                    return;
-                }
-
-                if (isset($bdate) && empty($bdate) || isset($rfid) && empty($rfid) || isset($qr) && empty($qr) || isset($pin) && empty($pin)){
-                    http_response_code(400);
-                    echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
-                    return;
-                }
-                else {
-                    if (isset($bdate)) {
-                        $data = $this->db->get_where('student', ['pin' => $bdate, 'srcode' => $studentID])->row_array();
-                    } 
-                    else if (isset($rfid)) {
-                        $data = $this->db->get_where('student', ['rfid' => $rfid, 'srcode' => $studentID])->row_array();
-                    } 
-                    else if (isset($qr)) {
-                        $data = $this->db->get_where('student', ['qrcode' => $qr, 'srcode' => $studentID])->row_array();
-                    }
-                    else if (isset($pin)) {
-                        $data = $this->db->get_where('student', ['pin' => $pin, 'srcode' => $studentID])->row_array();
-                    }
-                    else{
-                        $data = NULL;
-                    }
-                }
-            }
         }
-
-        //check if there is a student record for the parameters above.
-        if ($data == NULL) {
+    
+        // Fetch student data based on available identifier
+        if (!empty($bdate)) {
+            $data = $this->db->get_where('student', ['pin' => $bdate, 'srcode' => $studentID])->row_array();
+        } elseif (!empty($rfid)) {
+            $data = $this->db->get_where('student', ['rfid' => $rfid])->row_array();
+        } elseif (!empty($qr)) {
+            $data = $this->db->get_where('student', ['qrcode' => $qr])->row_array();
+        } elseif (!empty($pin)) {
+            $data = $this->db->get_where('student', ['pin' => $pin])->row_array();
+        } else {
+            $data = null;
+        }
+    
+        // Check if student exists
+        if ($data === null) {
             http_response_code(200);
-            echo json_encode(array("status" => "error", "message" => "No student record found."));
+            echo json_encode(["status" => "error", "message" => "No student record found."]);
             return;
         }
-
-        // Check for today's attendance record with incomplete "out_time"
+    
+        // Check for incomplete attendance record (missing out_time)
         $records = $this->db->get_where('attend', [
             'srcode' => $data['srcode'],
             'date' => $Sdate,
-            'out_time' => NULL // Check if "out_time" is NULL
+            'out_time' => null
         ])->row_array();
-
+    
         if ($records) {
-            // If an incomplete record exists, proceed to "time-out"
+            // Time-out the student
             $this->db->where('id', $records['id']);
             $this->db->update('attend', ['out_time' => $date]);
             http_response_code(200);
-            echo json_encode(array("status" => "success", "message" => "Time-out success"));
+            echo json_encode(["status" => "success", "message" => "Time-out success"]);
             return;
         } else {
-            // Create a new "time-in" record
+            // Time-in the student
             $srcode = $data['srcode'];
             $category = 'student';
-            $username = ($data['first_name'] . ' ' . $data['last_name']);
-            $data = [
+            $username = $data['first_name'] . ' ' . $data['last_name'];
+            
+            $attendanceData = [
                 'username' => $username,
                 'category' => $category,
-                // 'qrcode' => ($code_type == 'qr' ? $code : ""),
-                // 'RFID' => ($code_type == 'rfid' ? $code : ""),
-                // 'pin' => ($code_type == 'pin' ? $code : ""),
                 'srcode' => $srcode,
                 'kiosk' => $kiosk_id,
                 'in_time' => $date,
                 'date' => $Sdate
             ];
-            $this->db->insert('attend', $data);
+    
+            $this->db->insert('attend', $attendanceData);
             http_response_code(200);
-            echo json_encode(array("status" => "success", "message" => "Time-in success"));
+            echo json_encode(["status" => "success", "message" => "Time-in success"]);
             return;
         }
     }
+    
+    // public function HttpGetUserInfo(){
+    //     date_default_timezone_set("Asia/Manila");
+    //     //--------------------------------------------------------------//
+    //     //----------------------GET REQUESTS-----------------------------//
+    //     //--------------------------------------------------------------//
+    //     //get the srcode
+    //     if ($this->input->get("studentID") !== null) {
+    //         $studentID = $this->input->get("studentID");
+    //     }
+    //     //get the code types.
+    //     if ($this->input->get('code_type') !== null) {
+    //         $code_type = $this->input->get("code_type");
+    //     }
+    //     //get the value of the code type
+    //     if ($this->input->get('code') !== null) {
+    //         $code = $this->input->get("code");
+    //     }
+    //     //--------------------------------------------------------------//
+    //     //----------------STUDENT && CODE VALIDATION--------------------//
+    //     //--------------------------------------------------------------//
+    //     if (isset($studentID) && empty($studentID) || !isset($studentID)) {
+    //         http_response_code(400);
+    //         echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+    //         return;
+    //     }else{
+    //         //check the code type first if empty or null.
+    //         if (isset($code_type) && empty($code_type) || !isset($code_type)){
+    //             http_response_code(400);
+    //             echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+    //             return;
+    //         }
+    //         else{
+    //             if ($this->input->get('code') !== null) {
+    //                 if ($code_type == 'birthdate' || $code_type == 'BIRTHDATE') {
+    //                     $bdate = $this->input->get("code");
+    //                 } else if ($code_type == 'rfid' || $code_type = 'RFID') {
+    //                     $rfid = $this->input->get("code");
+    //                 } else if ($code_type == "qr" || $code_type == 'QR'){
+    //                     $qr = $this->input->get('code');
+    //                 } else if ($code_type == 'pin' || $code_type == 'PIN'){
+    //                     $pin = $this->input->get("code");
+    //                 }
+    //                 else{
+    //                     http_response_code(400);
+    //                     echo json_encode(array("status" => "error", "message" => "Invalid code type."));
+    //                     return;
+    //                 }
+    //             } else{
+    //                 http_response_code(400);
+    //                 echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+    //                 return;
+    //             }
 
+    //             if (isset($bdate) && empty($bdate) || isset($rfid) && empty($rfid) || isset($qr) && empty($qr) || isset($pin) && empty($pin)){
+    //                 http_response_code(400);
+    //                 echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+    //                 return;
+    //             }
+    //             else {
+    //                 if (isset($bdate)) {
+    //                     $data = $this->db->get_where('student', ['pin' => $bdate, 'srcode' => $studentID])->row_array();
+    //                 } 
+    //                 else if (isset($rfid)) {
+    //                     $data = $this->db->get_where('student', ['rfid' => $rfid])->row_array();
+    //                     print_r($data);
+    //                 } 
+    //                 else if (isset($qr)) {
+    //                     $data = $this->db->get_where('student', ['qrcode' => $qr])->row_array();
+    //                 }
+    //                 else if (isset($pin)) {
+    //                     $data = $this->db->get_where('student', ['pin' => $pin])->row_array();
+    //                 }
+    //                 else{
+    //                     $data = NULL;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if ($data == NULL) {
+    //         http_response_code(200);
+    //         echo json_encode(array("status" => "error", "message" => "No student record found."));
+    //         return;
+    //     }
+        // /*!!!!
+        //     This function HttpGetUserInfo basically is self-explanatory. It gets the user info. (ALL)
+        //     BUT, since this is the first function to run in the KIOSK, I also implemented to check if the student 
+        //     do have a pending reservation. This function additionaly checks if the reservation is still valid. If not, it will fill up the timein and timeout.
+        // !!!!*/
+        // // Fetch booking data
+        // if (isset($bdate) || isset($qr) || isset($pin) || isset($rfid)) {
+        //     if (isset($bdate)) {
+        //         $this->db->where(['code' => $studentID . '_' . $bdate]);
+        //     }
+        //     if (isset($qr)) {
+        //         $this->db->or_where(['code' => $qr]);
+        //     }
+        //     if (isset($pin)) {
+        //         $this->db->or_where(['code' => $pin]);
+        //     }
+        //     if (isset($rfid)) {
+        //         $this->db->or_where(['code' => $rfid]);
+        //     }
+            
+        //     $booking_data = $this->db->get('booking')->result_array();
+        // } else {
+        //     http_response_code(400);
+        //     echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+        //     return;
+        // }
+        // // Get current date
+        // $current_date = date('Y-m-d');
+        // foreach ($booking_data as $booking) {
+        //     // Extract booking details
+        //     $date = $booking['date'];
+        //     $start_time = $booking['start_time'];
+        //     $end_time = $booking['end_time'];
+        //     $area_floor = $booking['floor'];
+        //     $area_name = $booking['room'];
+        //     $seat_slot = $booking['slot_id'];
+        //     $booking_date = $booking['date'];
+        //     $in_time = $booking['in_time'];
+        //     $out_time = $booking['out_time'];
+            
+        //     if ($in_time == NULL || $out_time == NULL) {
+        //         // Get area info
+        //         $area_info = $this->db->get_where('area', ['floor' => $area_floor, 'room' => $area_name])->row_array();
+        //         $open_time = strtotime($area_info['opentime']);
+        //         $close_time = strtotime($area_info['closetime']);
+
+        //         // Generate time slots
+        //         $timesIndex = [];
+        //         for ($time = $open_time, $counter = 0; $time <= $close_time; $time = strtotime('+1 hour', $time), $counter++) {
+        //             $timesIndex[$counter] = date('H:i', $time);
+        //         }
+
+        //         // Get the current time
+        //         $current_time = date('H:i:s');
+        //         $current_time_format = date('H:i', strtotime($current_time));
+        //         $start_time_equi = $timesIndex[$start_time];
+        //         $end_time_equi = $timesIndex[$end_time];
+
+        //         // Convert to DateTime objects
+        //         $current_time_object = new DateTime($current_time_format);
+        //         $end_time_object = new DateTime($end_time_equi);
+        //         $start_time_object = new DateTime($start_time_equi);
+        //         $start_time_object->sub(new DateInterval('PT1H'));
+
+        //         // Booking validation logic
+        //         if ($date == $current_date) {
+        //             if ($current_time_object <= $end_time_object && $current_time_object >= $start_time_object) {
+        //                 // User is allowed to time in and out.
+        //             } elseif ($current_time_object < $start_time_object) {
+        //                 // User is early; do nothing.
+        //             } elseif ($current_time_object > $end_time_object) {
+        //                 // User is late.
+        //                 if ($booking['in_time'] == NULL) {
+        //                     $this->fillTimeInTimeOuts($booking['id'], $start_time_equi, $end_time_equi);
+        //                 } elseif ($booking['out_time'] == NULL && $booking['in_time'] != NULL) {
+        //                     $this->fillTimeouts($booking['id'], $end_time_equi);
+        //                 }
+        //             }
+        //             //dec 3 < dec 4
+        //         } else if ($current_date > $date) {
+        //             $this->fillTimeInTimeOuts($booking['id'], $start_time_equi, $end_time_equi);
+        //         } else if ($current_date < $date) {
+        //         //FIXED !
+        //         }
+        //     }
+    //     }
+
+    //     http_response_code(200);
+    //     echo json_encode(array("status" => "success", "message" => "User found.", "data" => $data));
+    // }
     public function HttpGetUserInfo(){
         date_default_timezone_set("Asia/Manila");
-        //--------------------------------------------------------------//
-        //----------------------GET REQUESTS-----------------------------//
-        //--------------------------------------------------------------//
-        //get the srcode
-        if ($this->input->get("studentID") !== null) {
-            $studentID = $this->input->get("studentID");
-        }
-        //get the code types.
-        if ($this->input->get('code_type') !== null) {
-            $code_type = $this->input->get("code_type");
-        }
-        //get the value of the code type
-        if ($this->input->get('code') !== null) {
-            $code = $this->input->get("code");
-        }
-        //--------------------------------------------------------------//
-        //----------------STUDENT && CODE VALIDATION--------------------//
-        //--------------------------------------------------------------//
-        if (isset($studentID) && empty($studentID) || !isset($studentID)) {
+    
+        $studentID = $this->input->get("studentID");
+        $code_type = $this->input->get("code_type");
+        $code = $this->input->get("code");
+    
+        // Validate that code_type is provided
+        if (empty($code_type)) {
             http_response_code(400);
-            echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
+            echo json_encode(["status" => "error", "message" => "Empty parameter(s) detected."]);
             return;
-        }else{
-            //check the code type first if empty or null.
-            if (isset($code_type) && empty($code_type) || !isset($code_type)){
-                http_response_code(400);
-                echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
-                return;
-            }
-            else{
-                if ($this->input->get('code') !== null) {
-                    if ($code_type == 'birthdate' || $code_type == 'BIRTHDATE') {
-                        $bdate = $this->input->get("code");
-                    } else if ($code_type == 'rfid' || $code_type = 'RFID') {
-                        $rfid = $this->input->get("code");
-                    } else if ($code_type == "qr" || $code_type == 'QR'){
-                        $qr = $this->input->get('code');
-                    } else if ($code_type == 'pin' || $code_type == 'PIN'){
-                        $pin = $this->input->get("code");
-                    }
-                    else{
-                        http_response_code(400);
-                        echo json_encode(array("status" => "error", "message" => "Invalid code type."));
-                        return;
-                    }
-                } else{
-                    http_response_code(400);
-                    echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
-                    return;
-                }
-
-                if (isset($bdate) && empty($bdate) || isset($rfid) && empty($rfid) || isset($qr) && empty($qr) || isset($pin) && empty($pin)){
-                    http_response_code(400);
-                    echo json_encode(array("status" => "error", "message" => "Empty parameter(s) detected."));
-                    return;
-                }
-                else {
-                    if (isset($bdate)) {
-                        $data = $this->db->get_where('student', ['pin' => $bdate, 'srcode' => $studentID])->row_array();
-                    } 
-                    else if (isset($rfid)) {
-                        $data = $this->db->get_where('student', ['rfid' => $rfid, 'srcode' => $studentID])->row_array();
-                    } 
-                    else if (isset($qr)) {
-                        $data = $this->db->get_where('student', ['qrcode' => $qr, 'srcode' => $studentID])->row_array();
-                    }
-                    else if (isset($pin)) {
-                        $data = $this->db->get_where('student', ['pin' => $pin, 'srcode' => $studentID])->row_array();
-                    }
-                    else{
-                        $data = NULL;
-                    }
-                }
-            }
         }
-        if ($data == NULL) {
+    
+        // Validate that code is provided
+        if (empty($code)) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "message" => "Empty parameter(s) detected."]);
+            return;
+        }
+    
+        // Validate studentID only when using birthdate
+        if (strtolower($code_type) === 'birthdate' && empty($studentID)) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "message" => "Empty parameter(s) detected."]);
+            return;
+        }
+    
+        // Assign the correct variable based on code_type
+        switch (strtolower($code_type)) {
+            case 'birthdate':
+                $bdate = $code;
+                break;
+            case 'rfid':
+                $rfid = $code;
+                break;
+            case 'qr':
+                $qr = $code;
+                break;
+            case 'pin':
+                $pin = $code;
+                break;
+            default:
+                http_response_code(400);
+                echo json_encode(["status" => "error", "message" => "Invalid code type."]);
+                return;
+        }
+    
+        // Fetch student data
+        if (!empty($bdate)) {
+            $data = $this->db->get_where('student', ['pin' => $bdate, 'srcode' => $studentID])->row_array();
+        } elseif (!empty($rfid)) {
+            $data = $this->db->get_where('student', ['rfid' => $rfid])->row_array();
+        } elseif (!empty($qr)) {
+            $data = $this->db->get_where('student', ['qrcode' => $qr])->row_array();
+        } elseif (!empty($pin)) {
+            $data = $this->db->get_where('student', ['pin' => $pin])->row_array();
+        } else {
+            $data = null;
+        }
+    
+        if ($data === null) {
             http_response_code(200);
-            echo json_encode(array("status" => "error", "message" => "No student record found."));
+            echo json_encode(["status" => "error", "message" => "No student record found."]);
             return;
         }
         /*!!!!
@@ -1995,10 +2254,11 @@ class Kiosk extends CI_Controller
                 }
             }
         }
-
+        
         http_response_code(200);
-        echo json_encode(array("status" => "success", "message" => "User found.", "data" => $data));
+        echo json_encode(["status" => "success", "message" => "User found.", "data" => $data]);
     }
+    
     
     public function HttpGetReservationList(){
         date_default_timezone_set("Asia/Manila");

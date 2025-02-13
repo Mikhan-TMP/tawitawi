@@ -14,40 +14,60 @@
         <div class="col-sm-6 mb-3 mb-sm-0">
             <div class="card border-0 bg-transparent">
                 <div class="card-body mb-0 p-0">
-                    <a href="<?= base_url('master/a_student'); ?>" class="btn btn-icon-split mb-4 shadow-sm text-light"
-                        style="background: linear-gradient(180deg, #031084, #000748); ">
-                        <span class="icon text-white-600">
-                            <i class="fas fa-plus-circle"></i>
-                        </span>
-                        <span class="text"
-                            style="color:#272727; color: white; font-weight: 500; text-transform: Uppercase;">Add New
-                            Student</span>
-                    </a>
-                    <button type="button" class="btn btn-secondary btn-icon-split mb-4 shadow-sm" data-toggle="modal"
-                        data-target=".bd-example-modal-xl" style="margin-bottom: 20px;">
-                        <span class="icon text-white-600">
-                            <i class="fas fa-file-import"></i>
-                        </span>
-                        <span class="text">Excel Import</span>
-                    </button>
-                    <button id="ImportDatabase" type="button" class="btn btn-secondary btn-icon-split mb-4 shadow-sm">
-                        <span class="icon text-white-600">
-                            <i class="fas fa-database"></i>
-                        </span>
-                        <span class="text">Import Data</span>
-                    </button>
-                    <!-- <button type="button" class="btn btn-secondary btn-icon-split mb-4 shadow-sm" data-toggle="modal" data-target=".bd-example-modal-xl-export">
-                  <span class="icon text-white-600">
-                    <i class="fas fa-file-export"></i>
-                  </span>
-                  <span class="text">Export</span>
-                </button> -->
-                    <button id="exportCsvButton" type="button" class="btn btn-secondary btn-icon-split mb-4 shadow-sm">
-                        <span class="icon text-white-600">
-                            <i class="fas fa-file-export"></i>
-                        </span>
-                        <span class="text">Excel Export</span>
-                    </button>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%; align-items: center;" class="mb-4">
+                        <a href="<?= base_url('master/a_student'); ?>" class="btn btn-icon-split  shadow-sm text-light"
+                            style="background: linear-gradient(180deg, #031084, #000748); ">
+                            <span class="icon text-white-600">
+                                <i class="fas fa-plus-circle"></i>
+                            </span>
+                            <span class="text"
+                                style="color:#272727; color: white; font-weight: 500; text-transform: Uppercase;">Add New
+                                Student</span>
+                        </a>
+                        <!-- <button type="button" id="manualAttendance" class="btn btn-info btn-icon-split shadow-sm" onclick="window.location.href='<?= base_url('manual/manualAttendance') ?>';">
+                            <span class="icon text-white-600">
+                                <i class="fas fa-calendar-check"></i>
+                            </span>
+                            <span class="text">Manual Attendance</span>
+                        </button> -->
+                        <!-- <button type="button" id="manualReserve" class="btn btn-info btn-icon-split  shadow-sm" onclick="window.location.href='<?= base_url('manual/manualReservation') ?>';" >
+                                <span class="icon text-white-600">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </span>
+                                <span class="text">Manual Reserve</span>
+                        </button> -->
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%; align-items: center;" class="mb-4">
+                        <button type="button" class="btn btn-secondary btn-icon-split  shadow-sm" data-toggle="modal"
+                            data-target=".bd-example-modal-xl" >
+                            <span class="icon text-white-600">
+                                <i class="fas fa-file-import"></i>
+                            </span>
+                            <span class="text">Excel Import</span>
+                        </button>
+                        <button id="ImportDatabase" type="button" class="btn btn-secondary btn-icon-split  shadow-sm">
+                            <span class="icon text-white-600">
+                                <i class="fas fa-database"></i>
+                            </span>
+                            <span class="text">EMS Import</span>
+                        </button>
+                        <!-- VERTICAL LINE -->
+                        <div class="vl">
+                            <span> | </span>
+                        </div>
+                        <button id="exportCsvButton" type="button" class="btn btn-secondary btn-icon-split  shadow-sm">
+                            <span class="icon text-white-600">
+                                <i class="fas fa-file-export"></i>
+                            </span>
+                            <span class="text">Excel Export</span>
+                        </button>
+                        <button id="export_to_koha" type="button" class="btn btn-secondary btn-icon-split  shadow-sm">
+                            <span class="icon text-white-600">
+                                <i class="fas fa-book-reader"></i>
+                            </span>
+                            <span class="text">Export to Koha</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -57,6 +77,35 @@
                 </div>
             </div>
         </div>
+
+        <!-- MODAL FOR MANUAL ATTENDANCE -->
+        <div class="modal fade" id="modalManualAttendance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Manual Attendance</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" class="form-control" id="date" name="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Time</label>
+                            <input type="time" class="form-control" id="time" name="time">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="saveManualAttendance">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- Modal for Importing Students with Excel -->
         <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
             aria-hidden="true">
@@ -262,11 +311,11 @@
                                 <th scope="col">Gender</th>
                                 <th scope="col">College</th>
                                 <th scope="col">Course</th>
-                                <th scope="col">Year</th>
-                                <th scope="col">Birthdate</th>
+                                <th scope="col">Year Level</th>
+                                <!-- <th scope="col">Birthdate</th> -->
                                 <th scope="col">Pin</th>
                                 <!-- <th scope="col">QRCODE</th> -->
-                                <!-- <th scope="col">RFID</th> -->
+                                <th scope="col">RFID</th>
                                 <!-- th>IMAGE</th>
                   <th>BUILDING</th -->
                                 <th scope="col align-middle">Actions</th>
@@ -294,10 +343,10 @@
                                 <td class=" align-middle"><?= $emp['college']; ?></td>
                                 <td class=" align-middle"><?= $emp['course']; ?></td>
                                 <td class=" align-middle"><?= $emp['schoolyear']; ?></td>
-                                <td class=" align-middle"><?= date('M. j, Y', strtotime($emp['birthdate'])); ?></td>
+                                <!-- <td class=" align-middle"><?= date('M. j, Y', strtotime($emp['birthdate'])); ?></td> -->
                                 <td class=" align-middle"><?= $emp['pin']; ?></td>
                                 <!-- <td class=" align-middle"><?= $emp['qrcode']; ?></td> -->
-                                <!-- <td class=" align-middle"><?= $emp['rfid']; ?></td> -->
+                                <td class=" align-middle"><?= $emp['rfid']; ?></td>
                                 <!-- td class="text-center"><img src="<?= base_url('images/pp/') . $emp['image']; ?>" style="width: 55px; height:55px" class="img-rounded"></td>
                     <td class=" align-middle"><?= $emp['building']; ?></td -->
                                 <td class="text-center align-middle">
@@ -517,7 +566,37 @@
               }
           });
       });
-  });
+//   });
+        document.getElementById("export_to_koha").addEventListener("click", function() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'Do you want to export the student data to Koha?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, export it!',
+                    cancelButtonText: 'No, cancel',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "<?= base_url('master/export_to_koha') ?>";
+                        Swal.fire({
+                            title: 'Import Started!',
+                            text: 'The database import process has begun.',
+                            icon: 'success',
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            onBeforeOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                        
+                    } else {
+                        Swal.fire('Cancelled', 'The export has been cancelled.', 'info');
+                    }
+                });
+            });
+        });
+
 </script>
 <script>
   $(document).ready(function() {

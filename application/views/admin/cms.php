@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     {$id++;?>
                                  <div class="col-lg-2 col-md-12 mb-4 mb-lg-0 image-area">
                                     <button value="<?php echo $k;?>" type="button" class="btn btnModal" data-toggle="modal" data-target="#vids<?php echo $id;?>">
-                                    <img alt="Cant see image" style="width:50%" class="w-100 shadow-1-strong rounded mb-4" src="<?php echo base_url($dir)."/".$k;?>" alt="">
+                                    <img alt="" class="w-100 shadow-1-strong rounded mb-4" src="<?php echo base_url($dir)."/".$k;?>" alt="">
                                     </button>
                                     <div class="remove-image d-flex justify-content-end">
                                        <a type="button" class="btn-sm btn-danger btn-circle" href="?deleteImg=<?php echo $k;?>"><i class="fas fa-trash-alt"></i></a>
@@ -262,12 +262,19 @@ document.addEventListener('DOMContentLoaded', function() {
                                           ?>
                                           <!-- Modal Header -->
                                           <div class="modal-header">
-                                             <h5 class="modal-title"><?php echo $t ?> </h5>
+                                             <h5 class="modal-title"><?php 
+                                             if (strlen($t) > 15) {
+                                                $ext = substr(strrchr($t, '.'), 1);
+                                                echo substr($t, 0, 12) . '... ' . $ext;
+                                             } else {
+                                                echo $t;
+                                             }
+                                             ?> </h5>
                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
                                           </div>
                                           <!-- Modal body -->
                                           <div class="modal-body d-flex justify-content-center">
-                                          <img class="rounded" src="<?php echo base_url($image)."/".$t ?>" id="" style="width: 300px;" >
+                                          <img class="rounded" src="<?php echo base_url($image)."/".$t ?>" id="" style="width: 400px;" >
                                           </div>
                                           <!-- Modal footer -->
                                           <div class="modal-footer">
