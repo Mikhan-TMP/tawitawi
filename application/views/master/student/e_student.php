@@ -100,15 +100,24 @@
                     </div>
                     <!-- </div> -->
                     <div class="row">
-                      <!-- <div class="col-lg-6">
+                      <div class="col-lg-6">
                         <div class="form-group">
-                          rfid
                           <label for="rfid" class="text-dark" style="font-weight: bold;">RFID</label>
                           <input type="text" minlength="2" maxlength="30" class="form-control" name="rfid" id="rfid" value="<?= $student['rfid']; ?>"
                           style="border-radius:15px; font-size: 1rem; padding: 25px;">
                           <?= form_error('rfid', '<small class="text-danger">', '</small>') ?>
                         </div>
-                      </div> -->
+                      </div>
+                      
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <!-- email -->
+                          <label for="email" class="text-dark" style="font-weight: bold;">Email</label>
+                          <input type="email" minlength="2" maxlength="50" class="form-control" name="email" id="email" value="<?= $student['email']; ?>"
+                          style="border-radius:15px; font-size: 1rem; padding: 25px;">
+                          <?= form_error('email', '<small class="text-danger">', '</small>') ?>
+                        </div>
+                      </div>
                       <!-- <div class="col-lg-6">
                         <div class="form-group">
                           <label for="qrcode" class="text-dark" style="font-weight: bold;">QR Code</label>
@@ -120,16 +129,6 @@
                     </div>
                     
                     <div class="row">
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <!-- email -->
-                          <label for="email" class="text-dark" style="font-weight: bold;">Email</label>
-                          <input type="email" minlength="2" maxlength="50" class="form-control" name="email" id="email" value="<?= $student['email']; ?>"
-                          style="border-radius:15px; font-size: 1rem; padding: 25px;">
-                          <?= form_error('email', '<small class="text-danger">', '</small>') ?>
-                        </div>
-                      </div>
-
                       <!-- <div class="col-lg-6">
                         <div class="form-group">
                           <label for="pin" class="text-dark" style="font-weight: bold;"">PIN</label>
@@ -149,13 +148,24 @@
                         </div>
                       </div>
                       <div class="col-lg-6">
-                        <div class="form-group mt-4" style="display: flex;flex-direction: column;">
+                        <div class="form-group" style="display: flex;flex-direction: column;">
                             <label for="birthdate" class="text-dark" style="font-weight: bold;">Birthdate</label>
                             <input type="date" class="form-control col-lg" name="birthdate" id="birthdate" value="<?= $student['birthdate']; ?>"
                                 style="border-radius:15px; font-size: 1rem; padding: 25px;">
                             <?= form_error('birthdate', '<small class="text-danger">', '</small>') ?>
                         </div>
                       </div>
+                      <!-- <div class="col-lg-6">
+                        <div class="form-group">
+                          <label for="rfid" class="text-dark" style="font-weight: bold;">RFID</label>
+                          <input type="text" minlength="2" maxlength="30" class="form-control" name="rfid" id="rfid" value="<?= $student['rfid']; ?>"
+                          style="border-radius:15px; font-size: 1rem; padding: 25px;">
+                          <?= form_error('rfid', '<small class="text-danger">', '</small>') ?>
+                        </div>
+                      </div> -->
+                    </div>
+
+                    <div class="row">
                       <div class="col-lg-6">
                         <div class="col-lg-6">
                           <div class="form-group">
@@ -183,35 +193,6 @@
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <!-- <div class="col-lg-6">
-                        <div class="col-lg-6">
-                          <div class="form-group">
-                            <label for="e_gender" class="text-dark" style="font-weight: bold;">Gender</label>
-                            <div class="row col-lg">
-                              <div class="form-check form-check-inline my-0">
-                                <input class="form-check-input" type="radio" name="e_gender" id="m" value="M" <?php if ($student['gender'] == 'M') {
-                                                                                                                echo 'checked';
-                                                                                                              }; ?>>
-                                <label class="form-check-label" for="m">
-                                  Male
-                                </label>
-                                <?= form_error('e_gender', '<small class="text-danger">', '</small>') ?>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="e_gender" id="f" value="F" <?php if ($student['gender'] == 'F') {
-                                                                                                                echo 'checked';
-                                                                                                              }; ?>>
-                                <label class="form-check-label" for="f">
-                                  Female
-                                </label>
-                              </div>
-                            </div>
-                            <?= form_error('e_gender', '<small class="text-danger">', '</small>') ?>
-                          </div>
-                        </div>
-                      </div> -->
                     </div>
 
                     <div class="row">

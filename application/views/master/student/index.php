@@ -311,13 +311,13 @@
                                 <th scope="col">Gender</th>
                                 <th scope="col">College</th>
                                 <th scope="col">Course</th>
-                                <th scope="col">Year Level</th>
+                                <th scope="col">Year</th>
                                 <!-- <th scope="col">Birthdate</th> -->
                                 <th scope="col">Pin</th>
                                 <!-- <th scope="col">QRCODE</th> -->
                                 <th scope="col">RFID</th>
                                 <!-- th>IMAGE</th>
-                  <th>BUILDING</th -->
+                                <th>BUILDING</th -->
                                 <th scope="col align-middle">Actions</th>
                             </tr>
                         </thead>

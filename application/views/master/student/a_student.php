@@ -129,6 +129,13 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
+                        <div class="form-group mt-4" style="display: flex; flex-direction: column;">
+                        <label for="pin"   class="text-dark" style="font-weight: bold;">RFID</label>
+                        <input type="text" minlength="2" maxlength="30" class="form-control col-lg" name="rfid" id="rfid" required style="border-radius:15px; font-size: 1rem; padding: 25px;" placeholder="Enter RFID">
+                        <?= form_error('rfid', '<small class="text-danger">', '</small>') ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
                         <div class="form-group mt-4" style="    
                       display: flex;
                       flex-direction: column;

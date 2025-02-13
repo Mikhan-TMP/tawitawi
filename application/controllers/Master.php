@@ -415,7 +415,7 @@ public function area()
     $this->form_validation->set_rules('srcode', 'Student ID ', 'required|trim|is_unique[student.srcode] ', [
       'is_unique' => 'This Student ID already exists. Please try again.'
     ]);
-    // $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
+    $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
     // $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim');
     // $this->form_validation->set_rules('pin', 'PIN', 'required|trim|numeric|is_unique[student.pin]', [
     //   'is_unique' => 'This PIN already exists. Please try again.'
@@ -455,7 +455,7 @@ public function area()
         'gender' => $this->input->post('e_gender'),
         // 'qrcode' => $this->input->post('qrcode'),
         'email' => $this->input->post('email'),
-        // 'rfid' => $this->input->post('rfid'),
+        'rfid' => $this->input->post('rfid'),
         'pin' => $pin,
         'schoolyear' => $this->input->post('year'),
         'course' => $this->input->post('course'),
@@ -489,7 +489,7 @@ public function area()
     // $this->form_validation->set_rules('qrcode', 'QR code', 'required|trim');
     // $this->form_validation->set_rules('pin', 'PIN', 'required|trim|numeric');
     // $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
-    // $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
+    $this->form_validation->set_rules('rfid', 'RF id', 'required|trim');
     $this->form_validation->set_rules('year', 'Year', 'required|trim');
     $this->form_validation->set_rules('course', 'course', 'required|trim');
     $this->form_validation->set_rules('college', 'college', 'required|trim');
@@ -514,7 +514,7 @@ public function area()
             // email
             'email' => $this->input->post('email'),
             // rfid
-            // 'rfid' => $this->input->post('rfid'),
+            'rfid' => $this->input->post('rfid'),
             'pin' => $pin,
             'schoolyear' => $this->input->post('year'),
             'course' => $this->input->post('course'),

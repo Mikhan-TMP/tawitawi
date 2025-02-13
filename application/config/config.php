@@ -555,3 +555,9 @@ $config['koha_password'] = 'Zxcqwe123$';
 $config['list_all_libraries'] = 'http://192.168.1.68:8080/api/v1/libraries';
 $config['add_patrons'] = 'http://192.168.1.68:8080/api/v1/patrons';
 $config['get_patrons'] = 'http://192.168.1.68:8080/api/v1/patrons';
+
+
+
+
+$autoload['libraries'] = array('firebase');
+$autoload['config'] = array('firebase');
